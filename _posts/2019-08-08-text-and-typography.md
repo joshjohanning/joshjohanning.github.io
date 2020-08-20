@@ -24,7 +24,9 @@ This Jekyll template totally compatible with Markdown syntax. Now, let's take a 
 
 ## Paragraph
 
-I wandered lonely as a cloud
+**I wandered lonely as a cloud** [linkname](http://google.com)
+
+<a href"www.google.com>link name</a> 
 
 That floats on high o'er vales and hills,
 
@@ -146,6 +148,17 @@ fi;
   </div>
   <a href="#contact">Search</a>
 </div>
+```
+
+#### YAML
+
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasks.version-assemblies-task.VersionAssemblies@2
+  displayName: 'Version Assemblies using **\AssemblyInfo.*'
+  inputs:
+    sourcePath: MyApp  # Path to search for files
+    # filePattern: '**\AssemblyInfo.*'  # File pattern (glob) to search
 ```
 
 **Horizontal Scrolling**
