@@ -52,6 +52,7 @@ In the root `azure-pipelines.yml` file, you'll notice that the `extends` keyword
 
 The deployment stages and jobs are defined in this file as well - this should look very familiar to regular deployment jobs except that they are being referenced as a parameter.
 
+{% raw %}
 ```yaml
 trigger:
   - main
@@ -162,7 +163,7 @@ jobs:
             echo "deploy hello world"
           displayName: deploy
 ```
-
+{% endraw %}
 ## Configuration in Azure DevOps
 
 The **Required YAML Template** check is added to the environment just as an Approval would be:
