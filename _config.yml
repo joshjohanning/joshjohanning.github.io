@@ -18,25 +18,25 @@ description: >-                        # used by seo meta and the atom feed
   and focuses on text presentation.
 
 # Replace with the website url, e.g. 'https://username.github.io'
-url: 'protocol://domain'
+url: 'https://josh-ops.com'
 
-author: your_full_name                  # change to your full name
+author: Joshua Johanning                  # change to your full name
 
 avatar: /assets/img/sample/avatar.jpg   # support internet resources
 
 github:
-  username: github_username             # change to your github username
+  username: soccerjoshj07             # change to your github username
 
 twitter:
-  username: twitter_username            # change to your twitter username
+  username: jjjettrain            # change to your twitter username
 
 social:
   name: your_full_name                  # it will shows as the copyright owner in Footer
   email: example@doamin.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
-    - https://github.com/username       # change to your github homepage
+    - https://github.com/soccerjoshj07       # change to your github homepage
+    - https://twitter.com/jjjettrain      # change to your twitter homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -51,10 +51,10 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 baseurl: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: America/Chicago
 
 google_analytics:
-  id: ''          # Fill with your Google Analytics ID
+  id: 'G-GE92ZJY22K'          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
