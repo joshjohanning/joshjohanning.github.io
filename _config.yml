@@ -8,9 +8,9 @@
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 #--------------------------
 
-title: 'Josh-Ops: A DevOps Blog'                          # the main title
+title: 'Josh-Ops'                          # the main title
 
-tagline: 'Azure DevOps, GitHub, and all the DevOps'  # it will display as the sub-title
+tagline: 'A DevOps Blog'  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   Blogging about Azure DevOps and GitHub practices, 
