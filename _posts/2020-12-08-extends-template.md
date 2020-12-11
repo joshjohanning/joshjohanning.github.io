@@ -168,18 +168,18 @@ jobs:
 
 The **Required YAML Template** check is added to the environment just as an Approval would be:
 
-![Azure DevOps required check]({{ site.url }}/images/2020-12-08-extends-template/required-check.png)
+![Azure DevOps required check](https://josh-ops.com/images/2020-12-08-extends-template/required-check.png)
 
 *Note here if you are storing the code in Azure Repos - the example in this screenshot mentions `project/repository-name`. If the repository is in the same project, DO NOT include the project name in the path otherwise it won't work.*
 
 Now, if you try to deploy to an environment while not using this extends template, it fails:
-![failed stage]({{ site.url }}/images/2020-12-08-extends-template/failed-stage.png)
+![failed stage](https://josh-ops.com/images/2020-12-08-extends-template/failed-stage.png)
 
 If you click the 0/1 checks passed, it shows the check that failed and hyperlinks to the checks for that environment:
-![failed check]({{ site.url }}/images/2020-12-08-extends-template/failed-check.png)
+![failed check](https://josh-ops.com/images/2020-12-08-extends-template/failed-check.png)
 
 Once you properly use the extends template - success!
-![successful stage]({{ site.url }}/images/2020-12-08-extends-template/successful-stage.png)
+![successful stage](https://josh-ops.com/images/2020-12-08-extends-template/successful-stage.png)
 
 ## Conclusion and Next Steps
 
