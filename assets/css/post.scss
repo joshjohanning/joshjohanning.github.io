@@ -27,16 +27,25 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
   border-color: var(--btn-border-color);
 }
 
-.post {
-  img {
-    max-width: 100%;
-    margin-top: .5rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
+.post-content {
+  > ol, > ul, > dl {
+    padding-left: 2rem;
+    li+li {
+      margin-top: 0.3rem;
+    }
+  }
+  li {
+    > ol, > ul, > dl { // sub list
+      padding-left: 2rem;
+    }
+    > p {
+      margin: 1rem 0 0.8rem;
+    }
+  }
+  .post-preview-img {
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+    @include align-center;
   }
 }
 
@@ -80,20 +89,20 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
   p {
     font-size: 1.1rem;
     line-height: 1.5rem;
-    margin-top: .3rem;
+    margin-top: 0.3rem;
     white-space: normal;
   }
 
   a, span {
     &::before {
       color: var(--text-muted-color);
-      font-size: .65rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
     }
     &:first-child {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
-      left: .5px;
+      left: 0.5px;
       &::before {
         content: $prompt-older
       }
@@ -101,7 +110,7 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
     &:last-child {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      right: .5px;
+      right: 0.5px;
       &::before {
         content: $prompt-newer
       }
@@ -123,7 +132,6 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
 }
 
 #toc-wrapper {
-  margin-top: 7rem;
   border-left: 1px solid rgba(158, 158, 158, 0.17);
   position: -webkit-sticky;
   position: sticky;
@@ -133,15 +141,15 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
   &.topbar-down {
     top: 6rem;
   }
-  >h3 {
-    @include label(inherit, 600);
+  > span {
+    @include panel-label;
   }
 }
 
 #toc li>a {
   line-height: 1rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 
@@ -164,7 +172,7 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
     &:hover {
       -webkit-transform: translate3d(0, -3px, 0);
       transform: translate3d(0, -3px, 0);
-      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.08));
+      box-shadow: 0 20px 35px -4px rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -173,8 +181,8 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
   }
 
   p {
-    font-size: .9rem;
-    margin-bottom: .5rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -225,7 +233,7 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
     font-size: 1.2rem;
     a {
       &:not(:last-child) {
-        margin-right: .25rem;
+        margin-right: 0.25rem;
       }
       &:hover {
         text-decoration: none;
@@ -235,7 +243,7 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
       }
     }
     >i {
-      padding-top: .35rem;
+      padding-top: 0.35rem;
       &:hover {
         @extend %btn-share-hovor;
       }
@@ -283,7 +291,7 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
     font-weight: 400;
   }
   span:last-child {
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 } // .license-wrapper
 
@@ -312,8 +320,8 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
         content: "\2022";
         color: rgba(158, 158, 158, 0.8);
         font-weight: bold;
-        padding-left: .5rem;
-        padding-right: .3rem;
+        padding-left: 0.5rem;
+        padding-right: 0.3rem;
       }
       &.flex-column {
         -webkit-box-orient: horizontal!important;
@@ -333,19 +341,10 @@ $prompt-newer: "{{ site.data.label.post.button.next }}";
 
 /* Hide SideBar and TOC */
 @media all and (max-width: 830px) {
-  .post img {
-    position: relative;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
-  }
-
   .post-navigation {
     padding-left: 0;
     padding-right: 0;
     margin-left: -.5rem;
     margin-right: -.5rem;
   }
-
 }

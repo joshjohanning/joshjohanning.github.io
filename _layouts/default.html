@@ -9,19 +9,13 @@ layout: compress
 
 <!DOCTYPE html>
 
-{% if site.lang %}
-  {% assign lang = site.lang | split: "_" | first %}
-{% else %}
-  {% assign lang = 'en' %}
-{% endif %}
-
 {% capture prefer_mode %}
-  {% if site.theme_mode != "dual" %}
+  {% if site.theme_mode %}
     mode="{{ site.theme_mode }}"
   {% endif %}
 {% endcapture %}
 
-<html lang="{{ lang }}" {{ prefer_mode }} >
+<html lang="{{ site.lang | split: "_" | first | default: "en" }}" {{ prefer_mode }}>
 
   {% include head.html %}
 
@@ -46,15 +40,15 @@ layout: compress
 
     </div> <!-- #main-wrapper -->
 
+    {% if page.mermaid %}
+      {% include mermaid.html %}
+    {% endif %}
+
     <div id="mask"></div>
 
-    <a id="back-to-top" href="#" class="btn btn-lg btn-box-shadow" role="button">
+    <a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button">
       <i class="fas fa-angle-up"></i>
     </a>
-
-    {% if jekyll.environment == 'production' %}
-      {% include google-analytics.html %}
-    {% endif %}
 
     {% include search-loader.html %}
 

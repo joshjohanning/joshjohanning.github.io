@@ -5,29 +5,29 @@ date: 2019-08-08 11:33:00 +0800
 categories: [Blogging, Demo]
 tags: [typography]
 math: true
+mermaid: true
+image: /assets/img/sample/devices-mockup.png
 published: false
 ---
 
-This Jekyll template totally compatible with Markdown syntax. Now, let's take a look for the text and typography in here.
+This post is to show Markdown syntax rendering on [**Chirpy**](https://github.com/cotes2020/jekyll-theme-chirpy/fork), you can also use it as an example of writing. Now, let's start looking at text and typography.
+
 
 ## Titles
+---
+# H1 - heading
 
-***
-# H1
+<h2 data-toc-skip>H2 - heading</h2>
 
-<h2 data-toc-skip>H2</h2>
+<h3 data-toc-skip>H3 - heading</h3>
 
-<h3 data-toc-skip>H3</h3>
-
-#### H4
-
-***
+<h4>H4 - heading</h4>
+---
+<br>
 
 ## Paragraph
 
-**I wandered lonely as a cloud** [linkname](http://google.com)
-
-<a href"www.google.com>link name</a> 
+I wandered lonely as a cloud
 
 That floats on high o'er vales and hills,
 
@@ -39,17 +39,33 @@ Beside the lake, beneath the trees,
 
 Fluttering and dancing in the breeze.
 
+## List
+
+### Ordered list
+
+1. first item
+2. second item
+3. third item
+
+### Unordered list
+
+- item 1
+	- sub item 1
+	- sub item 2
+
+- item 2
+
 ## Block Quote
 
 > This line to shows the Block Quote.
 
 ## Tables
 
-|Company|Contact|Country|
-|:---|:--|---:|
-|Alfreds Futterkiste | Maria Anders | Germany
-|Island Trading | Helen Bennett | UK
-|Magazzini Alimentari Riuniti | Giovanni Rovelli | Italy
+| Company                      | contact          | Country |
+|:-----------------------------|:-----------------|--------:|
+| Alfreds Futterkiste          | Maria Anders     | Germany |
+| Island Trading               | Helen Bennett    | UK      |
+| Magazzini Alimentari Riuniti | Giovanni Rovelli | Italy   |
 
 ## Link
 
@@ -61,10 +77,51 @@ Fluttering and dancing in the breeze.
 Click the hook will locate the footnote[^footnote].
 
 
-## Image
+## Images
 
-![Desktop View]({{ "/assets/img/sample/mockup.png" | relative_url }})
+- Default (with caption)
 
+![Desktop View](/assets/img/sample/mockup.png)
+_Full screen width and center alignment_
+
+<br>
+
+- Specify width
+
+![Desktop View](/assets/img/sample/mockup.png){: width="400"}
+_400px image width_
+
+<br>
+
+- Left aligned
+
+![Desktop View](/assets/img/sample/mockup.png){: width="350" class="normal"}
+
+<br>
+
+- Float to left
+
+  ![Desktop View](/assets/img/sample/mockup.png){: width="240" class="left"}
+  "A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space."
+
+<br>
+
+- Float to right
+
+  ![Desktop View](/assets/img/sample/mockup.png){: width="240" class="right"}
+  "A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space."
+
+<br>
+
+## Mermaid SVG
+
+```mermaid
+ gantt
+  title  Adding GANTT diagram functionality to mermaid
+  apple :a, 2017-07-20, 1w
+  banana :crit, b, 2017-07-23, 1d
+  cherry :active, c, after b a, 1d
+```
 
 ## Inline code
 
@@ -134,7 +191,7 @@ fi;
 ```
 {% endraw %}
 
-#### HTML
+#### Html
 
 ```html
 <div class="sidenav">
@@ -151,31 +208,26 @@ fi;
 </div>
 ```
 
-#### YAML
+#### Java
 
-```yaml
-steps:
-- task: colinsalmcorner.colinsalmcorner-buildtasks.version-assemblies-task.VersionAssemblies@2
-  displayName: 'Version Assemblies using **\AssemblyInfo.*'
-  inputs:
-    sourcePath: MyApp  # Path to search for files
-    # filePattern: '**\AssemblyInfo.*'  # File pattern (glob) to search
+```java
+private void writeObject(java.io.ObjectOutputStream s)
+  throws java.io.IOException {
+  // Write out any hidden serialization magic
+  s.defaultWriteObject();
+
+  // Write out HashMap capacity and load factor
+  s.writeInt(map.capacity());
+  s.writeFloat(map.loadFactor());
+
+  // Write out size
+  s.writeInt(map.size());
+
+  // Write out all elements in the proper order.
+  for (E e: map.keySet())
+    s.writeObject(e);
+}
 ```
-
-**Horizontal Scrolling**
-
-```html
-<div class="panel-group">
-  <div class="panel panel-default">
-    <div class="panel-heading" id="{{ category_name }}">
-      <i class="far fa-folder"></i>
-      <p>This is a very long long long long long long long long long long long long long long long long long long long long long line.</p>
-      </a>
-    </div>
-  </div>
-</div>
-```
-
 
 ## Reverse Footnote
 
