@@ -115,6 +115,7 @@ resources:
 
 stages:
 - stage: secure_buildstage
+  displayName: 'Secure Build Stage'
   jobs:
   - job: secure_buildjob
     steps:
