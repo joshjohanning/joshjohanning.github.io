@@ -82,16 +82,38 @@ For this, I wrote a script that examines the `.sarif` and added another job to t
     - name: Detect Errors
       run: |
         repo=$(echo ${{ github.repository }} | awk -F'/' '{print $2}')
+        results=$(cat $repo/results/${{ matrix.language }}-builtin.sarif | jq -r '.runs[].results[].ruleId')
 
-        results=$(cat $repo/results/${{ matrix.language }}-builtin.sarif | jq -r '.runs[].results[].level')
+        resultsArray=($results)
+        
+        echo "${resultsArray[*]}"
 
-        if [ -z "$results" ]; then count=0; else count=$(echo "$results" | grep -c '^'); fi
+        errorCount=0
+        warningCount=0
+        noteCount=0
 
-        echo "Results: $count"
+        for var in "${resultsArray[@]}"
+        do
+          severity=$(cat $repo/results/${{ matrix.language }}-builtin.sarif | jq -r '.runs[].tool.driver.rules[] | select(.id=="'$var'").properties."problem.severity"')
+          echo "${var} | $severity"
+          if [ "$severity" == "warning" ]; then let warningCount+=1; fi
+          if [ "$severity" == "error" ]; then let errorount+=1; fi
+          if [ "$severity" == "note" ]; then let noteount+=1; fi
+        done
+
+        echo ""
+        echo "Error Count: $errorCount"
+        echo "Warning Count: $warningCount"
+        echo "Note Count: $noteCount"
         echo ""
 
-        if (( $count > 0 )); then
-            echo "issues found - failing detect vulnerabilities check..."
+        if (( $errorCount > 0 )); then
+            echo "errors found - failing detect error check..."
+            exit -1
+        fi
+
+        if (( $warningCount > 0 )); then
+            echo "warnings found - failing detect warning check..."
             exit -1
         fi
 ```
@@ -111,9 +133,9 @@ Note that we also have to add an `Upload Build Artifact` step in the `Analyze` j
 
 Depending on the workflow, you may have to modify the `path` in the Upload task as well as the script. You can find out the relative path of the .sarif report by viewing the Actions' logs.
 
-The entire workflow can be found in my [GitHub branch](https://github.com/soccerjoshj07/tailspin-spacegame-web-deploy/blob/3d27d9558a5d469ff7953381e5ec5886167cc69d/.github/workflows/codeql-analysis.yml).
+The entire workflow can be found in my [GitHub branch](https://github.com/soccerjoshj07/tailspin-spacegame-web-deploy/blob/2d4955b668ffde45a2f4ea6e742268a536249b27/.github/workflows/codeql-analysis.yml).
 
-Because the .sarif produced by the ShiftLeft analysis is slightly different and *doesn't* fail the job even with *errors*, I created a different workflow you can use to block pull requests if errors or warnings are found - see for [example](https://github.com/soccerjoshj07/azdo-terraform-tailspin/blob/05151b64818db1c4cabf5aaf51f0024c779d81f5/.github/workflows/shiftleft-analysis.yml).
+Because the .sarif produced by the ShiftLeft analysis is slightly different and by default *doesn't* fail the job even with *errors*, I created a different workflow you can use to block pull requests if errors or warnings are found - see for [example](https://github.com/soccerjoshj07/azdo-terraform-tailspin/blob/05151b64818db1c4cabf5aaf51f0024c779d81f5/.github/workflows/shiftleft-analysis.yml).
 
 Now just like we did above, we can modify our branch rule to require the "Detect-Errors" job to finish successfully, as this job will run successfully if there are no errors/warnings.
 
