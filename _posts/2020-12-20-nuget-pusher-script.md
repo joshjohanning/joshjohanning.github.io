@@ -3,7 +3,7 @@ title: 'Quickly Migrate NuGet Packages to a New Feed En Masse'
 author: Joshua Johanning
 date: 2020-12-23 16:45:00 -0600
 categories: [Azure DevOps]
-tags: [azure devops, nuget]
+tags: [Azure DevOps, NuGet]
 ---
 
 ## Summary
