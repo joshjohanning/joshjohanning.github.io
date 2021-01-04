@@ -16,7 +16,7 @@ What I did instead was borrow some of my scripting knowledge from my [NuGet Push
 
 {% raw %}
 
-```bash
+```yaml
     - name: Auth NuGet
       run: nuget sources add -Name ${{ env.nuget_feed_name }} -Source ${{ env.nuget_feed_source }} -username "az" -password ${{ secrets.AZDO_PAT }} -ConfigFile ${{ env.nuget_config }}
      
@@ -34,7 +34,7 @@ Let's take a step back and add some things that are necessary to make this work.
 1. If the secret name is named something different, make sure to modify the `nuget sources add ... -password ${{ secrets.AZDO_PAT }}` command to use the appropriate secret.
 1. Next, we have to add in a few other environment variables to the GitHub Action workflow:
 
-```bash
+```yaml
 env:
   solution_file: 'My.NetFramework47.App.sln'
   nuget_feed_name: 'My-Azure-Artifacts-Feed'
@@ -48,7 +48,7 @@ Note that my Azure Artifacts feed was scoped to the Organization level, the NuGe
 
 Including the complete workflow for reference - the only bit custom here is the environment variables and the Auth NuGet and Restore NuGet Packages command Actions.
 
-```bash
+```yaml
 # For most projects, this workflow file will not need changing; you simply need
 # to commit it to your repository.
 #
@@ -137,7 +137,7 @@ jobs:
 1. If your solution does not contain a NuGet.config file (`nuget_config: '.nuget/NuGet.Config'`), you may have to create a temporary config file similar to how the [NuGet Command](https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/NuGetCommandV2/nugetrestore.ts#L136) task works in Azure DevOps
 1. If you the `Autobuild` Action does not successfully build your project, you will have to build it manually. Using full .NET Framework, there is an additional Action that you need to add to add MSBuild to the path (`warrenbuckley/Setup-MSBuild@v1`). This Action requires `ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'` to be set because [GitHub Actions: Deprecating set-env and add-path commands](https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/). Also make sure to add the `/p:UseSharedCompilation=false` argument mentioned from [Troubleshooting the CodeQL workflow: No code found during the build](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/troubleshooting-the-codeql-workflow#no-code-found-during-the-build). Here's an example:
 
-```bash
+```yaml
     - name: Setup MSBuild Path
       uses: warrenbuckley/Setup-MSBuild@v1
       env:
