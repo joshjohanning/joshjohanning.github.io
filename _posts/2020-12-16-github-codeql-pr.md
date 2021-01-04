@@ -24,7 +24,7 @@ If you already have a Code Scanning alert setup, skip to step #7.
 1. Commit the workflow to your branch and merge it into Main - for best results we want an initial scan in the default branch before we test out the PR process
 1. Under the Settings tab in the repository, navigate to Branches
 1. Create a [rule](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-required-status-checks) for your default branch - check the 'Require status checks to pass before merging' box
-1. If you used the GitHub CodeQL workflow, check the `CodeQL` status check and save the rule
+1. If you used the GitHub CodeQL workflow, check the `CodeQL` status check and save the rule (Note 1/4/20: I have noticed that the `CodeQL` won't appear as an option until you initiate at least one PR on the repository that triggers and completes the `Analyze (csharp)` job)
 
 This last step was the part I wasn't clear on from the GitHub docs. The other entry, such as `Analyze (javascript)`, is only the *scan* job for that language. It should succeed irregardless of if vulnerabilities are found. If it fails, the `autobuild` task might not be able to compile your code.
 
