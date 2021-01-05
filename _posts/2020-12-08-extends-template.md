@@ -145,7 +145,6 @@ steps:
 
 This is pretty vanilla as well - this *job* template is injected into the extends template in the `- ${{ parameters.deployStages }}` line of code.
 
-
 ```yaml
 parameters:
   environment: ''
@@ -164,7 +163,6 @@ jobs:
             echo "deploy hello world"
           displayName: deploy
 ```
-{% endraw %}
 ## Configuration in Azure DevOps
 
 The **Required YAML Template** check is added to the environment just as an Approval would be:
@@ -191,3 +189,87 @@ Did you know that you can also add these same type of required checks on Service
 Completing this circle, we can ensure that protected resources in Azure DevOps - environments AND service connections - extend from a particular template, ensuring compliance and standardization across the organization.
 
 Happy templating!
+
+## Updates - Jan 5 2020 - Using Build Job template instead of Build Steps template
+
+After using the template for a few weeks, I've made an update to be able to pass in *build jobs* instead of *build steps*. Note that with this template, you can pass in either. I prefer using a separate job under the build stage for the secret scanning bit so I can see what failed - the secret scan or the build.
+
+I have an input parameter for `buildStageName` so that this would still make sense in a scenario where there isn't a stage named Build, such as in Terraform deployments. By default, the stage will be named build, but it can be optionally overridden (called something like Terraform Plan instead, in the Terraform example).
+
+**secret-scanning-extends.yml:**
+
+```yaml
+parameters:
+- name: buildSteps # the name of the parameter is buildSteps
+  type: stepList # data type is StepList
+  default: [] # default value of buildSteps
+- name: buildJobs # the name of the parameter is buildSteps
+  type: jobList # data type is StepList
+  default: [] # default value of buildSteps
+- name: deployStages
+  type: stageList
+  default: [] 
+- name: 'buildStageName'
+  type: string
+  default: 'build'
+
+resources:
+  repositories:
+  - repository: secretscanning
+    type: github
+    name: soccerjoshj07/secret-scanning-config
+    endpoint: soccerjoshj07
+
+stages:
+- stage: ${{ parameters.buildStageName }}
+  displayName: ${{ parameters.buildStageName }}
+  jobs:
+  - job: secret_scanning
+    steps:
+
+    - template: secret-scanning/secret-scanning-steps.yml
+
+    - ${{ parameters.buildSteps }}
+
+  - ${{ parameters.buildJobs }}
+
+- ${{ parameters.deployStages }}
+
+```
+
+**azure-pipelines.yml:**
+
+```yaml
+trigger:
+  - main
+  
+resources:
+  repositories:
+  - repository: templates
+    type: github
+    name: soccerjoshj07/pipeline-templates
+    endpoint: soccerjoshj07
+
+extends:
+  template: secret-scanning/secret-scanning-extends.yml@templates
+  parameters:
+    buildJobs:
+    # job template
+    - template: my-build-job.yml@templates
+    deployStages:
+    - stage: dev
+      displayName: deploy to dev
+      jobs: 
+      # job template
+      - template: secret-scanning/sample-deployment-job.yml@templates
+        parameters:
+          environment: github-secret-scanning-test-gate-dev
+    - stage: prod
+      displayName: deploy to prod
+      jobs:
+      - template: secret-scanning/sample-deployment-job.yml@templates
+        parameters:
+          environment: github-secret-scanning-test-gate-prod
+```
+
+{% endraw %}
