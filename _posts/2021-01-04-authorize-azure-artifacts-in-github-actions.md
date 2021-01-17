@@ -1,5 +1,5 @@
 ---
-title: 'GitHub: Authorize and Restore Azure Artifacts NuGet Packages in GitHub Actions'
+title: 'Authorize and Restore Azure Artifacts NuGet Packages in GitHub Actions'
 author: Joshua Johanning
 date: 2021-01-04 14:15:00 -0600
 categories: [GitHub, DevOps]

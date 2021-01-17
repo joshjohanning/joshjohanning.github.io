@@ -3,7 +3,7 @@ title: 'GitHub: Block Pull Request if Code Scanning Alerts Are Found'
 author: Joshua Johanning
 date: 2020-12-16 20:00:00 -0600
 categories: [GitHub, Pipelines]
-tags: [GitHub, pull request, CodeQL]
+tags: [GitHub, Pull Requests, CodeQL]
 ---
 
 ## Overview
