@@ -37,8 +37,6 @@ done
 
 ## Improvement Ideas
 
-The `username` doesn't matter in this script since when using an Azure DevOps PAT, username is irrelevant. If one was pushing to a NuGet feed that required username authentication, I would presume you would add that as an input.
-
-One could also add a target folder as an input too.
-
-Also one could use a more elaborate input mechanism to the script...
+* The `username` doesn't matter in this script since when using an Azure DevOps PAT, username is irrelevant. If one was pushing to a NuGet feed that required username authentication, I would presume you would add that as an input.
+* One could also add a target folder as an input too.
+* Also one could use a more elaborate input mechanism to the script...
