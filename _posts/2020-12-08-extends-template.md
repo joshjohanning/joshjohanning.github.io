@@ -194,7 +194,7 @@ Happy templating!
 
 After using the template for a few weeks, I've made an update to be able to pass in *build jobs* instead of *build steps*. Note that with this template, you can pass in either. I prefer using a separate job under the build stage for the secret scanning bit so I can see what failed - the secret scan or the build.
 
-I have an input parameter for `buildStageName` so that this would still make sense in a scenario where there isn't a stage named Build, such as in Terraform deployments. By default, the stage will be named build, but it can be optionally overridden (called something like Terraform Plan instead, in the Terraform example).
+I have an input parameter for `buildStageName` so that this would still make sense in a scenario where there isn't a stage named Build, such as in Terraform deployments. By default, the stage will be named build, but it can be optionally overridden (called something like `secret-scanning` instead, in the Terraform example).
 
 **secret-scanning-extends.yml:**
 
