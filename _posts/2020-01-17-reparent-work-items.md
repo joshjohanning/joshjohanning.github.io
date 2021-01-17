@@ -9,6 +9,7 @@ tags: [Azure DevOps, Work Items]
 ## Reparent Work Items in the UI
 
 If you are reparenting only a few work items, then the easiest way is to use the Mapping view in the Azure DevOps backlog, as described by [Microsoft](https://docs.microsoft.com/en-us/azure/devops/boards/backlogs/organize-backlog?view=azure-devops#map-items-to-group-them-under-a-feature-or-epic):
+
 ![turn-mapping-on](https://docs.microsoft.com/en-us/azure/devops/boards/backlogs/media/organize-backlog/turn-mapping-on-agile.png)
 ![map-workitems](https://docs.microsoft.com/en-us/azure/devops/boards/backlogs/media/organize-backlog/map-unparented-items-agile.png)
 
