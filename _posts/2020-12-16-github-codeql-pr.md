@@ -8,7 +8,7 @@ tags: [GitHub, pull request, CodeQL]
 
 ## Overview
 
-After virtually attending GitHub Universe last week and watching the [GitHub Advanced Security round-up](https://githubuniverse.com/GitHub-Advanced-Security-round-up/) and [Catching vulnerabilities early with GitHub](https://githubuniverse.com/Catching-vulnerabilities-early-with-GitHub/) sessions, it got me thinking: How do I block a pull request from being merged if the scans detect issues? I didn't think the [GitHub Docs](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#understanding-the-pull-request-checks) were incredibly straight forward on how this works. 
+After virtually attending GitHub Universe last week and watching the [GitHub Advanced Security round-up](https://githubuniverse.com/GitHub-Advanced-Security-round-up/) and [Catching vulnerabilities early with GitHub](https://githubuniverse.com/Catching-vulnerabilities-early-with-GitHub/) sessions, it got me thinking: How do I block a pull request from being merged if the scans detect issues? I didn't think the [GitHub Docs](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#understanding-the-pull-request-checks) were incredibly straight forward on how this works.
 
 I knew how to configure a branch protection rule in GitHub that enforces things such as a GitHub Action or Azure DevOps stage completes successfully, but what about code scanning? How configurable is it?
 
@@ -64,6 +64,7 @@ Well, in the case of the ShiftLeft Analysis workflow, there is a [config file](h
 For this, I wrote a script that examines the `.sarif` and added another job to the workflow, like so:
 
 {% raw %}
+
 ```yaml
   Detect-Errors:
     runs-on: ubuntu-latest
@@ -129,6 +130,7 @@ Note that we also have to add an `Upload Build Artifact` step in the `Analyze` j
         name: sarif-report-${{ matrix.language }}
         path: /home/runner/work/**/*.sarif
 ```
+
 {% endraw %}
 
 Depending on the workflow, you may have to modify the `path` in the Upload task as well as the script. You can find out the relative path of the .sarif report by viewing the Actions' logs.
