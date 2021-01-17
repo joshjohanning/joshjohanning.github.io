@@ -8,7 +8,11 @@ tags: [Azure DevOps, Work Items]
 
 ## Summary
 
-Reparenting work items in the Azure DevOps UI is clunky - it can be done in mass using the parent mapping feature, but what if you have hundreds or thousands of work items split across multiple parent/child relationships? Then it becomes harder since you can't use this functionality in a query window, only from the backlog.
+If you are reparenting only a few work items, then the easiest way is to use the Mapping view in the Azure DevOps backlog, as described by [Microsoft](https://docs.microsoft.com/en-us/azure/devops/boards/backlogs/organize-backlog?view=azure-devops#map-items-to-group-them-under-a-feature-or-epic):
+![turn-mapping-on](https://docs.microsoft.com/en-us/azure/devops/boards/backlogs/media/organize-backlog/turn-mapping-on-agile.png)
+![map-workitems](https://docs.microsoft.com/en-us/azure/devops/boards/backlogs/media/organize-backlog/map-unparented-items-agile.png)
+
+However, mapping (or reparenting) work items in the Azure DevOps UI is clunky - it can be done in mass using the parent mapping pane, but what if you have hundreds or thousands of work items split across multiple parent/child relationships or multiple backlogs? Then it becomes harder since you can't use this functionality in a query window, only from the backlog.
 
 This is a *very* simple bash script utilizing the [Azure DevOps CLI extension](https://docs.microsoft.com/en-us/azure/devops/cli/?view=azure-devops) that can very quickly update the parent on a query of work items. I used a combination of the CLI commands with PowerShell, since PowerShell makes it super simple to use loops and JSON parsing. Before the Azure DevOps CLI, this would have to have been done with using the [APIs](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/?view=azure-devops-rest-6.0), which isn't hard, but this solution uses way fewer lines of code!
 
