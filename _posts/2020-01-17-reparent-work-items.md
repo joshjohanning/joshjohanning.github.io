@@ -64,3 +64,4 @@ ForEach($workitem in $query) {
 
 * Utilize the [environment variable or from file method](https://docs.microsoft.com/en-us/azure/devops/cli/log-in-via-pat?view=azure-devops&tabs=windows) to be able to run `az devops login` in an unattended fashion
 * Use the APIs if you are so inclined, but I still like to use the CLI when possible
+* Expand the WIQL, and maybe add it as a script parameter!
