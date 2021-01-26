@@ -35,8 +35,6 @@ done
 
 {% endraw %}
 
-<script src="https://gist.github.com/soccerjoshj07/4788111b31edbb4be49a3ac2f8519671.js"></script>
-
 ## Improvement Ideas
 
 * The `username` doesn't matter in this script since when using an Azure DevOps PAT, username is irrelevant. If one was pushing to a NuGet feed that required username authentication, I would presume you would add that as an input.
