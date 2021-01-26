@@ -107,7 +107,7 @@ The team did not like this tool because the original create date was not preserv
 
 Otherwise, it does the job at migrating tickets, comments, user mapping with assignee, and label mapping.
 
-### How to
+### trac2github How To
 
 I ran this on a debian 10.7 server, the same server that was running my Trac installation.
 
