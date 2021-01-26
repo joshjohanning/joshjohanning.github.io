@@ -21,7 +21,7 @@ The two I have tested are:
 * **[my  fork of mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/soccerjoshj07/trac-hub)**
 * **[trustmaster/trac2github](https://github.com/trustmaster/trac2github)**
 
-Both of these are more focused on Issues, and neither really do attachments (see trac-hub how to section below for a possible solution though). The [svigerske/trac-to-github](https://github.com/svigerske/trac-to-github) tool mentions that it uploads attachments as gists.
+Both of these are more focused on Issues, and neither really do attachments (see trac-hub how to section [below](#trac-hub-how-to) for a possible solution though). The [svigerske/trac-to-github](https://github.com/svigerske/trac-to-github) tool mentions that it uploads attachments as gists.
 
 Note: These tested against GitHub's Cloud instance (not server).
 
