@@ -127,7 +127,7 @@ Instructions:
     1. `$repo` : The GitHub repo name
     1. `$users_list` : Provide a mapping of Trac user --> GitHub user
     1. The database driver settings - whether that's `$mysqlhost_*`, `$sqlite_trac_path`, or `$pgsql_` settings.
-    1. Explore the [other items in the config file](https://github.com/trustmaster/trac2github/blob/master/trac2github.cfg) to see if they are needed, such as `$ticket_offset` for resuming a migration or `$remap_labels` to modify the label mapping. Note that while you might not think you need to set `$ticket_limit` because you want to migrate the entire Trac ticket database, this setting needs to be set in order to trigger the aforementioned [rate limiting sleep](https://github.com/trustmaster/trac2github/blob/master/trac2github.php#L485). **I advise giving `$ticket_limit` an arbitrary value for this purpose.**
+    1. Explore the [other items in the config file](https://github.com/trustmaster/trac2github/blob/master/trac2github.cfg) to see if they are needed, such as `$ticket_offset` for resuming a migration or `$remap_labels` to modify the label mapping. Note that while you might not think you need to set `$ticket_limit` because you want to migrate the entire Trac ticket database, this setting needs to be set in order to trigger the [aforementioned](#trac2github-overview) rate limiting sleep control. **Therefore, I advise giving `$ticket_limit` an arbitrary value for this purpose.**
 1. Run the import: `php trac2github.php`
 
 You'll notice that this import is a lot slower than trac-hub :).
