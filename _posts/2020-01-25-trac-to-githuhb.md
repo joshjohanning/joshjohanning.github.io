@@ -59,15 +59,15 @@ Instructions:
 1. Clone the repository - `git clone https://github.com/soccerjoshj07/trac-hub`
 1. Rename the example configuration file - `mv config.yaml.example config.yaml`
 1. Edit the configuration file `vim config.yaml` and modify the following sections:
-    a. `trac` to provide the sqlite database path or mysql connection (untested)
-    b. `github` to provide the target org/repo name and personal access token (make sure to grant the token enough access!)
-    c. `users` to provide a list of mapping of Trac users --> GitHub. If a mapping doesn't exist, it won't use the GitHub handle and just refer to the user as the Trac user. In my version of the tool, if a mapping is found but the GitHub handle doesn't exist, it won't migrate tickets --> issues that are owned by/assigned to that non-existant user. Essentially, just make sure that the mapping uses a valid GitHub user or don't include it :)
-    d. `labels` to provide a mapping of Trac ticket metadata to [labels in GitHub Issues](https://docs.github.com/en/github/managing-your-work-on-github/managing-labels)
+    1. `trac` to provide the sqlite database path or mysql connection (untested)
+    1. `github` to provide the target org/repo name and personal access token (make sure to grant the token enough access!)
+    1. `users` to provide a list of mapping of Trac users --> GitHub. If a mapping doesn't exist, it won't use the GitHub handle and just refer to the user as the Trac user. In my version of the tool, if a mapping is found but the GitHub handle doesn't exist, it won't migrate tickets --> issues that are owned by/assigned to that non-existant user. Essentially, just make sure that the mapping uses a valid GitHub user or don't include it :)
+    1. `labels` to provide a mapping of Trac ticket metadata to [labels in GitHub Issues](https://docs.github.com/en/github/managing-your-work-on-github/managing-labels)
 1. Run the migration in a test repo! `sudo bundle exec trac-hub -v -s 1 -F`.  Command line options:
-    a. `-v` : verbose/debug logging
-    b. `-s 1` : start at the the first ticket in Trac
-    c. `-F` : fast import, import without safety-checking the issue number. The way this tool runs is it expects Trac ticket #1 to be created as Issue #1. If you already have issues in the repository, or you want to do testing, add the -F import. For your real migration, you could probably drop this and trac ticket #1 will map to issue #1. Otherwise, with this `-F` argument, the issues will be created even though the ID's won't make 1:1.
-    d. No example here, but `-a` for attachment-urls is interesting. The tool doesn't migrate attachments, but if you used one of the `download-trac-attachment-*.sh` scripts [in the repo](https://github.com/soccerjoshj07/trac-hub/tree/master/tools), you could host the files somewhere, presumably with the same file names and it will hyperlink the attachments??
+    1. `-v` : verbose/debug logging
+    1. `-s 1` : start at the the first ticket in Trac
+    1. `-F` : fast import, import without safety-checking the issue number. The way this tool runs is it expects Trac ticket #1 to be created as Issue #1. If you already have issues in the repository, or you want to do testing, add the -F import. For your real migration, you could probably drop this and trac ticket #1 will map to issue #1. Otherwise, with this `-F` argument, the issues will be created even though the ID's won't make 1:1.
+    1. No example here, but `-a` for attachment-urls is interesting. The tool doesn't migrate attachments, but if you used one of the `download-trac-attachment-*.sh` scripts [in the repo](https://github.com/soccerjoshj07/trac-hub/tree/master/tools), you could host the files somewhere, presumably with the same file names and it will hyperlink the attachments??
 
 ### trac-hub Command Line Argument List
 
@@ -121,13 +121,13 @@ Instructions:
 
 1. Clone the repository - `git clone https://github.com/soccerjoshj07/trac-hub`
 1. Edit the configuration file `vim config.yaml` and modify the following variables:
-    a. `$username` : GitHub username
+    1. `$username` : GitHub username
     b. `$password` GitHub personal access token (make sure to grant the token enough access!)
     c. `$project` : The GitHub organization you are migrating to. If migrating issues to your own GitHub repo under your own account, this would be the same as `$username`. Use the Organization name if using GitHub Enterprise
-    d. `$repo` : The GitHub repo name
-    e. `$users_list` : Provide a mapping of Trac user --> GitHub user
-    f. The database driver settings - whether that's `$mysqlhost_*`, `$sqlite_trac_path`, or `$pgsql_` settings.
-    e. Explore the [other items in the config file](https://github.com/trustmaster/trac2github/blob/master/trac2github.cfg) to see if they are needed, such as `$ticket_offset` for resuming a migration or `$remap_labels` to modify the label mapping. Note that while you might not think you need to set `$ticket_limit` because you want to migrate the entire Trac ticket database, this setting needs to be set in order to trigger the aforementioned [rate limiting sleep](https://github.com/trustmaster/trac2github/blob/master/trac2github.php#L485). **I advise giving `$ticket_limit` an arbitrary value for this purpose.**
+    1. `$repo` : The GitHub repo name
+    1. `$users_list` : Provide a mapping of Trac user --> GitHub user
+    1. The database driver settings - whether that's `$mysqlhost_*`, `$sqlite_trac_path`, or `$pgsql_` settings.
+    1. Explore the [other items in the config file](https://github.com/trustmaster/trac2github/blob/master/trac2github.cfg) to see if they are needed, such as `$ticket_offset` for resuming a migration or `$remap_labels` to modify the label mapping. Note that while you might not think you need to set `$ticket_limit` because you want to migrate the entire Trac ticket database, this setting needs to be set in order to trigger the aforementioned [rate limiting sleep](https://github.com/trustmaster/trac2github/blob/master/trac2github.php#L485). **I advise giving `$ticket_limit` an arbitrary value for this purpose.**
 1. Run the import: `php trac2github.php`
 
 You'll notice that this import is a lot slower than trac-hub :).
