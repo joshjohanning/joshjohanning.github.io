@@ -18,7 +18,7 @@ There are plenty of tools out there on GitHub ([svigerske/trac-to-github](https:
 
 The two I have tested are:
 
-* **[my  fork of mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/soccerjoshj07/trac-hub)**
+* **[mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/mavam/trac-hub)**
 * **[trustmaster/trac2github](https://github.com/trustmaster/trac2github)**
 
 Both of these are more focused on Issues, and neither really do attachments (see trac-hub how to section [below](#trac-hub-how-to) for a possible solution though). The [svigerske/trac-to-github](https://github.com/svigerske/trac-to-github) tool mentions that it uploads attachments as gists.
@@ -40,7 +40,7 @@ I originally tested out trac2github and was going to write about that, but I thi
 
 Basically, using this tool allows the GitHub issue to look like it was created originally when it was created in Trac versus looking like a brand new issue that was created.
 
-[My fork of mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/soccerjoshj07/trac-hub) adds the ability to map Trac ticket owners to GitHub Issues assignees. Make sure not to typo the GitHub username as the issue will fail to create if a ticket's owner (assignee) has a mapping in the configuration file. If a mapping doesn't exist, the GitHub Issue will be created with no assignee, as expected.
+[I created a fork of mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/soccerjoshj07/trac-hub) (that has since been [merged](https://github.com/mavam/trac-hub/pull/33)) that adds the ability to map Trac ticket owners to GitHub Issues assignees. Make sure not to typo the GitHub username as the issue will fail to create if a ticket's owner (assignee) has a mapping in the configuration file. If a mapping doesn't exist, the GitHub Issue will be created with no assignee, as expected.
 
 The caveats of both of the tools is that the "Issue creator" will appear as the one who originally ran the tool - but at least with this tool, we can preserve create and comment dates.
 
