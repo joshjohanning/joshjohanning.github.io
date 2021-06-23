@@ -2,6 +2,7 @@
 title: 'Tokenizing Angular Environment Configuration in Azure DevOps'
 author: Joshua Johanning
 date: 2021-06-17 17:30:00 -0600
+description: Using the 'build once deploy many' concepts with an Angular application and Azure Pipelines
 categories: [Azure DevOps, Pipelines]
 tags: [Azure DevOps]
 ---
