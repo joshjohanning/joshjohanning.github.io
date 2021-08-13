@@ -9,7 +9,7 @@ tags: [Azure DevOps]
 
 ## Overview
 
-I was working with a team that had an Angular front-end application and I was tasked with improving their CI/CD process. They had some automated pipelines, but they were running a build before each environment by running a different `npm run build -- --configuration <env>` command. 
+I was working with a team that had an Angular front-end application and I was tasked with improving their CI/CD process. They had some automated pipelines, but they were running a build before each environment by running a different `npm run build -- --prod --configuration <env>` command. 
 
 My co-worker Colin Dembovsky summarizes it well in a [similar post for .NET Core](https://colinsalmcorner.com/managing-config-for-net-core-web-app-deployments-with-tokenizer-and-replacetokens-tasks/):
 > **The Build Once Principle**
@@ -92,7 +92,7 @@ Finally, we just need to modify our pipeline file! I'll break down the changes i
 
 ### 1. NPM Build
 
-In the Build job, update the **[NPM build](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/npm?view=azure-devops&tabs=yaml)** command. In this example, the command this task will produce will be `npm run build -- --configuration=tokenized`. Alternatively, you may just opt to use a [script task](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#script), but the `Npm@1` task also works.
+In the Build job, update the **[NPM build](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/npm?view=azure-devops&tabs=yaml)** command. In this example, the command this task will produce will be `npm run build -- --prod --configuration=tokenized`. Alternatively, you may just opt to use a [script task](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#script), but the `Npm@1` task also works.
 
 ```yml
 - task: Npm@1
@@ -174,3 +174,22 @@ The **deployment job** will...
 * rinse and repeat for all of your environments
 
 ![Replace Tokens Workflow](/assets/screenshots/2021-06-17-angular-tokenization/replace-tokens.png)
+
+## Build Configuration Update 08/12/2021
+
+I saw this in an `angular.json` file and had to update this post. This might be a more elegant solution than creating an entirely new `tokenized` build configuration:
+
+```json
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/My-Angular-App/src/environments/environment.ts",
+                  "with": "apps/My-Angular-App/src/environments/environment.prod.ts"
+                }
+              ],
+```
+
+This encapsulates the best of both worlds - we are still building once and deploying many, but we also don't need a specialized build configuration to run through. We cna use the normal production build configuration and file replace the tokenized `environments.prod.ts` with `environment.ts` at build time. 
+
+The deployment replace tokens task will replace the tokens with the proper environment-specific variable configuration.
