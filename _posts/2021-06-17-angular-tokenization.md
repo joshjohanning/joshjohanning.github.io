@@ -175,7 +175,7 @@ The **deployment job** will...
 
 ![Replace Tokens Workflow](/assets/screenshots/2021-06-17-angular-tokenization/replace-tokens.png)
 
-## Build Configuration Update 08/12/2021
+## Build Configuration / File Replacement Update 08/12/2021
 
 I saw this in an `angular.json` file and had to update this post. This might be a more elegant solution than creating an entirely new `tokenized` build configuration:
 
