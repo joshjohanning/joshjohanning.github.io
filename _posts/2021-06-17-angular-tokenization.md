@@ -188,8 +188,11 @@ I saw this in an `angular.json` file and had to update this post. This might be 
                   "with": "apps/My-Angular-App/src/environments/environment.prod.ts"
                 }
               ],
+              ...
+            }
+          }
 ```
 
-This encapsulates the best of both worlds - we are still building once and deploying many, but we also don't need a specialized build configuration to run through. We cna use the normal production build configuration and file replace the tokenized `environments.prod.ts` with `environment.ts` at build time. 
+This encapsulates the best of both worlds - we are still building once and deploying many, but we also don't need a specialized build configuration to run through. We can use the normal production build configuration and file replace the tokenized `environments.prod.ts` with `environment.ts` at build time. 
 
 The deployment replace tokens task will replace the tokens with the proper environment-specific variable configuration.
