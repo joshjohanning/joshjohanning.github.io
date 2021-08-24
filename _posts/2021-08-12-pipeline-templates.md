@@ -11,7 +11,7 @@ tags: [Azure DevOps]
 
 Although linked in various posts in this blog, I never fully advertise my `pipeline-templates` GitHub repository. I refer back to this every so often to see how I accomplished something in the past with various pipeline YAML concepts and will often share to others when they are in need of an example to follow.
 
-Link: [https://github.com/soccerjoshj07/pipeline-templates](https://github.com/soccerjoshj07/pipeline-templates)
+Link: [https://github.com/joshjohanning/pipeline-templates](https://github.com/joshjohanning/pipeline-templates)
 
 In each folder, you will typically see the build as well as the deployment yaml template. I also started including the `azure-pipelines-*.yml` file to show an example of how to consume/reference the pipeline templates.
 

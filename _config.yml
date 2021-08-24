@@ -23,7 +23,7 @@ author: Josh Johanning                  # change to your full name
 avatar: /assets/img/sample/headshot.png   # support internet resources
 
 github:
-  username: soccerjoshj07             # change to your github username
+  username: joshjohanning             # change to your github username
 
 twitter:
   username: jjjettrain            # change to your twitter username
@@ -33,7 +33,7 @@ social:
   email: jjohanning@uwalumni.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://github.com/soccerjoshj07      # change to your twitter homepage
+    - https://github.com/joshjohanning      # change to your twitter homepage
     - https://twitter.com/jjjettrain       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username

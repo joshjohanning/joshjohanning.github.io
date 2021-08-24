@@ -18,7 +18,7 @@ There are plenty of tools out there on GitHub ([svigerske/trac-to-github](https:
 
 The two I have tested are:
 
-* **[mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/mavam/trac-hub)**
+* **[mavam/trac-hub (joshjohanning/trac-hub)](https://github.com/mavam/trac-hub)**
 * **[trustmaster/trac2github](https://github.com/trustmaster/trac2github)**
 
 Both of these are more focused on Issues, and neither really do attachments (see trac-hub how to section [below](#trac-hub-how-to) for a possible solution though). The [svigerske/trac-to-github](https://github.com/svigerske/trac-to-github) tool mentions that it uploads attachments as gists.
@@ -29,7 +29,7 @@ Note: These tested against GitHub's Cloud instance (not server).
 
 ### trac-hub Overview
 
-I originally tested out trac2github and was going to write about that, but I think I might like this [trac-hub](https://github.com/soccerjoshj07/trac-hub) tool a little better. When comparing the two, trac-hub might be better in that it uses the [Import Issues API](https://gist.github.com/jonmagic/5282384165e0f86ef105). The issues import API never left preview, so be aware it's not officially supported from GitHub. The benefits of using this API are that it can create issues:
+I originally tested out trac2github and was going to write about that, but I think I might like this [trac-hub](https://github.com/joshjohanning/trac-hub) tool a little better. When comparing the two, trac-hub might be better in that it uses the [Import Issues API](https://gist.github.com/jonmagic/5282384165e0f86ef105). The issues import API never left preview, so be aware it's not officially supported from GitHub. The benefits of using this API are that it can create issues:
 
 * without hitting abuse detection warnings and getting blocked
 * without sending email notifications
@@ -40,7 +40,7 @@ I originally tested out trac2github and was going to write about that, but I thi
 
 Basically, using this tool allows the GitHub issue to look like it was created originally when it was created in Trac versus looking like a brand new issue that was created.
 
-[I created a fork of mavam/trac-hub (soccerjoshj07/trac-hub)](https://github.com/soccerjoshj07/trac-hub) (that has since been [merged](https://github.com/mavam/trac-hub/pull/33)) that adds the ability to map Trac ticket owners to GitHub Issues assignees. Make sure not to typo the GitHub username as the issue will fail to create if a ticket's owner (assignee) has a mapping in the configuration file. If a mapping doesn't exist, the GitHub Issue will be created with no assignee, as expected.
+[I created a fork of mavam/trac-hub (joshjohanning/trac-hub)](https://github.com/joshjohanning/trac-hub) (that has since been [merged](https://github.com/mavam/trac-hub/pull/33)) that adds the ability to map Trac ticket owners to GitHub Issues assignees. Make sure not to typo the GitHub username as the issue will fail to create if a ticket's owner (assignee) has a mapping in the configuration file. If a mapping doesn't exist, the GitHub Issue will be created with no assignee, as expected.
 
 The caveats of both of the tools is that the "Issue creator" will appear as the one who originally ran the tool - but at least with this tool, we can preserve create and comment dates.
 
@@ -56,7 +56,7 @@ Pre-requisites to install:
 
 Instructions:
 
-1. Clone the repository - `git clone https://github.com/soccerjoshj07/trac-hub`
+1. Clone the repository - `git clone https://github.com/joshjohanning/trac-hub`
 1. Rename the example configuration file - `mv config.yaml.example config.yaml`
 1. Edit the configuration file `vim config.yaml` and modify the following sections:
     1. `trac` to provide the sqlite database path or mysql connection (untested)
@@ -67,7 +67,7 @@ Instructions:
     1. `-v` : verbose/debug logging
     1. `-s 1` : start at the the first ticket in Trac
     1. `-F` : fast import, import without safety-checking the issue number. The way this tool runs is it expects Trac ticket #1 to be created as Issue #1. If you already have issues in the repository, or you want to do testing, add the -F import. For your real migration, you could probably drop this and trac ticket #1 will map to issue #1. Otherwise, with this `-F` argument, the issues will be created even though the ID's won't make 1:1.
-    1. No example here, but `-a` for attachment-urls is interesting. The tool doesn't migrate attachments, but if you used one of the `download-trac-attachment-*.sh` scripts [in the repo](https://github.com/soccerjoshj07/trac-hub/tree/master/tools), you could host the files somewhere, presumably with the same file names and it will hyperlink the attachments??
+    1. No example here, but `-a` for attachment-urls is interesting. The tool doesn't migrate attachments, but if you used one of the `download-trac-attachment-*.sh` scripts [in the repo](https://github.com/joshjohanning/trac-hub/tree/master/tools), you could host the files somewhere, presumably with the same file names and it will hyperlink the attachments??
 
 ### trac-hub Command Line Argument List
 
@@ -119,7 +119,7 @@ Pre-requisites to install:
 
 Instructions:
 
-1. Clone the repository - `git clone https://github.com/soccerjoshj07/trac-hub`
+1. Clone the repository - `git clone https://github.com/joshjohanning/trac-hub`
 1. Edit the configuration file `vim config.yaml` and modify the following variables:
     1. `$username` : GitHub username
     b. `$password` GitHub personal access token (make sure to grant the token enough access!)

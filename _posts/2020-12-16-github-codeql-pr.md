@@ -135,9 +135,9 @@ Note that we also have to add an `Upload Build Artifact` step in the `Analyze` j
 
 Depending on the workflow, you may have to modify the `path` in the Upload task as well as the script. You can find out the relative path of the .sarif report by viewing the Actions' logs.
 
-The entire workflow can be found in my [GitHub branch](https://github.com/soccerjoshj07/tailspin-spacegame-web-deploy/blob/2d4955b668ffde45a2f4ea6e742268a536249b27/.github/workflows/codeql-analysis.yml).
+The entire workflow can be found in my [GitHub branch](https://github.com/joshjohanning/tailspin-spacegame-web-deploy/blob/2d4955b668ffde45a2f4ea6e742268a536249b27/.github/workflows/codeql-analysis.yml).
 
-Because the .sarif produced by the ShiftLeft analysis is slightly different and by default *doesn't* fail the job even with *errors*, I created a different workflow you can use to block pull requests if errors or warnings are found - see for [example](https://github.com/soccerjoshj07/azdo-terraform-tailspin/blob/05151b64818db1c4cabf5aaf51f0024c779d81f5/.github/workflows/shiftleft-analysis.yml).
+Because the .sarif produced by the ShiftLeft analysis is slightly different and by default *doesn't* fail the job even with *errors*, I created a different workflow you can use to block pull requests if errors or warnings are found - see for [example](https://github.com/joshjohanning/azdo-terraform-tailspin/blob/05151b64818db1c4cabf5aaf51f0024c779d81f5/.github/workflows/shiftleft-analysis.yml).
 
 Now just like we did above, we can modify our branch rule to require the "Detect-Errors" job to finish successfully, as this job will run successfully if there are no errors/warnings.
 

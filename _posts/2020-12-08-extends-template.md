@@ -17,8 +17,8 @@ resources:
   repositories:
   - repository: templates
     type: github
-    name: soccerjoshj07/pipeline-templates
-    endpoint: soccerjoshj07
+    name: joshjohanning/pipeline-templates
+    endpoint: joshjohanning
 
 stages:
 - stage: 'Build'
@@ -46,7 +46,7 @@ I remember when this was first announced in a [sprint release note](https://docs
 
 In this demo scenario, my code is stored in GitHub, but this could work just as well with code in Azure Repos as well.
 
-### [`azure-pipelines.yml`](https://github.com/soccerjoshj07/secrets-scanning-poc/blob/f07a2eae415f38933f506d4ed0c69f75df2ffb91/azure-pipelines.yml)
+### [`azure-pipelines.yml`](https://github.com/joshjohanning/secrets-scanning-poc/blob/f07a2eae415f38933f506d4ed0c69f75df2ffb91/azure-pipelines.yml)
 
 In the root `azure-pipelines.yml` file, you'll notice that the `extends` keyword is at the same level as `trigger` and `resources`. This was the tricky part - how does one use `extends` AND job templates? The approach is to use a *steps* template for the build where we want the extra steps injected, and for deployment we can use our *job* templates like normal. We will add an Environment check that ensures that the extends template is being used. If the Extends template isn't used, the check fails and the deployment isn't allowed.
 
@@ -62,8 +62,8 @@ resources:
   repositories:
   - repository: templates
     type: github
-    name: soccerjoshj07/pipeline-templates
-    endpoint: soccerjoshj07
+    name: joshjohanning/pipeline-templates
+    endpoint: joshjohanning
 
 extends:
   template: secret-scanning/secret-scanning-extends.yml@templates
@@ -90,7 +90,7 @@ extends:
           environment: github-secret-scanning-test-gate-prod
 ```
 
-### [`secret-scanning-extends.yml`](https://github.com/soccerjoshj07/pipeline-templates/blob/master/secret-scanning/secret-scanning-extends.yml)
+### [`secret-scanning-extends.yml`](https://github.com/joshjohanning/pipeline-templates/blob/master/secret-scanning/secret-scanning-extends.yml)
 
 The `parameters` passed into the extends template include a `stepList` type for the `buildSteps` and a `stageList` for the `deployStages`.
 
@@ -111,8 +111,8 @@ resources:
   repositories:
   - repository: secretscanning
     type: github
-    name: soccerjoshj07/secret-scanning-config
-    endpoint: soccerjoshj07
+    name: joshjohanning/secret-scanning-config
+    endpoint: joshjohanning
 
 stages:
 - stage: secure_buildstage
@@ -128,7 +128,7 @@ stages:
 - ${{ parameters.deployStages }}
 ```
 
-### [`sample-build-steps.yml`](https://github.com/soccerjoshj07/pipeline-templates/blob/master/secret-scanning/sample-build-steps.yml)
+### [`sample-build-steps.yml`](https://github.com/joshjohanning/pipeline-templates/blob/master/secret-scanning/sample-build-steps.yml)
 
 Not much crazy here - this is a *steps* template (as opposed to a *job* template). This is injected into the extends template in the `- ${{ parameters.buildSteps }}` line of code.
 
@@ -142,7 +142,7 @@ steps:
 
 ```
 
-### [`sample-deployment-job.yml`](https://github.com/soccerjoshj07/pipeline-templates/blob/master/secret-scanning/sample-deployment-job.yml)
+### [`sample-deployment-job.yml`](https://github.com/joshjohanning/pipeline-templates/blob/master/secret-scanning/sample-deployment-job.yml)
 
 This is pretty vanilla as well - this *job* template is injected into the extends template in the `- ${{ parameters.deployStages }}` line of code.
 
@@ -219,8 +219,8 @@ resources:
   repositories:
   - repository: secretscanning
     type: github
-    name: soccerjoshj07/secret-scanning-config
-    endpoint: soccerjoshj07
+    name: joshjohanning/secret-scanning-config
+    endpoint: joshjohanning
 
 stages:
 - stage: ${{ parameters.buildStageName }}
@@ -249,8 +249,8 @@ resources:
   repositories:
   - repository: templates
     type: github
-    name: soccerjoshj07/pipeline-templates
-    endpoint: soccerjoshj07
+    name: joshjohanning/pipeline-templates
+    endpoint: joshjohanning
 
 extends:
   template: secret-scanning/secret-scanning-extends.yml@templates
