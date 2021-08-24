@@ -90,7 +90,7 @@ extends:
           environment: github-secret-scanning-test-gate-prod
 ```
 
-### [`secret-scanning-extends.yml`](https://github.com/joshjohanning/pipeline-templates/blob/master/secret-scanning/secret-scanning-extends.yml)
+### [`secret-scanning-extends.yml`](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/secret-scanning-extends.yml)
 
 The `parameters` passed into the extends template include a `stepList` type for the `buildSteps` and a `stageList` for the `deployStages`.
 
@@ -128,7 +128,7 @@ stages:
 - ${{ parameters.deployStages }}
 ```
 
-### [`sample-build-steps.yml`](https://github.com/joshjohanning/pipeline-templates/blob/master/secret-scanning/sample-build-steps.yml)
+### [`sample-build-steps.yml`](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/sample-build-steps.yml)
 
 Not much crazy here - this is a *steps* template (as opposed to a *job* template). This is injected into the extends template in the `- ${{ parameters.buildSteps }}` line of code.
 
@@ -142,7 +142,7 @@ steps:
 
 ```
 
-### [`sample-deployment-job.yml`](https://github.com/joshjohanning/pipeline-templates/blob/master/secret-scanning/sample-deployment-job.yml)
+### [`sample-deployment-job.yml`](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/sample-deployment-job.yml)
 
 This is pretty vanilla as well - this *job* template is injected into the extends template in the `- ${{ parameters.deployStages }}` line of code.
 
