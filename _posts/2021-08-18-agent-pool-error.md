@@ -21,7 +21,7 @@ I suspected I was able to delete the agent pool from the project because I was a
 
 However, I was surprised to find that I couldn't even *see* the agent pool in the list.
 
-> https://dev.azure.com/<ORG>/_settings/agentpools
+> https://dev.azure.com/ORG/_settings/agentpools
 
 I tried querying the REST API and it didn't appear there.
 
