@@ -16,7 +16,7 @@ If you want to navigate to the solution, [scroll down](#the-better-way).
 ## Not Good: The Out of the Box Way
 
 If using the out of the box `dotnet` task with the `test` command, simply check the checkbox:
-![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png ){: width="250" }
+![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png )
 
 However, if you click on the `(i) ` on the `Publish test results and code coverage` option, it says:
 
