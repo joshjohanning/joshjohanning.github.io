@@ -11,7 +11,7 @@ tags: [Azure DevOps]
 
 Publishing code coverage in Azure DevOps and making it look pretty is way harder than it should be. It's something that sounds simple, oh just check the box on the task - but nope you have to make sure to read the notes and add the additional parameter to the test task. Okay great, now you have a code coverage tab, but what is this .coverage file and how do I open it? That's not very user friendly. And don't get me started on having to wait for the *entire* pipeline to finish before you can even *see* the code coverage tab - nonsensical. 
 
-If you want to navigate to the solution, [scroll down](#The-Better-Way). 
+If you want to navigate to the solution, [scroll down](#the-better-way). 
 
 ## Not Good: The Out of the Box Way
 
