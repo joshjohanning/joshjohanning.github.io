@@ -15,10 +15,10 @@ If you want to navigate to the solution, [scroll down](#the-better-way).
 
 ## Not Good: The Out of the Box Way
 
-If using the out of the box `dotnet` task with the `test` command, simply checking the checkbox:
-![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png )
+If using the out of the box `dotnet` task with the `test` command, simply check the checkbox:
+![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png ){: width="250" }
 
-If you click on the `(i) ` on the `Publish test results and code coverage` option, it says:
+However, if you click on the `(i) ` on the `Publish test results and code coverage` option, it says:
 
 > Enabling this option will generate a test results TRX file in `$(Agent.TempDirectory)` and results will be published to the server.
 > This option appends `--logger trx --results-directory $(Agent.TempDirectory)` to the command line arguments.
