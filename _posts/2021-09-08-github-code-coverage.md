@@ -13,6 +13,8 @@ This is a follow-up to my previous post: [The Easiest Way to Generate and Publis
 
 I was familiar with adding Code Coverage to my pipelines in Azure DevOps and having a Code Coverage tab appear on the pipeline summary page, but I wasn't sure what was available for GitHub Actions. With GitHub Actions really starting to pick up steam, especially with recent additions such as [Composite Actions](https://www.colinsalmcorner.com/github-composite-actions/), I thought now would be a great time to explore.
 
+![github action pull request](/assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png)
+
 ## Adding Code Coverage Report to GitHub Actions
 
 I found this GitHub Action in the marketplace - [Code Coverage Summary](https://github.com/marketplace/actions/code-coverage-summary). There might be others, but this one seemed simple and had the functionality I was looking for.
