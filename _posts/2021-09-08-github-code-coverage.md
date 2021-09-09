@@ -62,7 +62,7 @@ The next action is the [Code Coverage Summary Report](https://github.com/irongut
 
 > Inputs:
 > * badge: **true** &#124; false
-> * format: markdown &#124; text
+> * format: **markdown** &#124; text
 > * output: console &#124; file &#124; **both**
 
 ```yml
