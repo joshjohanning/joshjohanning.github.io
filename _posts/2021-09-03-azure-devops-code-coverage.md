@@ -1,6 +1,6 @@
 ---
 title: 'The Easiest Way to Generate and Publish .NET Code Coverage in Azure DevOps'
-author: Joshua Johanning
+author: Josh Johanning
 date: 2021-09-03 4:00:00 -0500
 description: Publishing Code Coverage and making it look pretty in Azure DevOps is way harder than it should be
 categories: [Azure DevOps, Pipelines]

@@ -1,6 +1,6 @@
 ---
 title: 'Azure DevOps: No agent pool found with identifier xx'
-author: Joshua Johanning
+author: Josh Johanning
 date: 2021-08-18 7:00:00 -0600
 description: A solution to the vague error message that occurs sometimes when deleting/re-creating an agent pool
 categories: [Azure DevOps, Pipelines]

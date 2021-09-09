@@ -1,6 +1,6 @@
 ---
 title: 'Azure DevOps: Delete Custom Fields on Process Template'
-author: Joshua Johanning
+author: Josh Johanning
 date: 2021-08-10 22:30:00 -0600
 description: Delete custom fields on a process template in Azure DevOps using the REST API
 categories: [Azure DevOps, Work Items]

@@ -1,6 +1,6 @@
 ---
 title: 'Azure DevOps: Extends Template with Build and Deployment Templates'
-author: Joshua Johanning
+author: Josh Johanning
 date: 2020-12-10 22:00:00 -0600
 categories: [Azure DevOps, Pipelines]
 tags: [Azure DevOps, Pipeline Templates]
