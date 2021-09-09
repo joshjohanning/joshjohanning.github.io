@@ -58,9 +58,10 @@ We have to use a copy command to copy the `coverage.cobertura.xml` to a known lo
 cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
 ```
 
-The next action is the [Code Coverage Summary Report](https://github.com/irongut/CodeCoverageSummary) action. 
+The next action is the [Code Coverage Summary Report](https://github.com/irongut/CodeCoverageSummary) action: 
 
-> Inputs:
+> CodeCoverageSummary Inputs:
+> * filename: **coverage/coverage.cobertura.xml**
 > * badge: **true** &#124; false
 > * format: **markdown** &#124; text
 > * output: console &#124; file &#124; **both**
