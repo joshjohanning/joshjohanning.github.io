@@ -84,7 +84,6 @@ Next, we have to specifically add the `PublishCodeCoverageResults@1` task to pub
 Now, after the *entire* pipeline has finished (including any of the deployment stages), we will have a code coverage tab with a way more visually appealing code coverage report:
 ![cobertura code coverage in azure devops](/assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png)
 
-
 ## Why not ReportGenerator?
 
 I've seen many blog posts that are similar to mine, except that they have the `reportgenerator@4` task. I used to think this was required, too! But I have recently found out it is not - at least not if you have **ONE** test project you are publishing results for.
@@ -98,7 +97,7 @@ I have started to use the command line instead of the actual `reportgenerator@4`
     - script: |
         dotnet tool install -g dotnet-reportgenerator-globaltool
         reportgenerator -reports:$(Agent.WorkFolder)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:'HtmlInline_AzurePipelines;Cobertura'
-      displayName: Create Code coverage report
+      displayName: Create code coverage report
 ```
 
 `reportgenerator@4` equivalent:
