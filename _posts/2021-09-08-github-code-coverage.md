@@ -60,10 +60,14 @@ cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
 
 The next action is the [Code Coverage Summary Report](https://github.com/irongut/CodeCoverageSummary) action. 
 
+{% raw %}
+
 > Inputs:
 > * badge: **true** | false
 > * format: markdown | text
 > * output: console | file | **both**
+
+{% endraw %}
 
 ```yml
     - name: Code Coverage Summary Report
