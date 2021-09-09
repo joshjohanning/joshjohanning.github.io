@@ -60,14 +60,10 @@ cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
 
 The next action is the [Code Coverage Summary Report](https://github.com/irongut/CodeCoverageSummary) action. 
 
-{% raw %}
-
 > Inputs:
-> * badge: **true** | false
-> * format: markdown | text
-> * output: console | file | **both**
-
-{% endraw %}
+> * badge: **true** &#124; false
+> * format: markdown &#124; text
+> * output: console &#124; file &#124; **both**
 
 ```yml
     - name: Code Coverage Summary Report
@@ -103,7 +99,7 @@ You'll notice the badge along with the markdown table summarizing the code cover
 
 Also, if a new commit is pushed to the PR, triggering a new action run, the comment will be deleted/re-added with the updated code coverage summary.
 
-## ReportGenerator
+## ReportGenerator?
 
 The above works well if you have a single test project, but if you have more than one, see the "[Why not ReportGenerator?](https://josh-ops.com/posts/azure-devops-code-coverage/#why-not-reportgenerator) section in my previous post for the commands and rationale.
 
