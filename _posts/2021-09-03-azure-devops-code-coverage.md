@@ -12,14 +12,15 @@ tags: [Azure DevOps]
 Publishing code coverage in Azure DevOps and making it look pretty is way harder than it should be. It's something that sounds simple, oh just check the box on the task - but nope you have to make sure to read the notes and add the additional parameter to the test task. Okay great, now you have a code coverage tab, but what is this .coverage file and how do I open it? That's not very user friendly. And don't get me started on having to wait for the *entire* pipeline to finish before you can even *see* the code coverage tab - nonsensical. 
 
 ![cobertura code coverage in azure devops](/assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png)
+
 If you want to navigate to the solution, [scroll down](#the-better-way). 
 
 ## Not Good: The Out of the Box Way
 
-If using the out of the box `dotnet` task with the `test` command, simply check the checkbox:
-![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png )
+If using the out of the box `dotnet` task with the `test` command, simply add the `publishTestResults` argument (or if using the task assistant, check the `Publish test results and code coverage` checkbox):
+![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png){: width="300" }
 
-However, if you click on the `(i) ` on the `Publish test results and code coverage` option, it says:
+However, if you read the information on the `publishTestResults` argument from the [.NET Core CLI task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops#arguments) (or clicking on the `(i) ` on the `Publish test results and code coverage` option in the task assistant), it says:
 
 > Enabling this option will generate a test results TRX file in `$(Agent.TempDirectory)` and results will be published to the server.
 > This option appends `--logger trx --results-directory $(Agent.TempDirectory)` to the command line arguments.
@@ -29,7 +30,7 @@ However, if you click on the `(i) ` on the `Publish test results and code covera
 Emphasis: mine. So even if you check the box, you need to ensure you add the `--collect "Code coverage"` argument. Oh, and you have to run this on a Windows agent, so no `ubuntu-latest` for us.  
 
 This produces code coverage that looks like the following in Azure DevOps:
-![.coverage file code coverage](/assets/screenshots/2021-09-03-azure-devops-code-coverage/bad-code-coverage.png )
+![.coverage file code coverage](/assets/screenshots/2021-09-03-azure-devops-code-coverage/bad-code-coverage.png ){: width="300" }
 
 It's a link to a .coverage file..which is great if you 1) have Visual Studio installed and 2) are on Windows (can't open .coverage file on Mac). 
 
