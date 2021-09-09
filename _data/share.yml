@@ -1,12 +1,5 @@
 #  Sharing options at the bottom of the post.
 #  Icons from <https://fontawesome.com/>
-#
-#  v2.1
-#  https://github.com/cotes2020/jekyll-theme-chirpy
-#  © 2020 Cotes Chung
-#  MIT Licensed
-
-label: "Share"
 
 platforms:
   -
@@ -23,10 +16,10 @@ platforms:
     link: "https://telegram.me/share?text=TITLE&url=URL"
 
   # Uncomment below if you need to.
-  # -
-  #   type: Linkedin
-  #   icon: "fab fa-linkedin"
-  #   link: "https://www.linkedin.com/sharing/share-offsite/?url=URL"
+  -
+    type: Linkedin
+    icon: "fab fa-linkedin"
+    link: "https://www.linkedin.com/sharing/share-offsite/?url=URL"
   #
   # -
   #   type: Weibo
