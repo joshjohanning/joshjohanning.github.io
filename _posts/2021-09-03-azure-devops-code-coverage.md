@@ -18,7 +18,7 @@ If you want to navigate to the solution, [scroll down](#the-better-way).
 ## Not Good: The Out of the Box Way
 
 If using the out of the box `dotnet` task with the `test` command, simply add the `publishTestResults` argument (or if using the task assistant, check the `Publish test results and code coverage` checkbox):
-![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png){: width="300" }
+![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png){: width="350" }
 
 However, if you read the information on the `publishTestResults` argument from the [.NET Core CLI task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops#arguments) (or clicking on the `(i) ` on the `Publish test results and code coverage` option in the task assistant), it says:
 
@@ -30,7 +30,7 @@ However, if you read the information on the `publishTestResults` argument from t
 Emphasis: mine. So even if you check the box, you need to ensure you add the `--collect "Code coverage"` argument. Oh, and you have to run this on a Windows agent, so no `ubuntu-latest` for us.  
 
 This produces code coverage that looks like the following in Azure DevOps:
-![.coverage file code coverage](/assets/screenshots/2021-09-03-azure-devops-code-coverage/bad-code-coverage.png ){: width="300" }
+![.coverage file code coverage](/assets/screenshots/2021-09-03-azure-devops-code-coverage/bad-code-coverage.png ){: width="400" }
 
 It's a link to a .coverage file..which is great if you 1) have Visual Studio installed and 2) are on Windows (can't open .coverage file on Mac). 
 
