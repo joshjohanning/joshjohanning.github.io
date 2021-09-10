@@ -56,7 +56,7 @@ _Pull Request that is blocked because of a code scanning vulnerability_
 
 Success! Or, failure, just as we wanted. For me, the fact that GitHub gives this away for free for all public repositories is incredible! There is a charge for the Enterprise, but the setup is so simple and integrations so robust - and we're only scratching the surface - makes it well worth it.
 
-## Extra Credit - Fine Tuning
+## Extra Credit - Blocking PR's with Scan Results that Contain Warnings
 
 Okay, what if we were to have a repository with Terraform code and used the ShiftLeft Analysis marketplace code scanning workflow? Or, we used the native GitHub CodeQL workflow but want it to block merges when it finds any result, including warnings?
 
