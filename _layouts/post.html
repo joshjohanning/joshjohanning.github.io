@@ -136,13 +136,46 @@ layout: default
       {% include disqus.html %}
     {% endif %}
 
-    <script src="https://utteranc.es/client.js"
-      repo="joshjohanning/joshjohanning.github.io"
-      issue-term="title"
-      theme="preferred-color-scheme"
-      crossorigin="anonymous"
-      async>
-    </script>
+    <!-- When page loads, determine whether to show light mode or dark mode utterances comments -->
+    <section>
+      <div id="light-mode">
+        <script src="https://utteranc.es/client.js"
+          repo="joshjohanning/joshjohanning.github.io"
+          issue-term="title"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+
+      <div id="dark-mode">
+        <script src="https://utteranc.es/client.js"
+          repo="joshjohanning/joshjohanning.github.io"
+          issue-term="title"
+          theme="github-dark"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+
+      <script>
+        var uttLight = document.getElementById("light-mode");
+        var uttDark = document.getElementById("dark-mode");
+
+        let initTheme = "light";
+        if ($("html[mode=dark]").length > 0
+          || ($("html[mode]").length == 0
+            && window.matchMedia("(prefers-color-scheme: dark)").matches ) ) {
+          initTheme = "dark";
+        }
+
+        if(initTheme === "dark"){
+          uttLight.parentNode.removeChild(uttLight);
+        } else {
+          uttDark.parentNode.removeChild(uttDark);
+        }
+      </script>
+    </section>
 
     </div> <!-- #post-extend-wrapper -->
 
