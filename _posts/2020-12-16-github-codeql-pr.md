@@ -145,4 +145,4 @@ Now just like we did above, we can modify our branch rule to require the "Detect
 
 ![pr-blocked](/assets/screenshots/2020-12-16-github-codeql-pr/pr-blocked.png)
 
-I'm sure there is probably a better way to do this (using the API?). I know back in the LGTM / Semmle days, there was also a config file you could commit to the root of the repository to more precisely define rules. Either way, let me know in the comments if you have any other ideas or improvements!
+I'm sure there is probably a better way to do this (using the API or GraphQL endpoint?). I know back in the LGTM / Semmle days, there was also a config file you could commit to the root of the repository to more precisely define rules. Either way, let me know in the comments if you have any other ideas or improvements!
