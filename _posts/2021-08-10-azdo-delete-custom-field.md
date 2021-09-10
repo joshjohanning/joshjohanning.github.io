@@ -34,12 +34,12 @@ https://dev.azure.com/jjohanning0798/TestTeamProject/_apis/wit/fields/NewTestFie
 Additionally, we should create a [Personal Access Token (PAT)](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page) with full permissions.
 
 Under the Postman authentication's tab, we can leave the username blank and enter the PAT for the password. Use Basic Authentication.
-![Postman authentication](/assets/screenshots/2021-08-10-azdo-delete-custom-field/postman-auth.png)
+![Postman authentication](/assets/screenshots/2021-08-10-azdo-delete-custom-field/postman-auth.png){: .shadow }
 
 Send the request.
 
 If it was successful, you will see a `204 No Content` message near the
-![Postman authentication](/assets/screenshots/2021-08-10-azdo-delete-custom-field/postman-response.png)
+![Postman authentication](/assets/screenshots/2021-08-10-azdo-delete-custom-field/postman-response.png){: .shadow }
 
 The field should no longer appear on our work item, and we can re-create the field with the right name and type. 
 

@@ -86,16 +86,16 @@ $ bundle exec trac-hub --help
 ### trac-hub Example Migration Screenshots
 
 Migrating 5 tickets from Trac:
-![trac-tickets](/assets/screenshots/2021-01-26-trac-to-github/trac-tickets.png)
+![trac-tickets](/assets/screenshots/2021-01-26-trac-to-github/trac-tickets.png){: .shadow }
 
 How they appear in GitHub:
-![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issues.png)
+![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issues.png){: .shadow }
 
 Trac ticket comments:
-![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png)
+![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png){: .shadow }
 
 Issue comments:
-![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issue-comments.png)
+![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issue-comments.png){: .shadow }
 
 ## trac2github
 
@@ -135,16 +135,16 @@ You'll notice that this import is a lot slower than trac-hub :).
 ### trac2github Example Migration Screenshots
 
 Migrating 5 tickets from Trac:
-![trac-tickets](/assets/screenshots/2021-01-26-trac-to-github/trac-tickets.png)
+![trac-tickets](/assets/screenshots/2021-01-26-trac-to-github/trac-tickets.png){: .shadow }
 
 How they appear in GitHub:
-![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac2github-example-issues.png)
+![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac2github-example-issues.png){: .shadow }
 
 Trac ticket comments:
-![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png)
+![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png){: .shadow }
 
 Issue comments:
-![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac2github-example-issue-comments.png)
+![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac2github-example-issue-comments.png){: .shadow }
 
 ## Takeaways
 

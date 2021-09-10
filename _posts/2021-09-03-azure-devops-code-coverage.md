@@ -21,7 +21,7 @@ If you want to navigate to the solution, [scroll down](#the-better-way).
 ## Not Good: The Out of the Box Way
 
 If using the out of the box `dotnet` task with the `test` command, simply add the `publishTestResults` argument (or if using the task assistant, check the `Publish test results and code coverage` checkbox):
-![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png){: width="350" }
+![adding dotnet test task](/assets/screenshots/2021-09-03-azure-devops-code-coverage/adding-test-task.png){: width="350" }{: .shadow }
 
 However, if you read the information on the `publishTestResults` argument from the [.NET Core CLI task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops#arguments) (or clicking on the `(i) ` on the `Publish test results and code coverage` option in the task assistant), it says:
 
@@ -33,7 +33,7 @@ However, if you read the information on the `publishTestResults` argument from t
 Emphasis: mine. So even if you check the box, you need to ensure you add the `--collect "Code coverage"` argument. Oh, and you have to run this on a Windows agent, so no `ubuntu-latest` for us.  
 
 This produces code coverage that looks like the following in Azure DevOps:
-![.coverage file code coverage](/assets/screenshots/2021-09-03-azure-devops-code-coverage/bad-code-coverage.png ){: width="400" }
+![.coverage file code coverage](/assets/screenshots/2021-09-03-azure-devops-code-coverage/bad-code-coverage.png ){: width="400" }{: .shadow }
 
 It's a link to a .coverage file..which is great if you 1) have Visual Studio installed and 2) are on Windows (can't open .coverage file on Mac). 
 
@@ -45,7 +45,7 @@ The easiest way to do this is to run the `dotnet package add` command targeting 
 
 `dotnet add <TestProject.cspoj> package coverlet.collector`
 
-![dotnet add package](/assets/screenshots/2021-09-03-azure-devops-code-coverage/dotnet-add-package.png )
+![dotnet add package](/assets/screenshots/2021-09-03-azure-devops-code-coverage/dotnet-add-package.png){: .shadow }
 
 For those who can't run the `dotnet` command, add the [following](https://github.com/joshjohanning/PrimeService-unit-testing-using-dotnet-test/commit/43067b4e035eb45899e185e701bd4aaf8575514b) under the `ItemGroup` block in the `.csproj` file:
 
@@ -84,10 +84,10 @@ This argument creates a `$(Agent.TempDirectory)/*/coverage.cobertura.xml` code c
 
 Next, we have to specifically add the `PublishCodeCoverageResults@1` task to publish the code coverage output to the pipeline. It seems like at least with my project, it produces 2 `coverage.cobertura.xml` files and that throws a warning in the pipeline, so that's I used `$(Agent.TempDirectory)/*/coverage.cobertura.xml` not `$(Agent.TempDirectory)/**/coverage.cobertura.xml`
 
-![duplicate code coverage reports](/assets/screenshots/2021-09-03-azure-devops-code-coverage/find-code-coverage.png)
+![duplicate code coverage reports](/assets/screenshots/2021-09-03-azure-devops-code-coverage/find-code-coverage.png){: .shadow }
 
 Now, after the *entire* pipeline has finished (including any of the deployment stages), we will have a code coverage tab with a way more visually appealing code coverage report:
-![cobertura code coverage in azure devops](/assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png)
+![cobertura code coverage in azure devops](/assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png){: .shadow }
 
 ## Why not ReportGenerator?
 
