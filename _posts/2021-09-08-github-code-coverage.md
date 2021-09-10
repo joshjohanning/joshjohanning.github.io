@@ -5,6 +5,11 @@ date: 2021-09-08 22:00:00 -0500
 description: Using GitHub Actions to add a code coverage summary report comment to a pull request
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Pull Requests]
+image:
+  src: /assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png
+  width: 933   # in pixels
+  height: 280   # in pixels
+  alt: GitHub Action Code Coverage Pull Request Comment
 ---
 
 ## Overview

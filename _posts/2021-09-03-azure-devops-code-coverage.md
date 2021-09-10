@@ -5,6 +5,11 @@ date: 2021-09-03 4:00:00 -0500
 description: Publishing Code Coverage and making it look pretty in Azure DevOps is way harder than it should be
 categories: [Azure DevOps, Pipelines]
 tags: [Azure DevOps]
+image:
+  src: /assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png
+  width: 816   # in pixels
+  height: 582   # in pixels
+  alt: Cobertura Code Coverage in Azure DevOps
 ---
 
 ## Overview
