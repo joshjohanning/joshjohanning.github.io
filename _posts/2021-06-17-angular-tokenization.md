@@ -25,6 +25,7 @@ I'm taking the concepts from that post and my experience with a few other client
 The particular challenge with Angular is that the build output is not the same file name every time - you can't just swap in a new file with the proper values. See screenshot for th main.js files from two builds:
 
 ![main.js example](/assets/screenshots/2021-06-17-angular-tokenization/main.js.png){: .shadow }
+_Compiled main.js output from two different builds_
 
 ## Solution and File Edits
 
@@ -174,6 +175,7 @@ The **deployment job** will...
 * rinse and repeat for all of your environments
 
 ![Replace Tokens Workflow](/assets/screenshots/2021-06-17-angular-tokenization/replace-tokens.png){: .shadow }
+_Replace Tokens output in the pipeline_
 
 ## Build Configuration / File Replacement Update 08/12/2021
 

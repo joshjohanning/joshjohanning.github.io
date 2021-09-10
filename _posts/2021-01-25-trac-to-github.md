@@ -87,15 +87,19 @@ $ bundle exec trac-hub --help
 
 Migrating 5 tickets from Trac:
 ![trac-tickets](/assets/screenshots/2021-01-26-trac-to-github/trac-tickets.png){: .shadow }
+_Original ticket list in Trac_
 
 How they appear in GitHub:
 ![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issues.png){: .shadow }
+Issues in GitHub migrated using trac-hub
 
 Trac ticket comments:
 ![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png){: .shadow }
+_Original ticket comments in Trac_
 
 Issue comments:
 ![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issue-comments.png){: .shadow }
+Issue comments in GitHub migrated using trac-hub
 
 ## trac2github
 
@@ -136,15 +140,19 @@ You'll notice that this import is a lot slower than trac-hub :).
 
 Migrating 5 tickets from Trac:
 ![trac-tickets](/assets/screenshots/2021-01-26-trac-to-github/trac-tickets.png){: .shadow }
+_Original ticket list in Trac_
 
 How they appear in GitHub:
 ![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac2github-example-issues.png){: .shadow }
+_Issues in GitHub migrated using trac2github_
 
 Trac ticket comments:
 ![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png){: .shadow }
+_Original ticket comments in Trac_
 
 Issue comments:
 ![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac2github-example-issue-comments.png){: .shadow }
+_Issue comments in GitHub migrated using trac2github_
 
 ## Takeaways
 

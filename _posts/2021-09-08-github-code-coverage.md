@@ -83,6 +83,7 @@ The next action is the [Code Coverage Summary Report](https://github.com/irongut
 
 This would be enough to show the code coverage in the action run: 
 ![github action code coverage report](/assets/screenshots/2021-09-08-github-code-coverage/github-action-code-coverage.png){: .shadow }
+_Code Coverage Summary Report in the Action run logs_
 
 However, the fun doesn't stop there. How useful would it be to post this to the PR so it's nice and easy for reviewers? Well, the next [action](https://github.com/marketplace/actions/sticky-pull-request-comment) shows a simple way we can add (and sticky) a PR comment with our code coverage report:
 
@@ -98,6 +99,7 @@ However, the fun doesn't stop there. How useful would it be to post this to the 
 Perfect - nothing for us to configure here, either. On the pull request, this comment is added: 
 
 ![github action pull request](/assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png){: .shadow }
+_Code Coverage Summary Report added as a pinned comment to the Pull Request_
 
 This is also demonstrated on my [pull request here](https://github.com/joshjohanning/PrimeService-unit-testing-using-dotnet-test/pull/2). 
 

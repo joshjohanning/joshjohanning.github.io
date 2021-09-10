@@ -52,6 +52,7 @@ Make sure to commit this in a branch because we want to test out the PR flow!
 Afterwards, create the PR and wait for the job to run:
 
 ![pr](/assets/screenshots/2020-12-16-github-codeql-pr/pr.png){: .shadow }
+_Pull Request that is blocked because of a code scanning vulnerability_
 
 Success! Or, failure, just as we wanted. For me, the fact that GitHub gives this away for free for all public repositories is incredible! There is a charge for the Enterprise, but the setup is so simple and integrations so robust - and we're only scratching the surface - makes it well worth it.
 
@@ -142,6 +143,8 @@ Because the .sarif produced by the ShiftLeft analysis is slightly different and 
 Now just like we did above, we can modify our branch rule to require the "Detect-Errors" job to finish successfully, as this job will run successfully if there are no errors/warnings.
 
 ![pr-detected-errors-job](/assets/screenshots/2020-12-16-github-codeql-pr/pr-detected-errors.png){: .shadow }
+_Adding the new job to the required status check list_
 ![pr-blocked](/assets/screenshots/2020-12-16-github-codeql-pr/pr-blocked.png){: .shadow }
+_Pull Request that is blocked because of a 'warning' result found in the code scanning results_
 
 I'm sure there is probably a better way to do this (using the API or GraphQL endpoint?). I know back in the LGTM / Semmle days, there was also a config file you could commit to the root of the repository to more precisely define rules. Either way, let me know in the comments if you have any other ideas or improvements!

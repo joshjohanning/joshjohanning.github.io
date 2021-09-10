@@ -35,11 +35,13 @@ Additionally, we should create a [Personal Access Token (PAT)](https://docs.micr
 
 Under the Postman authentication's tab, we can leave the username blank and enter the PAT for the password. Use Basic Authentication.
 ![Postman authentication](/assets/screenshots/2021-08-10-azdo-delete-custom-field/postman-auth.png){: .shadow }
+_Setting up Basic authorization in Postman with a PAT_
 
 Send the request.
 
 If it was successful, you will see a `204 No Content` message near the
 ![Postman authentication](/assets/screenshots/2021-08-10-azdo-delete-custom-field/postman-response.png){: .shadow }
+_Successful request in Postman_
 
 The field should no longer appear on our work item, and we can re-create the field with the right name and type. 
 
