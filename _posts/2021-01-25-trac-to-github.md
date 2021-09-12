@@ -99,7 +99,7 @@ _Original ticket comments in Trac_
 
 Issue comments:
 ![trac-hub-example-issue-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issue-comments.png){: .shadow }
-Issue comments in GitHub migrated using trac-hub
+_Issue comments in GitHub migrated using trac-hub_
 
 ## trac2github
 
