@@ -2,8 +2,8 @@
 title: 'Azure DevOps: Bulk Reparent Work Items'
 author: Josh Johanning
 date: 2021-01-17 16:30:00 -0600
-categories: [Azure DevOps]
-tags: [Azure DevOps, Work Items]
+categories: [Azure DevOps, Work Items]
+tags: [Azure DevOps, Work Items, Scripts]
 ---
 
 ## Reparent Work Items in the UI

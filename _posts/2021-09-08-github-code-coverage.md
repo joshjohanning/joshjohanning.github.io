@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2021-09-08 22:00:00 -0500
 description: Using GitHub Actions to add a code coverage summary report comment to a pull request
 categories: [GitHub, Actions]
-tags: [GitHub, GitHub Actions, Pull Requests]
+tags: [GitHub, GitHub Actions, Pull Requests, Code Coverage]
 image:
   src: /assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png
   width: 933   # in pixels
