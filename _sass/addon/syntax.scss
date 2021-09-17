@@ -172,22 +172,37 @@ div {
   align-items: center;
   line-height: 1.85rem;
 
-  // text data
-  &::before {
-    content: attr(text-data);
-    color: var(--lang-badge-color);
-    padding-left: 1em;
+  // icons
+  i {
+    font-size: 1rem;
+    color: var(--lang-badge-muted-color);
 
-    // language
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-
-    // file name
-    @at-root [file] #{&} {
-      font-size: 0.85rem;
-      text-transform: none;
+    &.small {
+      font-size: 70%;
     }
+  }
+
+  // the label block
+  span {
+    padding-left: 0.35rem;
+
+    &::after {
+      content: attr(text-data);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--lang-badge-color);
+    }
+
+    i {
+      margin: 0 0.5rem;
+    }
+
+    @at-root [file] #{&} > i {
+      position: relative;
+      top: 1px; // center the file icon
+      margin-left: 0.25rem;
+    }
+
   }
 
   // clipboard
@@ -197,26 +212,29 @@ div {
     padding: 0;
     width: 1.95rem;
     background-color: inherit;
-    color: var(--highlight-lineno-color);
 
     @extend %cursor-pointer;
 
     &[timeout] {
-      color: var(--clipboard-checked-color);
-      border-color: var(--clipboard-checked-color);
+      &:hover {
+        border-color: var(--clipboard-checked-color);
+      }
+
+      i {
+        color: var(--clipboard-checked-color);
+      }
     }
 
     &:not([timeout]):hover {
-      background-color: gray;
-      color: white;
+      background-color: rgba(128, 128, 128, 0.37);
+
+      i {
+        color: white;
+      }
     }
 
     &:focus {
       outline: none;
-    }
-
-    i {
-      font-size: 0.9rem;
     }
 
   }
@@ -229,6 +247,10 @@ div {
       @include ml-mr(-1.25rem);
 
       border-radius: 0;
+
+      .highlight {
+        padding-left: 0.25rem;
+      }
 
       .code-header {
         border-radius: 0;
