@@ -240,7 +240,11 @@
       }
     }
     > i {
-      padding-top: 0.35rem;
+      position: relative;
+      bottom: 1px;
+
+      @extend %cursor-pointer;
+
       &:hover {
         @extend %btn-share-hovor;
       }

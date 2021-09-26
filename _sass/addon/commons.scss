@@ -53,6 +53,26 @@ body {
   font-family: 'Source Sans Pro', 'Microsoft Yahei', sans-serif;
 }
 
+/* --- Scrollbar --- */
+
+$scrollbar-size: 7px;
+
+::-webkit-scrollbar {
+  width: $scrollbar-size;
+  height: $scrollbar-size;
+}
+
+::-webkit-scrollbar-track {
+  @at-root body#{&} {
+    -webkit-box-shadow: inset 0 0 6px var(--scrollbar-track-bg);
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg);
+  border-radius: calc(#{$scrollbar-size} / 2);
+}
+
 /* --- Typography --- */
 
 h1 {
@@ -791,6 +811,8 @@ $sidebar-display: "sidebar-display";
       i {
         @include sidebar-links;
 
+        @extend %cursor-pointer;
+
         margin: 0;
         font-size: 1.05rem;
         text-align: center;
@@ -894,12 +916,16 @@ $sidebar-display: "sidebar-display";
   border: 1px solid var(--search-wrapper-bg);
   background: var(--search-wrapper-bg);
   padding: 0 0.5rem;
+
   i {
     z-index: 2;
     font-size: 0.9rem;
     color: var(--search-icon-color);
   }
+
   .fa-times-circle { /* button 'clean up' */
+    @extend %cursor-pointer;
+
     visibility: hidden;
   }
 }
@@ -908,6 +934,8 @@ $sidebar-display: "sidebar-display";
   color: var(--link-color);
   margin-left: 1rem;
   display: none;
+
+  @extend %cursor-pointer;
 }
 
 #search-input {

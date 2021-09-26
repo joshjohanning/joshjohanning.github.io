@@ -152,7 +152,8 @@ div {
   &[class^='highlighter-rouge'],
   &.language-plaintext.highlighter-rouge,
   &.language-console.highlighter-rouge,
-  &.language-terminal.highlighter-rouge {
+  &.language-terminal.highlighter-rouge,
+  &.nolineno {
     pre.lineno {
       display: none;
     }
@@ -171,24 +172,41 @@ div {
   align-items: center;
   line-height: 1.85rem;
 
-  // language badge
+  // text data
   &::before {
-    content: attr(data-lang);
+    content: attr(text-data);
     color: var(--lang-badge-color);
+    padding-left: 1em;
+
+    // language
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    padding-left: 1em;
+
+    // file name
+    @at-root [file] #{&} {
+      font-size: 0.85rem;
+      text-transform: none;
+    }
   }
 
   // clipboard
   button {
-    border: 0;
+    border: 1px solid var(--code-header-bg);
+    border-radius: $code-radius;
+    padding: 0;
+    width: 1.95rem;
     background-color: inherit;
-    border-top-right-radius: $code-radius;
     color: var(--highlight-lineno-color);
 
-    &:hover {
+    @extend %cursor-pointer;
+
+    &[timeout] {
+      color: var(--clipboard-checked-color);
+      border-color: var(--clipboard-checked-color);
+    }
+
+    &:not([timeout]):hover {
       background-color: gray;
       color: white;
     }
@@ -198,7 +216,7 @@ div {
     }
 
     i {
-      font-size: 85%;
+      font-size: 0.9rem;
     }
 
   }
@@ -215,10 +233,7 @@ div {
       .code-header {
         border-radius: 0;
         padding-left: 0.4rem;
-
-        button {
-          border-top-right-radius: 0;
-        }
+        padding-right: 0.5rem;
       }
     }
   }
