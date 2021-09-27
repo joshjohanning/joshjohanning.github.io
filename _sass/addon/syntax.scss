@@ -105,7 +105,18 @@ div > pre {
     user-select: none;
   }
 
+  /* implementing https://github.com/cotes2020/jekyll-theme-chirpy/issues/414 */
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 } //.highlight
+
+.highlight:hover {
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-bg);
+  }
+}
+/* end implementation */
 
 code {
   -webkit-hyphens: none;
