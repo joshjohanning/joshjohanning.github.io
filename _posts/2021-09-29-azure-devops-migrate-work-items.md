@@ -168,7 +168,7 @@ Here is a high-level list of steps that you need to do in order to run the migra
 
 The migrator has pretty good output logging, just search the output log file for `error` to work through any errors you have.
 
-I have a lot of notes in an old [README.md](https://gist.github.com/joshjohanning/f43f90936b55f5fe00ea451edceb0579), but it's from v7.5 circa summer 2019, so it's probably not super relevant, but including here in case anyone can glean anything from it. There are some additional explanations on what the various setting are for the `WorkItemMigrationConfig`.
+I have a lot of notes in an old [README.md](https://gist.github.com/joshjohanning/f43f90936b55f5fe00ea451edceb0579), but it's from v7.5 circa summer 2019, so it's probably not super relevant, but including here in case anyone can glean anything from it. There are some additional explanations on what the various setting are for the `WorkItemMigrationConfig`. I also have an old [configuration file from v8.9.x](https://gist.github.com/joshjohanning/e79ca39cf5b7819179a50699b3f65ea3) that might be helpful to some - I had a lot of success with it in July 2020.
 
 ## Other Useful Scripts
 
