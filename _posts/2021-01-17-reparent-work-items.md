@@ -19,7 +19,7 @@ _Reparenting work items in Azure DevOps with the mapping pane_
 
 However, mapping (or reparenting) work items in the Azure DevOps UI *can* be a little clunky - it can be done in mass using the parent mapping pane, but what if you have hundreds or thousands of work items split across multiple parent/child relationships or multiple backlogs? Then it becomes harder since you can't use this functionality in a query window, only from the backlog.
 
-This is a *very* simple bash script utilizing the [Azure DevOps CLI extension](https://docs.microsoft.com/en-us/azure/devops/cli/?view=azure-devops) that can very quickly update the parent on a query of work items. I used a combination of the CLI commands with PowerShell, since PowerShell makes it super simple to use loops and JSON parsing. Before the Azure DevOps CLI, this would have to have been done with using the [APIs](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/?view=azure-devops-rest-6.0), which isn't hard, but this solution uses way fewer lines of code!
+This is a *very* simple PowerShell script utilizing the [Azure DevOps CLI extension](https://docs.microsoft.com/en-us/azure/devops/cli/?view=azure-devops) that can very quickly update the parent on a query of work items. I used a combination of the CLI commands with PowerShell, since PowerShell makes it super simple to use loops and JSON parsing. Before the Azure DevOps CLI, this would have to have been done with using the [APIs](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/?view=azure-devops-rest-6.0), which isn't hard, but this solution uses way fewer lines of code!
 
 In this example, I am using a Tag on the work items I want to update.
 
