@@ -49,7 +49,6 @@ There are two sub-options here, but both will require a query to be created.
 
 Assuming you want child/parent relationships migrated, create a [*tree* query](https://docs.microsoft.com/en-us/azure/devops/boards/queries/using-queries?view=azure-devops&tabs=browser#use-a-tree-of-work-items-to-view-hierarchies) that includes all of the columns of data that you want to export. Here is an example list of columns:
 > 
-  - Recommended work item properties to include (exclude the fields that are not being used by your team): 
   - Work item name
   - Work item type
   - Assigned to
@@ -158,9 +157,9 @@ Example:
 ### Run Migration
 
 Here is a high-level list of steps that you need to do in order to run the migration: 
-1. Add the `ReflectedWorkItemId` field to each of the work items you are migrating
+1. Add the `ReflectedWorkItemId` field to each of the work items you are migrating in both the source and target project. I believe you can get away without adding it to the source project, but then it makes it impossible to re-start a migration
 1. Install the version you want
-    - `choco install vsts-sync-migrator` (oh yeah, this only runs on Windows only the last I checked?)
+    - `choco install vsts-sync-migrator` (oh yeah, this only runs on Windows only the last I checked)
     - Or download from the [releases page](https://github.com/nkdAgility/azure-devops-migration-tools/releases); I have most recently used[version 11.9.34](https://github.com/nkdAgility/azure-devops-migration-tools/releases/tag/v11.9.34)
 1. Set up your configuration file - my sample configuration file is found in this [gist](https://gist.github.com/joshjohanning/baa2de38466302f0c173e0dccdd887c0)
 1. I usually run the Area Path processor (`TfsTeamSettingsProcessorOptions`, which references`TeamSettingsSource` and `TeamSettingsTarget`) by itself first to make sure the area path / iteration nodes are created. Decide if you want to enable `PrefixProjectToNodes`, where it will prefix the source project name in the area/iteration structure
@@ -168,7 +167,9 @@ Here is a high-level list of steps that you need to do in order to run the migra
 
 The migrator has pretty good output logging, just search the output log file for `error` to work through any errors you have.
 
-I have a lot of notes in an old [README.md](https://gist.github.com/joshjohanning/f43f90936b55f5fe00ea451edceb0579), but it's from v7.5 circa summer 2019, so it's probably not super relevant, but including here in case anyone can glean anything from it. There are some additional explanations on what the various setting are for the `WorkItemMigrationConfig`. I also have an old [configuration file from v8.9.x](https://gist.github.com/joshjohanning/e79ca39cf5b7819179a50699b3f65ea3) that might be helpful to some - I had a lot of success with it in July 2020.
+**Pro-tip on running the migration**: If you can, run this inside a virtual machine inside of Azure so you have the best possible internet capabilities and don't have to worry about your computer falling asleep.
+
+**Old, bust maybe useful notes:** I have a lot of notes in an old [README.md](https://gist.github.com/joshjohanning/f43f90936b55f5fe00ea451edceb0579), but it's from v7.5 circa summer 2019, so it's probably not super relevant, but including here in case anyone can glean anything from it. There are some additional explanations on what the various setting are for the `WorkItemMigrationConfig`. I also have an old [configuration file from v8.9.x](https://gist.github.com/joshjohanning/e79ca39cf5b7819179a50699b3f65ea3) that might be helpful to some - I had a lot of success with it in July 2020.
 
 ## Other Useful Scripts
 
