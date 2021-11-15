@@ -9,7 +9,7 @@ image:
   src: /assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/load-npm-cache.png
   width: 1212   # in pixels
   height: 614   # in pixels
-  alt: Front Door Overview
+  alt: Azure DevOps Pipeline Cache Task in Action
 ---
 
 ## Overview
