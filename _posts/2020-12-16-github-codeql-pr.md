@@ -2,9 +2,17 @@
 title: 'GitHub: Block Pull Request if Code Scanning Alerts Are Found'
 author: Josh Johanning
 date: 2020-12-16 20:00:00 -0600
-categories: [GitHub, Actions]
-tags: [GitHub, GitHub Actions, Pull Requests, CodeQL]
+categories: [GitHub, Advanced Security]
+tags: [GitHub, GitHub Actions, Pull Requests, CodeQL, GitHub Advanced Security]
 ---
+
+## Edit - December 2021
+
+Much of this post is irrelevant now that the [Control which code scanning alerts cause a pull request check to fail](https://github.blog/changelog/2021-06-03-control-which-code-scanning-alerts-cause-a-pull-request-check-to-fail/) feature has been released. But still, this post might be useful in its own right if you are interested in deep-diving or debugging your `SARIF` results file. 
+
+![defining-the-severities-causing-pull-request-check-failure](https://docs.github.com/assets/images/help/repository/code-scanning-check-failure-setting.png){: .shadow }
+
+For more information, see the documentation on this new feature [here](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#defining-the-severities-causing-pull-request-check-failure).
 
 ## Overview
 
