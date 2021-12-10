@@ -172,7 +172,7 @@ Note the font configuration!
 ## Summary
 
 Take a look at our awesome development environment, all running from within our browser!
-
 ![GitHub Codespaces using Powerlevel10k Zsh Theme](/assets/screenshots/2021-11-23-github-codespaces-powerlevel10k/codespace.png ){: .shadow }
+_Powerlevel10k ZSH theme in GitHub Codespaces_
 
 And yes...I did write and test this blog post completely with GitHub Codespaces :).

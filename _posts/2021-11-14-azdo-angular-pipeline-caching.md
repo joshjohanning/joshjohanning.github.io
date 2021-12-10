@@ -19,11 +19,14 @@ I've tried several times to implement the [Pipeline Cache task using Microsoft's
 For builds where the `npm install` takes 30-60 seconds...it's not really a problem. However, recently I was working with a team where the `npm install` was taking 10 (!!!) minutes. This was not going to work for me, and for my sanity, I had to get this pipeline caching figured out.
 
 ![slow npm install](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/slow-npm-install.png ){: width="500" }{: .shadow }
+_npm install taking 10 minutes to run_
 
 ## How To - The Explanation
 
 I was finally able to figure out what I was missing, part in thanks to [this post from High Performance Programmer](https://www.highperformanceprogrammer.com/2021/05/30/how-to-cache-node-modules-npm-install-command-in-azure-devops-classic-builds/) - in particular, their screenshot:
-![pipeline cache task configuration from High Performance Programmer](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/CacheBuildStep.png ){: width="500" }{: .shadow }
+
+![pipeline cache task configuration from High Performance Programmer](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/CacheBuildStep.png ){: width="600" }{: .shadow }
+_Cache task configuration in a Classic Build Definition_
 
 Note how this differs from [Microsoft's documentation](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/caching?view=azure-devops#nodejsnpm):
 ```yml
@@ -46,6 +49,7 @@ The way the task works is it zips up and saves the `path` you specify and stores
 
 This means, that if you flip a build from Windows to Ubuntu, the key won't match, and the contents of the cache won't be restored. Likewise, if the hash of the `package-lock.json` file changes (ie: you add a package, change a package version, remove a package, etc.), the cache won't be restored. In both cases, you would expect a full `npm install` from scratch. If the build completes successfully, you should expect a new cache to be uploaded as an automatically added post build step:
 ![uploading cache to pipeline](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/upload-cache.png ){: .shadow }
+_Uploading of the cache as a post-job step_
 
 ## How To - Just the YAML
 
@@ -87,5 +91,6 @@ Before working with us, the team's build averaged 30 minutes. Using a slimmed do
 
 Since we have added and properly configured the Pipeline Cache task in our Angular CI build, we have shaved off **10 minutes** from each build. When our `npm build` alone takes 10 minutes, our average build time of 20 minutes has been reduced by 50% to 10 minutes:
 ![build time comparison](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/build-time-comparison.png ){: .shadow }
+_Average build time of 20 minutes shaved down to 10 minutes after adding the Cache task_
 
 This was a huge win for the us and dev team, and I'm happy to say the third time's the charm for me on trying to configure the Azure DevOps Pipeline Caching Task.
