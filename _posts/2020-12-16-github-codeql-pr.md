@@ -6,14 +6,6 @@ categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Actions, Pull Requests, CodeQL, GitHub Advanced Security]
 ---
 
-## Edit - December 2021
-
-Much of this post is irrelevant now that the [Control which code scanning alerts cause a pull request check to fail](https://github.blog/changelog/2021-06-03-control-which-code-scanning-alerts-cause-a-pull-request-check-to-fail/) feature has been released. But still, this post might be useful in its own right if you are interested in deep-diving or debugging your `SARIF` results file. 
-
-![defining-the-severities-causing-pull-request-check-failure](https://docs.github.com/assets/images/help/repository/code-scanning-check-failure-setting.png){: .shadow }
-
-For more information, see the documentation on this new feature [here](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#defining-the-severities-causing-pull-request-check-failure).
-
 ## Overview
 
 After virtually attending GitHub Universe last week and watching the [GitHub Advanced Security round-up](https://githubuniverse.com/GitHub-Advanced-Security-round-up/) and [Catching vulnerabilities early with GitHub](https://githubuniverse.com/Catching-vulnerabilities-early-with-GitHub/) sessions, it got me thinking: How do I block a pull request from being merged if the scans detect issues? I didn't think the [GitHub Docs](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#understanding-the-pull-request-checks) were incredibly straight forward on how this works.
@@ -22,21 +14,28 @@ I knew how to configure a branch protection rule in GitHub that enforces things 
 
 ## How To
 
-If you already have a Code Scanning alert setup, skip to step #7.
+If you already have a Code Scanning workflow configured, skip to step #7.
 
-1. The first thing you need is a public repository or a private repository with the GitHub Advanced Security license purchased (as of Dec 2020)
+1. The first thing you need is a public repository or a private repository with the GitHub Advanced Security license purchased
 1. In the Security tab on the repository, navigate to 'Code scanning alerts' page
 1. I'm using the native 'CodeQL Analysis' workflow by GitHub - there are 3rd party analysis engines here too!
 1. Take a look at the workflow file - I didn't need to make any changes, but one can modify the language matrix if you want/don't want scans to run for a particular language
-1. There's an `Autobuild` step here that works most of the time, but for some repositories I found I had to build my app manually
+1. There's an `Autobuild` step here that works most of the time, but for some repositories I found I had to build my app manually - further reading on [build steps for compiled languages](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-the-codeql-workflow-for-compiled-languages#adding-build-steps-for-a-compiled-language)
 1. Commit the workflow to your branch and merge it into Main - for best results we want an initial scan in the default branch before we test out the PR process
 1. Under the Settings tab in the repository, navigate to Branches
 1. Create a [rule](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-required-status-checks) for your default branch - check the 'Require status checks to pass before merging' box
-1. If you used the GitHub CodeQL workflow, check the `CodeQL` status check and save the rule (Note 1/4/20: I have noticed that the `CodeQL` won't appear as an option until you initiate at least one PR on the repository that triggers and completes the `Analyze (csharp)` job)
+1. If you used the GitHub CodeQL workflow, add the `CodeQL` status check and save the rule
+   - You don't want the `Analyze (javascript)` status check; that just will show if the particular scan has completed, not that it found any vulnerabilities
+   - If you don't see the `CodeQL` to add as a status check to the branch protection, **it won't appear as an option until you initiate at least one PR on the repository that triggers and completes the entire CodeQL scan** (meaning all of the `Analyze` jobs have finished) - as of December 2021, this is still an issue. It is vaguely alluded to in this [tidbit in the documentation](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/setting-up-code-scanning-for-a-repository#understanding-the-pull-request-checks) - emphasis mine: 
+   > - When the code scanning jobs complete, GitHub works out whether any alerts were added by the pull request and adds the "Code scanning results / TOOL NAME" entry to the list of checks. **After code scanning has been performed at least once**, you can click Details to view the results of the analysis.
 
-This last step was the part I wasn't clear on from the GitHub docs. The other entry, such as `Analyze (javascript)`, is only the *scan* job for that language. It should succeed irregardless of if vulnerabilities are found. If it fails, the `autobuild` task might not be able to compile your code.
+Step #9 was the part I wasn't originally confused on. The other entry (eg. `Analyze (javascript)`) is only the *scan job* for the corresponding language. It should succeed irregardless of if vulnerabilities are found. If it fails, the `autobuild` task might not be able to compile your code. The [Understanding the pull request checks
+](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/setting-up-code-scanning-for-a-repository#understanding-the-pull-request-checks) GitHub documentation summarizes well.
 
-After configuring the code scanning workflow, you should be all set!
+After configuring the code scanning workflow and branch protection policy, you should be all set!
+
+![branch protection policy configuration](/assets/screenshots/2020-12-16-github-codeql-pr/branch-protection-configuration.png){: .shadow }
+_Branch Protection Policy with the CodeQL status check configured_
 
 ## Testing It Out
 
@@ -59,12 +58,23 @@ Make sure to commit this in a branch because we want to test out the PR flow!
 
 Afterwards, create the PR and wait for the job to run:
 
-![pr](/assets/screenshots/2020-12-16-github-codeql-pr/pr.png){: .shadow }
-_Pull Request that is blocked because of a code scanning vulnerability_
+![blocked pr](/assets/screenshots/2020-12-16-github-codeql-pr/pr.png){: .shadow }
+_Pull Request that is blocked because of a code scanning vulnerability - note that I can force merge since I am an Administrator_
 
 Success! Or, failure, just as we wanted. For me, the fact that GitHub gives this away for free for all public repositories is incredible! There is a charge for the Enterprise, but the setup is so simple and integrations so robust - and we're only scratching the surface - makes it well worth it.
 
 ## Extra Credit - Blocking PR's with Scan Results that Contain Warnings
+
+We can use the [Control which code scanning alerts cause a pull request check to fail](https://github.blog/changelog/2021-06-03-control-which-code-scanning-alerts-cause-a-pull-request-check-to-fail/) feature that was release in June 2021 to natively select what alert level fails the PR.
+
+![defining-the-severities-causing-pull-request-check-failure](https://docs.github.com/assets/images/help/repository/code-scanning-check-failure-setting.png){: .shadow }
+_Control which code scanning alerts cause a pull request check to fail_
+
+For more information, see the documentation on this new feature [here](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#defining-the-severities-causing-pull-request-check-failure).
+
+I will leave the section below as it might be useful in its own right if you are interested in deep-diving or debugging your `SARIF` results file. 
+
+### Original content - scanning a .sarif file manually
 
 Okay, what if we were to have a repository with Terraform code and used the ShiftLeft Analysis marketplace code scanning workflow? Or, we used the native GitHub CodeQL workflow but want it to block merges when it finds any result, including warnings?
 
@@ -156,3 +166,15 @@ _Adding the new job to the required status check list_
 _Pull Request that is blocked because of a 'warning' result found in the code scanning results_
 
 I'm sure there is probably a better way to do this (using the API or GraphQL endpoint?). I know back in the LGTM / Semmle days, there was also a config file you could commit to the root of the repository to more precisely define rules. Either way, let me know in the comments if you have any other ideas or improvements!
+
+## Summary
+
+Not allowing code that introduces vulnerabilities to be merged in the PR process is crucial to ensuring the integrity of our code. Blocking a PR that contains a code vulnerability is essentially THE use case of GitHub Advanced Security - we're able to see right on our PR in GitHub that there's a vulnerability, with the deep linking and integration that you would expect. Finding out about the issue at PR time shortens the feedback loop - we don't have to scramble before a production deployment if your security scan is occurring too late in the process.
+
+Even without the branch protection configured, the code scanning results will still show that `CodeQL` found a vulnerability, but without the branch protection we would be able to freely merge this into main:
+![pr with no branch protection](/assets/screenshots/2020-12-16-github-codeql-pr/pr-no-branch-protection.png){: .shadow }
+_Pull Request that shows a code vulnerability found, but since there is no branch protection on this repo, we are free to merge_
+
+This might be enough for some, but if we're going to go through the exercise of creating a code scanning workflow, just as it's a best practice to require at least one other approver on the PR before merging, we should require that there are no vulnerabilities being introduced as well. GitHub Advanced Security prides itself on limiting the signal vs noise ratio, so the chance of getting a 'High' vulnerability result that is a false positive is pretty minimal. And if you do get a false positive or a result you aren't going to fix - just [dismiss](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/managing-code-scanning-alerts-for-your-repository#dismissing-or-deleting-alerts) the alert.
+
+Happy (secure) coding!
