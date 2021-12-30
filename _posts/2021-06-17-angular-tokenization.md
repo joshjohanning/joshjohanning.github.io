@@ -39,7 +39,6 @@ Pre-requisites:
 
 Your `angular.json` file might look a little different, but what I did was take an existing configuration, copy/paste it, and change the `fileReplacements` section, specifically the `src/environments/environment.tokenized.ts` line.
 
-`angular.json`:
 ```json
           "configurations": {
             ...
@@ -70,12 +69,12 @@ Your `angular.json` file might look a little different, but what I did was take 
           }
         }
 ```
+{: file='angular.json'}
 
 ## environments.tokenized.ts
 
 Similarly, I copied an existing `src/environments/environments.*.ts` file to create the `environments.tokenized.ts` file that my new configuration will use. The important line here is the `baseUrl: '#{baseUrl}#'` line. Notice how I'm creating a token here with the `#{token-name}#` syntax. This is the syntax of the token that our deployment process will know to find and replace.
 
-`environments.tokenized.ts`:
 ```js
 import { NgxLoggerLevel } from 'ngx-logger';
 
@@ -86,6 +85,7 @@ export const environment = {
   loggerLevel: NgxLoggerLevel.OFF
 };
 ```
+{: file='environments.tokenized.ts'}
 
 ## azure-pipelines.yml
 
@@ -194,6 +194,7 @@ I saw this in an `angular.json` file and had to update this post. This might be 
             }
           }
 ```
+{: file='angular.json'}
 
 This encapsulates the best of both worlds - we are still building once and deploying many, but we also don't need a specialized build configuration to run through. We can use the normal production build configuration and file replace the tokenized `environments.prod.ts` with `environment.ts` at build time. 
 
