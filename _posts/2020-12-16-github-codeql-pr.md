@@ -44,7 +44,7 @@ _Branch Protection Policy with the CodeQL status check configured_
 
 ## Testing It Out
 
-Another thing the GitHub Docs do not do a good job of spelling out is that only *Errors* are going to fail the Pull Request status check. *Warnings*, out of the box, do not block the PR.
+Another thing the GitHub Docs do not do a good job of spelling out is that only *Errors* or a security severity level of *High or Higher* are going to fail the Pull Request status check. *Warnings*, out of the box, do not block the PR.
 
 Alright, so let's introduce an error...does anyone know of an easy vulnerability we can put in our code? Well neither do I, but we don't have to with the help of our friend, the [Semmle vulnerability database](https://web.archive.org/web/20200929073843/https://help.semmle.com/wiki/label/js/path-problem) (Note: The day before I wrote this, this link started redirecting to GitHub, but I found an archive.org link to use for the purposes of this demo).
 
@@ -64,22 +64,45 @@ Make sure to commit this in a branch because we want to test out the PR flow!
 Afterwards, create the PR and wait for the job to run:
 
 ![blocked pr](/assets/screenshots/2020-12-16-github-codeql-pr/pr.png){: .shadow }
-_Pull Request that is blocked because of a code scanning vulnerability - note that I can force merge since I am an Administrator_
+_Pull Request that is blocked because of a code scanning vulnerability (note that I can still force merge since I am an Administrator)_
 
-Success! Or, failure, just as we wanted. For me, the fact that GitHub gives this away for free for all public repositories is incredible! There is a charge for the Enterprise, but the setup is so simple and integrations so robust - and we're only scratching the surface - makes it well worth it.
+Success! Or, failure, just as we wanted - the pull request cannot be merged because the `CodeQL` status check failed, meaning it detected a vulnerability in the code.
 
-## Extra Credit - Blocking PR's with Scan Results that Contain Warnings
+Once you fix the vulnerable code and re-push, all of the status checks will be successful and you are free to merge:
 
-We can use the [Control which code scanning alerts cause a pull request check to fail](https://github.blog/changelog/2021-06-03-control-which-code-scanning-alerts-cause-a-pull-request-check-to-fail/) feature that was release in June 2021 to natively select what alert level fails the PR.
+![passing pr](/assets/screenshots/2020-12-16-github-codeql-pr/pr-passing.png){: .shadow }
+_Pull Request with passing status checks - no vulnerable code has been found_
 
-![defining-the-severities-causing-pull-request-check-failure](https://docs.github.com/assets/images/help/repository/code-scanning-check-failure-setting.png){: .shadow }
+The fact that GitHub gives this away for free for all public repositories is incredible! There is a licensing upcharge for Enterprises, but the setup is so simple and integrations so robust makes it well worth it (and we're only scratching the surface!).
+
+## Status Check Failure Configuration
+
+By default, the status check will only fail if there is an *Error* or a security severity level of *High or Higher* *High or Higher* vulnerability - *Warnings* or a security level of *Medium* will not fail the status check. However, we can use the [Control which code scanning alerts cause a pull request check to fail](https://github.blog/changelog/2021-06-03-control-which-code-scanning-alerts-cause-a-pull-request-check-to-fail/) feature that was release in June 2021 to configure what alert level will fail the PR:
+
+![defining-the-severities-causing-pull-request-check-failure](/assets/screenshots/2020-12-16-github-codeql-pr/code-scanning-configuration.png){: .shadow }
 _Control which code scanning alerts cause a pull request check to fail_
 
-For more information, see the documentation on this new feature [here](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#defining-the-severities-causing-pull-request-check-failure).
+For more information, see the documentation for [Defining the severities causing pull request check failure](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#defining-the-severities-causing-pull-request-check-failure).
 
-I will leave the section below as it might be useful in its own right if you are interested in deep-diving or debugging your `SARIF` results file. 
+## Summary
 
-### Original content - scanning a .sarif file manually
+Not allowing code that introduces vulnerabilities to be merged in the PR process is crucial to ensuring the integrity of our code. Blocking a PR that contains a code vulnerability is essentially THE use case of GitHub Advanced Security - we're able to see right on our PR in GitHub that there's a vulnerability, with the deep linking and integration that you would expect. Finding out about the issue at PR time shortens the feedback loop - we don't have to scramble before a production deployment if your security scan is occurring too late in the process.
+
+Even without the branch protection configured, the code scanning results will still show that `CodeQL` found a vulnerability, but without the branch protection we would be able to freely merge this into main:
+![pr with no branch protection](/assets/screenshots/2020-12-16-github-codeql-pr/pr-no-branch-protection.png){: .shadow }
+_Pull Request that shows a code vulnerability found, but since there is no branch protection on this repo, we are free to merge_
+
+This might be enough for some, but if we're going to go through the exercise of creating a code scanning workflow, just as it's a best practice to require at least one other approver on the PR before merging, we should require that there are no vulnerabilities being introduced as well. GitHub Advanced Security prides itself on limiting the signal vs noise ratio, so the chance of getting a 'High' vulnerability result that is a false positive is pretty minimal. And if you do get a false positive or a result you aren't going to fix - just [dismiss](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/managing-code-scanning-alerts-for-your-repository#dismissing-or-deleting-alerts) the alert.
+
+Happy (secure) coding!
+
+---
+
+## Extra Credit - Analyzing a SARIF File
+
+I originally had this section in here to assist with blocking PR's from results other than *Errors* (such as *Warnings*), but GitHub has [implemented this feature now](#status-check-failure-configuration). I will leave the section below as it might be useful in its own right if you are interested in deep-diving or debugging your `SARIF` results file. 
+
+### Original Content - Analyzing a SARIF Results File Manually
 
 Okay, what if we were to have a repository with Terraform code and used the ShiftLeft Analysis marketplace code scanning workflow? Or, we used the native GitHub CodeQL workflow but want it to block merges when it finds any result, including warnings?
 
@@ -171,15 +194,3 @@ _Adding the new job to the required status check list_
 _Pull Request that is blocked because of a 'warning' result found in the code scanning results_
 
 I'm sure there is probably a better way to do this (using the API or GraphQL endpoint?). I know back in the LGTM / Semmle days, there was also a config file you could commit to the root of the repository to more precisely define rules. Either way, let me know in the comments if you have any other ideas or improvements!
-
-## Summary
-
-Not allowing code that introduces vulnerabilities to be merged in the PR process is crucial to ensuring the integrity of our code. Blocking a PR that contains a code vulnerability is essentially THE use case of GitHub Advanced Security - we're able to see right on our PR in GitHub that there's a vulnerability, with the deep linking and integration that you would expect. Finding out about the issue at PR time shortens the feedback loop - we don't have to scramble before a production deployment if your security scan is occurring too late in the process.
-
-Even without the branch protection configured, the code scanning results will still show that `CodeQL` found a vulnerability, but without the branch protection we would be able to freely merge this into main:
-![pr with no branch protection](/assets/screenshots/2020-12-16-github-codeql-pr/pr-no-branch-protection.png){: .shadow }
-_Pull Request that shows a code vulnerability found, but since there is no branch protection on this repo, we are free to merge_
-
-This might be enough for some, but if we're going to go through the exercise of creating a code scanning workflow, just as it's a best practice to require at least one other approver on the PR before merging, we should require that there are no vulnerabilities being introduced as well. GitHub Advanced Security prides itself on limiting the signal vs noise ratio, so the chance of getting a 'High' vulnerability result that is a false positive is pretty minimal. And if you do get a false positive or a result you aren't going to fix - just [dismiss](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/managing-code-scanning-alerts-for-your-repository#dismissing-or-deleting-alerts) the alert.
-
-Happy (secure) coding!
