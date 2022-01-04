@@ -31,6 +31,10 @@ See commit: [c432906](https://github.com/joshjohanning/joshjohanning.github.io/c
 
 See: [#8](https://github.com/joshjohanning/joshjohanning.github.io/pull/8)
 
+### Recently Updated text
+
+See: [77a5f78](https://github.com/joshjohanning/joshjohanning.github.io/commit/77a5f78)
+
 ## Upgrading the Theme
 
 Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way: 
