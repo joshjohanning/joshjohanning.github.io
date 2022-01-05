@@ -18,8 +18,8 @@ There are plenty of tools out there on GitHub ([svigerske/trac-to-github](https:
 
 The two I have tested are:
 
-* **[mavam/trac-hub (joshjohanning/trac-hub)](https://github.com/mavam/trac-hub)**
-* **[trustmaster/trac2github](https://github.com/trustmaster/trac2github)**
+* [mavam/trac-hub (joshjohanning/trac-hub)](https://github.com/mavam/trac-hub)
+* [trustmaster/trac2github](https://github.com/trustmaster/trac2github)
 
 Both of these are more focused on Issues, and neither really do attachments (see trac-hub how to section [below](#trac-hub-how-to) for a possible solution though). The [svigerske/trac-to-github](https://github.com/svigerske/trac-to-github) tool mentions that it uploads attachments as gists.
 
@@ -91,7 +91,7 @@ _Original ticket list in Trac_
 
 How they appear in GitHub:
 ![trac-hub-example-issues](/assets/screenshots/2021-01-26-trac-to-github/trac-hub-example-issues.png){: .shadow }
-Issues in GitHub migrated using trac-hub
+_Issues in GitHub migrated using trac-hub_
 
 Trac ticket comments:
 ![trac-ticket-comments](/assets/screenshots/2021-01-26-trac-to-github/trac-ticket-comments.png){: .shadow }
