@@ -1,5 +1,5 @@
 ---
-title: 'My Experience Working with Azure Front Door Standard/Premium (Preview)'
+title: 'My Experience Working with Azure Front Door Standard/Premium Preview'
 author: Josh Johanning
 date: 2021-10-01 16:30:00 -0500
 description: I share my experience, lessons-learned, and tips and tricks for working with the new Azure Front Door Standard/Premium (Preview) SKUs
