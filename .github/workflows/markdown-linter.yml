@@ -10,4 +10,5 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
-      folder-path: _posts
+      with:
+        folder-path: _posts
