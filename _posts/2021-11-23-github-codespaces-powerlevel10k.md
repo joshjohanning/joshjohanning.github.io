@@ -5,8 +5,9 @@ date: 2021-11-23 16:00:00 -0600
 description: How to use the Powerlevel10k Zsh theme in GitHub Codespaces
 categories: [GitHub, Codespaces]
 tags: [GitHub, GitHub Codespaces]
+img_path: /assets/screenshots/2021-11-23-github-codespaces-powerlevel10k
 image:
-  src: /assets/screenshots/2021-11-23-github-codespaces-powerlevel10k/codespace.png
+  src: codespace.png
   width: 1123   # in pixels
   height: 606   # in pixels
   alt: A GitHub Codespace with the Powerlevel10k Zsh theme
@@ -126,10 +127,10 @@ echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 * I also wanted the machine to have my local time zone. Whenever I would commit, I would see UTC time in my `git log`. The GitHub UI translates this just fine, but my Jekyll blog theme uses the `git commit` timestamp when displaying the updated timestamp on the blog post, which I did not like since it was inconsistent with the posted time zone (where I'm using Central US).
 * The `zshrc` line launches the `zsh` command prompt when I launch my CodeSpace instead of `bash`.
 * And finally, when I would `ls` or use the directory autocomplete suggestions, I would see a [lime green blackground with blue text on directories](https://stackoverflow.com/questions/64250199/how-to-change-color-of-directory-suggestions-in-zsh/70598500#70598500) which was unreadable. These lines remove the highlighting and simply use a distinct color for the directories instead:
-    ![Default zsh configuration - directory names are hard to read](https://i.stack.imgur.com/rFWYU.png){: .shadow }
+    ![Default zsh configuration - directory names are hard to read](directory-bad.png){: .shadow }
     _Directories are unreadable with default zsh configuration_
 
-    ![With modifications - easier to read directory names](https://i.stack.imgur.com/Gx6jR.png){: .shadow }
+    ![With modifications - easier to read directory names](directory-good.png){: .shadow }
     _Directories readable again!_
 
 Important: Don't `git add` this just yet! [Continue to the next step](#5-mark-the-install-script-as-executable-with-git).
@@ -191,7 +192,7 @@ Note the font configuration!
 ## Summary
 
 Take a look at our awesome development environment, all running from within our browser!
-![GitHub Codespaces using Powerlevel10k Zsh Theme](/assets/screenshots/2021-11-23-github-codespaces-powerlevel10k/codespace.png ){: .shadow }
+![GitHub Codespaces using Powerlevel10k Zsh Theme](codespace.png ){: .shadow }
 _Powerlevel10k ZSH theme in GitHub Codespaces_
 
 And yes...I did write and test this blog post completely with GitHub Codespaces :).
