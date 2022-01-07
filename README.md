@@ -55,8 +55,6 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
     - Update the commit message as appropriate
 1. Update author: `git commit --amend --author "Josh Johanning <joshjohanning@github.com>"`
 1. Update commit time: `git commit --date=now --amend`
-    - Check the `git log` to ensure it looks right - if the time zone is incorrect, run: `export TZ=America/Chicago` and run again
-    - See this [Stack Overflow post](https://stackoverflow.com/a/58622282/4270353) for modifying the date/time for multiple commits
 1. [Test changes locally before pushing](#building--testing-locally) 
 
 ## Building / Testing Locally
