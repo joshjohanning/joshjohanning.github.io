@@ -47,6 +47,7 @@ In hindsight, it's so simple, yet it's not documented anywhere! I was trying to 
 
 Extrapulating to `curl`, this was how to replicate this in the command line:
 
+{% raw %}
 ```bash
 curl 'https://maven.pkg.github.com/<org>/<repo>/com/<group>/<artifact>/<version>/<file-name>.jar' \
     -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
@@ -251,3 +252,5 @@ Hopefully this either helped you download a file from GitHub Packages, gives you
 I should mention that for some of these you might need to tweak your [GITHUB_TOKEN settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#setting-the-permissions-of-the-github_token-for-your-repository) to grant it more permissions.
 
 Let me know what I've missed or if you have any other ideas!
+
+{% endraw %}
