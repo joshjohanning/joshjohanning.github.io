@@ -107,14 +107,34 @@ zshrc() {
     cat .p10k.zsh > $HOME/.p10k.zsh
 }
 
+# change time zone
+sudo ln -fs /usr/share/zoneinfo/America/Chicago /etc/localtime
+sudo dpkg-reconfigure --frontend noninteractive tzdata
+
 zshrc
+
+# needs to be after zshrc
+echo "" >> ~/.zshrc
+echo "# remove ls and directory completion highlight color" >> ~/.zshrc
+echo "_ls_colors=':ow=01;33'" >> ~/.zshrc
+echo 'zstyle ":completion:*:default" list-colors "${(s.:.)_ls_colors}"' >> ~/.zshrc
+echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 ```
+{: file='install.sh'}
 
-The `cat .zshrc > $HOME/.zshrc` and `cat .p10k.zsh > $HOME/.p10k.zsh` lines here are pretty important - this is what takes the content you have in your dotfiles repository and move it to the `$HOME` directory of the Codespace.
+* The `cat .zshrc > $HOME/.zshrc` and `cat .p10k.zsh > $HOME/.p10k.zsh` lines here are pretty important - this is what takes the content you have in your dotfiles repository and move it to the `$HOME` directory of the Codespace.
+* I also wanted the machine to have my local time zone. Whenever I would commit, I would see UTC time in my `git log`. The GitHub UI translates this just fine, but my Jekyll blog theme uses the `git commit` timestamp when displaying the updated timestamp on the blog post, which I did not like since it was inconsistent with the posted time zone (where I'm using Central US).
+* The `zshrc` line launches the `zsh` command prompt when I launch my CodeSpace instead of `bash`.
+* And finally, when I would `ls` or use the directory autocomplete suggestions, I would see a [lime green blackground with blue text on directories](https://stackoverflow.com/questions/64250199/how-to-change-color-of-directory-suggestions-in-zsh/70598500#70598500) which was unreadable. These lines remove the highlighting and simply use a distinct color for the directories instead:
+    ![Default zsh configuration - directory names are hard to read](https://i.stack.imgur.com/rFWYU.png){: .shadow }
+    _Directories are unreadable with default zsh configuration_
 
-Don't `git add` this just yet!
+    ![With modifications - easier to read directory names](https://i.stack.imgur.com/Gx6jR.png){: .shadow }
+    _Directories readable again!_
 
-This `install.sh` script is based on this [post](https://burkeholland.github.io/posts/codespaces-dotfiles/).
+Important: Don't `git add` this just yet! [Continue to the next step](#5-mark-the-install-script-as-executable-with-git).
+
+*This `install.sh` script is based on this [post](https://burkeholland.github.io/posts/codespaces-dotfiles/).*
 
 ### 5. Mark the install script as executable with git
 
@@ -136,7 +156,6 @@ git add install.sh --chmod=+x
 {: .nolineno}
 
 There's an alternative command you can run to mark the file as executable in-place with `git update-index --chmod=+x install.sh`, but if you do that, every time you change the file the executable bit will get flipped off and you’ll have to run that command again. Inevitably, you will forget, and your Codespace's Zsh environment will be broken.
-
 
 You can view the Codespaces creation logs by opening the command pallette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Codespaces: View Creation Log`
 
