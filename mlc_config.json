@@ -1,7 +1,8 @@
 {
-  "baseurl": [
-    {
-      "pattern": "https://josh-ops.com"
-    }
-  ]
+	"replacementPatterns": [
+		{
+			"pattern": "^/",
+			"replacement": "https://josh-ops.com/"
+		}
+	]
 }
