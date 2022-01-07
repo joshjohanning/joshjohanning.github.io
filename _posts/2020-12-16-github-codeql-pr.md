@@ -13,7 +13,7 @@ image:
 
 ## Overview
 
-After virtually attending GitHub Universe last week and watching the [GitHub Advanced Security round-up](https://githubuniverse.com/GitHub-Advanced-Security-round-up/) and [Catching vulnerabilities early with GitHub](https://githubuniverse.com/Catching-vulnerabilities-early-with-GitHub/) sessions, it got me thinking: How do I block a pull request from being merged if the scans detect issues? I didn't think the [GitHub Docs](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#understanding-the-pull-request-checks) were incredibly straight forward on how this works.
+After virtually attending GitHub Universe last week and watching the [GitHub Advanced Security round-up](https://www.youtube.com/watch?v=T_-Tn81b4lc) and [Catching vulnerabilities early with GitHub](https://www.youtube.com/watch?v=l2epzyytPGE) sessions, it got me thinking: How do I block a pull request from being merged if the scans detect issues? I didn't think the [GitHub Docs](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#understanding-the-pull-request-checks) were incredibly straight forward on how this works.
 
 I knew how to configure a branch protection rule in GitHub that enforces things such as a GitHub Action or Azure DevOps stage completes successfully, but what about code scanning? How configurable is it?
 
