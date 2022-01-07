@@ -14,7 +14,7 @@ We were working with a client who was migrating off of their old Trac server, an
 
 ## Tools
 
-There are plenty of tools out there on GitHub ([svigerske/trac-to-github](https://github.com/svigerske/trac-to-github), [robertoschwald/migrate-trac-issues-to-github](https://github.com/robertoschwald/migrate-trac-issues-to-github), [hershwg/github-migrate-trac-tickets](https://github.com/hershwg/github-migrate-trac-tickets)... some of them require [XML-RPC](https://trac-hacks.org/wiki/XmlRpcPlugin), which I had a heck of a time installing on my Apache Trac webserver, so I wasn't able to test those.
+There are plenty of tools out there on GitHub ([svigerske/trac-to-github](https://github.com/svigerske/trac-to-github), [robertoschwald/migrate-trac-issues-to-github](https://web.archive.org/web/20200912010021/https://github.com/robertoschwald/migrate-trac-issues-to-github), [hershwg/github-migrate-trac-tickets](https://github.com/hershwg/github-migrate-trac-tickets)... some of them require [XML-RPC](https://trac-hacks.org/wiki/XmlRpcPlugin), which I had a heck of a time installing on my Apache Trac webserver, so I wasn't able to test those.
 
 The two I have tested are:
 
