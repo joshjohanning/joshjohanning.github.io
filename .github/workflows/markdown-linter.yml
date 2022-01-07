@@ -12,4 +12,4 @@ jobs:
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
         folder-path: _posts
-        config_file: mlc_config.json
+        config-file: mlc_config.json
