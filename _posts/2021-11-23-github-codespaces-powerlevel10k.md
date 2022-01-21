@@ -33,6 +33,8 @@ Before we configure Powerlevel10k, we need to make sure we set up [VS Code setti
 
 One of the things we need to make sure this is setup for is for the Terminal font that I have defined for the Powerlevel10k theme (`MesloLGS NF`), but you'd want your other VS Code settings to sync as well.
 
+After firing up your Codespace, it should automatically sign you in and sync your settings and extensions, but if not, [sign in manually](https://code.visualstudio.com/docs/editor/settings-sync#_turning-on-settings-sync).
+
 ## Configure Powerlevel10k
 
 There are a few steps:
@@ -181,6 +183,10 @@ This is an extended snippet of the relevant section in my VS Code's `settings.js
 ```
 
 Note the font configuration!
+
+### 8. Log into VS Code Settings Sync in the Codespaces
+
+After firing up your Codespace, sign into [VS Code Settings sync](https://code.visualstudio.com/docs/editor/settings-sync#_turning-on-settings-sync) (I use GitHub_)
 
 ## Gotchas
 
