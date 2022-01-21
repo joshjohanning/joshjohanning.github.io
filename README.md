@@ -31,10 +31,6 @@ See commit: [c432906](https://github.com/joshjohanning/joshjohanning.github.io/c
 
 See: [#8](https://github.com/joshjohanning/joshjohanning.github.io/pull/8)
 
-### Recently Updated text
-
-See: [77a5f78](https://github.com/joshjohanning/joshjohanning.github.io/commit/77a5f78)
-
 ## Upgrading the Theme
 
 Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way: 
@@ -45,9 +41,9 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
     - Recommendation is to use release tag milestones instead of loose commits that aren't contained in a release yet
     - For example, updating from 4.3.0 to 4.3.4 was referencing [a887f1d](https://github.com/cotes2020/jekyll-theme-chirpy/commit/a887f1d57d9ac8e08c789c6201147bf68c459573) (one right after [945e8d1](https://github.com/cotes2020/jekyll-theme-chirpy/commit/945e8d195393f73f38c4782cb31b808f09acc6f5)) and [602e984](https://github.com/cotes2020/jekyll-theme-chirpy/commit/602e98448d419e9c5710cb0c8a002a6538562150) (the merge commit for 4.3.4)
     - You can use this [link](https://github.com/cotes2020/jekyll-theme-chirpy/compare/a887f1d^..602e984) to compare the changes between two commits in GitHub
-1. Start the `cherry-pick`:
-    - To cherry-pick a range of commits (more common): `git cherry-pick a887f1d^..602e984 -m 1`
-    - The `^` is important otherwise you will not be including the first commit - but the commit might get picked up in the maintainer's merge commit for the release anyways
+1. Start the `git cherry-pick`:
+    - To cherry-pick a range of commits (more common): `git cherry-pick "a887f1d^..602e984" -m 1`
+    - The `^` is important otherwise you will not be including the first commit - but the commit might get picked up in the maintainer's merge commit for the release anyways - and the quotes are necessary around the commits in `zsh` b/c of the `^`
     - To cherry-pick a single commit (probably not as common): `git cherry-pick a887f1d -m 1`
 1. Review merge conflicts - use a combination of `git cherry-pick --skip` (for when readme/starter posts are updated) and `cherry-pick --continue` (to continue after you resolve real merge conflicts)
 1. Rebase the number of commits you just brought in (you should see icon in VS Code): `git rebase -i HEAD~16`
