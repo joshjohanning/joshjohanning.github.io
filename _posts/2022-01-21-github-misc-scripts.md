@@ -28,10 +28,10 @@ I have readme's in each of the folders with a brief description of the enclosed 
 
 Here's an example of some of the scripts I have populated in there so far:
 
-- [download file from github packages](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-file-from-github-packages.sh) - (and my [blog post](https://josh-ops.com/posts/github-download-from-github-packages/)!)
-- [create repo](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/create-repo.sh)
-- [download file from private repo](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-file-from-private-repo.sh)
-- [download workflow artifacts](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-workflow-artifacts.sh)
+- [download file from github packages](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-file-from-github-packages.sh) (api) - (and my [blog post](https://josh-ops.com/posts/github-download-from-github-packages/)!)
+- [create repo](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/create-repo.sh) (api)
+- [download file from private repo](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-file-from-private-repo.sh) (api)
+- [download workflow artifacts](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-workflow-artifacts.sh) (api)
 - [list enterprise](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/list-enterprise-id.sh) (graphql)
 - [create organization](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/create-organization.sh) (graphql)
 - [delete repository branch policy](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/delete-repository-branch-policy.sh) (graphql)
@@ -41,6 +41,7 @@ Here's an example of some of the scripts I have populated in there so far:
 - [transfer issue](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/transfer-issue.sh) (graphql)
 - [download specific version from github packages](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/download-specific-version-from-github-packages.sh) (graphql) - (and my [blog post](https://josh-ops.com/posts/github-download-from-github-packages/)!)
 - [download latest version from github packages](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/download-latest-version-from-github-packages.sh) (graphql) - (and my [blog post](https://josh-ops.com/posts/github-download-from-github-packages/)!)
+- [sso credential authorizations](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/sso-credential-authorizations.sh) (gh-cli)
 
 ## Overview
 
