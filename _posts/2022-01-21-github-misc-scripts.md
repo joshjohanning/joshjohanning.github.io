@@ -9,20 +9,20 @@ tags: [GitHub, Scripts]
 
 ## Overview
 
-I have a huge workspace in Postman for all of my API calls, but it's sometimes hard to share with someone an example of a script or API call. Therefore, I decided to create a repo that consolidates a lot of my random GitHub scripts into one central spot.
+I have a large Postman workspace for all my API calls, but it’s sometimes hard to share an example of an API or script with someone. Thus, I decided to create a repo that consolidates my random GitHub scripts into one central spot. Now, I can simply send a link!
 
 Here's the repo: [joshjohanning/github-misc-scripts](https://github.com/joshjohanning/github-misc-scripts)
 
 ## Layout
 
-I have them split by type:
+I have them categorized by type:
 
 * [api](https://github.com/joshjohanning/github-misc-scripts/tree/main/api)
 * [gh-cli](https://github.com/joshjohanning/github-misc-scripts/tree/main/gh-cli)
 * [graphql](https://github.com/joshjohanning/github-misc-scripts/tree/main/graphql)
 * [scripts](https://github.com/joshjohanning/github-misc-scripts/tree/main/scripts)
 
-I have readme's in each of the above folders with a brief description of each of the scripts.
+I have readme's in each of the folders with a brief description of the enclosed scripts.
 
 ## Script Examples
 
