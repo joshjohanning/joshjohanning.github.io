@@ -1,7 +1,7 @@
 ---
 title: 'Programmatically Download a Package Binary from GitHub Packages'
 author: Josh Johanning
-date: 2022-01-04 23:00:00 -0600
+date: 2022-01-07 14:30:00 -0600
 description: Programmatically download a package binary (such as NuGet, Maven) from GitHub Packages
 categories: [GitHub, Packages]
 tags: [GitHub, GitHub Packages, Maven, NuGet]
