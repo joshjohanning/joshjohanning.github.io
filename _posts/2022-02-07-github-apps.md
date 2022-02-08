@@ -23,6 +23,8 @@ In GitHub Actions, the [GitHub Token](https://dev.to/github/the-githubtoken-in-g
 
 In this post, I will go through the setup and usage of GitHub Apps in an Actions workflow with two scenarios: [Using a GitHub App to grant access to a single repository](#scenario-1-using-a-github-app-to-grant-access-to-a-single-repository) and [Using a GitHub App as a rich comment bot](#scenario-2-using-a-github-app-as-a-rich-comment-bot).
 
+And don't worry - you don't need any programming experience to create a GitHub App!
+
 ## GitHub Apps
 
 GitHub Apps are certainly preferred and recommended from GitHub. From [GitHub's documentation](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps), this fits our exact use case: 
@@ -31,9 +33,11 @@ GitHub Apps are certainly preferred and recommended from GitHub. From [GitHub's 
 >
 > GitHub Apps are first-class actors within GitHub. A GitHub App acts on its own behalf, taking actions via the API directly using its own identity, which means you don't need to maintain a bot or service account as a separate user.
 
+GitHub Apps also have a [higher API rate limiting threshold](https://docs.github.com/en/rest/overview/resources-in-the-rest-api#requests-from-user-accounts) than requests from user accounts and GitHub Actions. [Installed in an Enterprise](https://github.blog/changelog/2020-07-27-increase-to-api-limits-in-github-enterprise-subscriptions/), GitHub Apps can have up to 15,000 requests per hour whereas the limit is 5,000 requests per hour coming from a user account and 1,000 requests per hour coming from GitHub Actions.
+
 ### Caveats
 
-- Each organization can only own up to 100 GitHub Apps
+- Each organization can only own up to [100 GitHub Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-github-apps)
 - You'll have to be an organization owner to create and install a GitHub app in an organization
 - Each installation access token is only valid for a [maximum of 10 minutes](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app)
 
@@ -63,9 +67,10 @@ There are a couple different actions to use such as:
 
 - [navikt/github-app-token-generator](https://github.com/marketplace/actions/github-app-installation-access-token-generator)
 - [peter-murray/workflow-application-token-action](https://github.com/marketplace/actions/workflow-application-token-action)
-- [jnwng/github-app-installation-token-action](https://github.com/marketplace/actions/create-github-app-installation-token) (the one I am using below)
+- [jnwng/github-app-installation-token-action](https://github.com/marketplace/actions/create-github-app-installation-token)
+- [tibdex/github-app-token](https://github.com/marketplace/actions/github-app-token) (the one I am using below)
 
-I like jnwng's version because it doesn't require the GitHub App to be installed on the repository that the action is running from whereas peter-murray's does. That's fine, but if the App has to be installed on every repository, we're not saving a ton with the app over the PAT (except that the GitHub App's token has a built-in expiration). navikt's version also works without being installed on the source repository, but it is a Docker-based action whereas jnwng's is a node-based action.
+I like **navikt's**, **jnwng's**, and **tibdex's** versions because it doesn't require the GitHub App to be installed on the repository that the action is running from whereas **peter-murray's** does. That's fine, but if the App must be installed on every repository, we're not saving a ton with the app over the PAT (except that the GitHub App's token has a built-in expiration). **navikt's** version is a Docker-based action. I'm typically going to prefer a node-based action if given the preference since typically a Docker action takes a little bit longer to initiate and requires one additional component to be installed if using self-hosted runners. **jnwng's** and **tibdex's** actions are node-based actions, and both certainly work. I slightly prefer **tibdex's** because you can either pass in an `installation_id` or not, depending on if the app is installed on the repository or not.
 
 It's really quite simple now that you have the installation ID, the app ID, and the private key. The only prerequisite is to create a secret on the repository (or [organization](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-organization)) with the private key's contents. I named my secret `PRIVATE_KEY`.
 
@@ -80,7 +85,7 @@ Here's the action code to generate and sign an installation access token for aut
 {% raw %}
 ```yml
     steps:
-      - uses: jnwng/github-app-installation-token-action@v2
+      - uses: tibdex/github-app-token@v1
         id: get_installation_token
         with: 
           appId: 170544
@@ -104,7 +109,7 @@ Here's the action code to generate and sign an installation access token for aut
 {: file='.github/workflows/test-permissions.yml'}
 {% endraw %}
 
-With the GitHub app installed on the `my-org/my-repo-2` repository, we have access to clone the repository even though it's not the repository that the workflow is running from. We can also use the token generated here as a Bearer token for GitHub API requests, assuming it has the access.
+With the GitHub app installed on the `my-org/my-repo-2` repository and passing in the installation ID to the action, we have access to clone the repository even though it's not the repository that the workflow is running from. We can also use the token generated here as a Bearer token for GitHub API requests, assuming it has the access.
 
 ![Successful Git clone using a GitHub App](clone-from-app.png ){: width="500" }{: .shadow }
 _Successful Git clone using a GitHup App_
@@ -137,11 +142,10 @@ Here's the relevant action code:
 {% raw %}
 ```yml
     steps:
-      - uses: jnwng/github-app-installation-token-action@v2
+      - uses: tibdex/github-app-token@v1
         id: get_installation_token
         with: 
           appId: 170544
-          installationId: 23052920
           privateKey: ${{ secrets.PRIVATE_KEY }}
           
       - if: ${{ steps.check-approval.outputs.approved == 'false' }}
@@ -158,15 +162,19 @@ Here's the relevant action code:
 {: file='.github/workflows/approveops.yml'}
 {% endraw %}
 
+You'll notice that we didn't have to pass in an installation ID this time to the action. This is because the GitHub App is installed on the repository, and the action can therefore lookup the installation ID dynamically to get the token.
+
 🎉 Issue comment with team mentioning success! 🥳
 
 ## Summary
 
+When I first learned about GitHub Apps, I was like, "This is cool, but I'm not going to be writing an app and creating code just for authentication, that's too much work, I'll just use a PAT." However, as you just saw, we created a GitHub App and used it for authentication without tying it to any code. 
+
 {% raw %}
-In both scenarios, we use the [jnwng/github-app-installation-token-action](https://github.com/marketplace/actions/create-github-app-installation-token) action and its output of `${{ steps.get_installation_token.outputs.token }}` to obtain the installation access token. [GitHub has sample Ruby code](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app) for creating a and signing the JWT, but the action is so much simpler!
+In both scenarios, we use the [tibdex/github-app-token](https://github.com/marketplace/actions/github-app-token) action and the installation access token that is an output parameter: `${{ steps.get_installation_token.outputs.token }}`. We use this token to make authenticated requests to the API or as the password in Git clones. Alternatively, [GitHub has sample Ruby code](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app) for creating a and signing the JWT and retrieving an installation ID, but the action is so much simpler!
 
-Check out my next post on 'ApproveOps: Approvals in IssueOps' for more information on the action workflow I'm using in the second scenario.
+Check out my next post, [ApproveOps: Approvals in IssueOps](/posts/github-approveops), for more information on the action workflow I'm using in the second scenario.
 
-Let me know what I've missed or if you have any other ideas!
+Happy App-ing!
 
 {% endraw %}
