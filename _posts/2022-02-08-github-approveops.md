@@ -45,7 +45,7 @@ _The ApproveOps run in GitHub Actions - the migration job is skipped if no one h
 
 ## The Code
 
-Here's the GitHub Actions workflow sample that we used to build our ApproveOps flow:
+Here's the [GitHub Actions workflow sample](https://github.com/joshjohanning/ApproveOps/blob/main/.github/workflows/approveops.yml) that we used to build our ApproveOps flow:
 
 {% raw %}
 ```yml
@@ -135,6 +135,7 @@ jobs:
     steps:
       - run: echo "run migration!"
 ```
+{: file='.github/workflows/approveops.yml'}
 {% endraw %}
 
 ## Setup and Explanation
