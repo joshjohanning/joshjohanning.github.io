@@ -132,7 +132,7 @@ If we use a PAT and a secret on the repository, we get the `@team` mention, but 
 ![GitHub Actions Comment Bot](pat-bot.png ){: .shadow }
 _Issues comment from GitHub Actions using a PAT_
 
-Instead, we can use a GitHub App that with **read-only** permissions on `Organization / Members` and **Read & write** on `Repository / Issues` to create the comment and then we'll have the mention as well as not coming from a regular user:
+Instead, we can use a GitHub App that with **read-only** permissions on `Organization / Members` and **read & write** on `Repository / Issues` to create the comment and then we'll have the mention as well as not coming from a regular user:
 
 ![GitHub Actions Comment Bot](app-bot.png ){: .shadow }
 _Issues comment from GitHub Actions using a GitHub App_
