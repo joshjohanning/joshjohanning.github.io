@@ -45,7 +45,9 @@ _The ApproveOps run in GitHub Actions - the migration job is skipped if no one h
 
 ## The Code
 
-Here's the [GitHub Actions workflow sample](https://github.com/joshjohanning/ApproveOps/blob/main/.github/workflows/approveops.yml) that we used to build our ApproveOps flow:
+I recently created a [GitHub Action published on the marketplace](https://github.com/marketplace/actions/approveops-approvals-in-issueops) that consolidates the various actions and bash commands. If you're not interested in using the marketplace action or want to extend what I've done, my [GitHub Actions workflow sample](https://github.com/joshjohanning/ApproveOps/blob/main/.github/workflows/approveops.yml) is still available in its entirety.
+
+Here's how you can use my Action in a GitHub Action workflow:
 
 {% raw %}
 ```yml
@@ -63,68 +65,14 @@ jobs:
       approved: ${{ steps.check-approval.outputs.approved }}
 
     steps:
-      - uses: tibdex/github-app-token@v1
-        id: get_installation_token
-        with: 
-          appId: 170544
-          privateKey: ${{ secrets.PRIVATE_KEY }}
-
-      # if you don't use a GitHub app, remove the ${{ steps.get_installation_token.outputs.token }} below and create your own PAT secret
-      - id: check-approval
-        name: check if there is an approve command from authorized party
-        run: | 
-          users=$(curl -sLX GET 'https://api.github.com/orgs/${{ github.repository_owner }}/teams/approver-team/members' \
-            --header "Accept: application/vnd.github.v3+json" \
-            --header "Authorization: Bearer ${{ steps.get_installation_token.outputs.token }}" | jq -c '.[].login')
-          approveCommand="/approve"
-          comments=$(curl -sLX GET '${{ github.event.comment.issue_url }}/comments' \
-            --header "Accept: application/vnd.github.v3+json" \
-            --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}")
-          authorized=false
-          for comment in $(echo $comments | jq -r '.[] | @base64'); do
-              body=$(echo $comment | base64 --decode | jq -r '.body')
-              actor=$(echo $comment | base64 --decode | jq -r '.user.login')
-              if [[ $body == *"$approveCommand"* ]]; then
-                  echo "Approve command found..."
-                  echo $users | grep -q $actor && echo "Found $actor in users" && authorized=true || echo "Not found $actor in users"
-              else
-                  echo "Approve command not found..."
-              fi
-          done
-          if $authorized; then
-              echo "Authorized"
-              echo "::set-output name=approved::true"
-          else
-              echo "Not authorized"
-              echo "::set-output name=approved::false"
-              echo "::error title=Not Approved::There is no /approve command in the comments from an authorized party"
-          fi
-
-      - if: ${{ steps.check-approval.outputs.approved == 'false' }}
-        name: Create completed comment
-        uses: peter-evans/create-or-update-comment@v1
+      - name: ApproveOps - ApproveOps in IssueOps
+        uses: joshjohanning/ApproveOps@main
+        id: check-approval
         with:
-          token: ${{ steps.get_installation_token.outputs.token }} # or ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Hey, @${{ github.event.comment.user.login }}!
-            :cry:  No one approved your run yet! Have someone from the @joshjohanning-org/approver-team run `/approve` and then try your command again
-            :no_entry_sign: :no_entry: Marking the workflow run as failed
-
-      - if: ${{ steps.check-approval.outputs.approved == 'true' }}
-        name: Create completed comment
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          token: ${{ steps.get_installation_token.outputs.token }} # or ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Hey, @${{ github.event.comment.user.login }}!
-            :tada:  You were able to run the migration because someone approved!! :tada:
-      
-      # optional - if we just want the action run stop right here
-      # - if: ${{ steps.check-approval.outputs.approved == 'false' }}
-      #   name: exit if not approved
-      #   run: exit 1
+          app-id: 170284
+          app-private-key: ${{ secrets.PRIVATE_KEY }}
+          team-name: approver-team
+          fail-if-approval-not-found: false
 
   migration:
     runs-on: ubuntu-latest
@@ -142,12 +90,12 @@ jobs:
 
 ### Prerequisites
 
-- Since accessing team membership is outside the scope of the [GitHub Token](https://dev.to/github/the-githubtoken-in-github-actions-how-it-works-change-permissions-customizations-3cgp), we have to either use our [GitHub App created in this related post](/posts/github-apps/#scenario-2-using-a-github-app-as-a-rich-comment-bot) or create a PAT with `read:org` scope and use it to get the team membership.
-- At least one member in the approver team, otherwise `jq` won't be able to find the `.[].login` property (this could probably be written more defensively :) ).
+- Since accessing team membership is outside the scope of the [GitHub Token](https://dev.to/github/the-githubtoken-in-github-actions-how-it-works-change-permissions-customizations-3cgp), we have to either use our [GitHub App created in this related post](/posts/github-apps/#scenario-2-using-a-github-app-as-a-rich-comment-bot) or create a PAT with `read:org` scope and use it to get the team membership
+- At least one member in the approver team, otherwise `jq` won't be able to find the `.[].login` property (this could probably be written more defensively :) )
 
 ### Explanation
 
-We are using a bash script to:
+I am using a [bash script in my composite action](https://github.com/joshjohanning/ApproveOps/blob/main/.github/workflows/approveops.yml#L28:L53) to:
 
 1. Get a list of users in the approval team
 2. Get a list of comments on the issue (note that I am converting the comments to base64 otherwise comments that had spaces in them would throw the loop off - this was a [good resource for explaining that](https://www.starkandwayne.com/blog/bash-for-loop-over-json-array-using-jq/))
@@ -158,7 +106,7 @@ We are using a bash script to:
 7. Afterwards, we use the output parameter and `if:` logic to post the write comment on the workflow, either requesting proper approval or informing the user that the migration will now run since it has been approved
 8. I'm using additional `if:` logic and the `approveops` jobs' output to determine if the `migration` job should run or not
     - As an alternative, I could see one omitting this using a single job with additional `if:` logic on the rest of the migration steps, but this could be messy
-    - If using the same job and you didn't mind seeing failed runs in the UI because of lack of approvals, you could use the `exit 1` run command that's commented out above
+    - If using the same job and you didn't mind seeing failed runs in the UI because of lack of approvals, you could fail the workflow run by setting `fail-if-approval-not-found: true`
 
 ## Wrap-up
 
