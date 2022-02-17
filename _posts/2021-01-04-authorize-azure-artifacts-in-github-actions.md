@@ -30,9 +30,9 @@ What I did instead was borrow some of my scripting knowledge from my [NuGet Push
 Notes:
 - This should work with either .NET Core as well as full .NET Framework on both Linux and Windows
 - The `--configfile` argument is optional - if not specified, there is a [hierarchy involved](https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior):
-    1. It will first try to use the `NuGet.config` in the current working directory first
-    2. Next, it will use the local user `NuGet.config` in `%appdata%\NuGet\NuGet.Config` (Windows) or `~/.nuget/NuGet.Config` (Linux/Mac, depending on distro)
-- If the `.sln` is in the root (or current working directory), you can simply run `dotnet restore` without the solution path as well
+    1. It will first try to use the `NuGet.config`{: .filepath} in the current working directory first
+    2. Next, it will use the local user `NuGet.config`{: .filepath} in `%appdata%\NuGet\NuGet.Config`{: .filepath} (Windows) or `~/.nuget/NuGet.Config`{: .filepath} (Linux/Mac, depending on distro)
+- If the `.sln`{: .filepath} is in the root (or current working directory), you can simply run `dotnet restore` without the solution path as well
 - Reference the [`dotnet nuget add source`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-add-source) and [`dotnet restore`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore) docs for more information
 
 ## Setup
@@ -70,7 +70,7 @@ on:
   workflow_dispatch:  # manual trigger
 
 env:
-  solution_file: 'My.NetFramework47.App.sln'
+  solution_file: 'My.Core.App.sln'
   nuget_feed_name: 'My-Azure-Artifacts-Feed'
   nuget_feed_source: 'https://pkgs.dev.azure.com/<AZURE-DEVOPS-ORGANIZATION>/_packaging/<MY-AZURE-ARTIFACTS-FEED>/nuget/v3/index.json'
   nuget_config: '.nuget/NuGet.Config'
@@ -125,18 +125,18 @@ You may have noticed a commented-out run command in the above workflow:
   run: dotnet nuget remove source ${{ env.nuget_feed_name }} --configfile ${{ env.nuget_config }}
 ```
 
-If your `NuGet.config` already has an Azure DevOps entry, you will need to remove it with [dotnet nuget remove source](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-remove-source) otherwise you will likely see `401 Unauthorized` errors during the `dotnet restore`. This is because that entry doesn't (or at least shouldn't!) have any credentials associated with it committed into source control, so it essentially tries to access it anonymously and will fail.
+If your `NuGet.config`{: .filepath} already has an Azure DevOps entry, you will need to remove it with [dotnet nuget remove source](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-remove-source) otherwise you will likely see `401 Unauthorized` errors during the `dotnet restore`. This is because that entry doesn't (or at least shouldn't!) have any credentials associated with it committed into source control, so it essentially tries to access it anonymously and will fail.
 
-Also, we have to remove it because we cannot add a sources entry to the `NuGet.config` with the same name.
+Also, we have to remove it because we cannot add a sources entry to the `NuGet.config`{: .filepath} with the same name.
 
 ## Improvement Ideas / Notes
 
-1. If your solution does not contain a `NuGet.config` file, you may have to create a temporary config file similar to how the [NuGet Command task](https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/NuGetCommandV2/nugetrestore.ts#L136) works in Azure DevOps
-  - Alternatively, simply omitting the `--configfile` argument will use the [local user](https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior) `NuGet.config`
-  - Using the local `NuGet.config` will certainly work with GitHub-hosted runners since it's a fresh instance each time, but you may run into conflicts if you're on a shared self-hosted runner
-  - This [marketplace action](https://github.com/marketplace/actions/github-nuget-private-source-authorisation) uses a [local `NuGet.config`](https://github.com/StirlingLabs/GithubNugetAuthAction/blob/main/action.sh#L25:L34) by default
+1. If your solution does not contain a `NuGet.config`{: .filepath} file, you may have to create a temporary config file similar to how the [NuGet Command task](https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/NuGetCommandV2/nugetrestore.ts#L136) works in Azure DevOps
+  - Alternatively, simply omitting the `--configfile` argument will use the [local user](https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior) `NuGet.config`{: .filepath}
+  - Using the local `NuGet.config`{: .filepath} will certainly work with GitHub-hosted runners since it's a fresh instance each time, but you may run into conflicts if you're on a shared self-hosted runner
+  - This [marketplace action](https://github.com/marketplace/actions/github-nuget-private-source-authorisation) uses a [local `NuGet.config`{: .filepath}](https://github.com/StirlingLabs/GithubNugetAuthAction/blob/main/action.sh#L25:L34) by default
 1. The `Restore NuGet Packages` command might not be needed since the `Autobuild` action performs a restore as well - therefore one may also be able to remove the `solution_file` variable - but I always like to have an explicit task for restoring packages so I know exactly if that failed
-1. If you the `Autobuild` Action does not successfully build your project for code scanning, you will have to build it manually. Using full .NET Framework, there is an additional action that you need to add to add MSBuild to the path (`actions/setup-msbuild@v1.1`). Also make sure to add the `/p:UseSharedCompilation=false` argument mentioned from [Troubleshooting the CodeQL workflow: No code found during the build](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/troubleshooting-the-codeql-workflow#no-code-found-during-the-build). Here's an example:
+1. If you the `Autobuild` Action does not successfully build your project for code scanning, you will have to build it manually. Using full .NET Framework, there is an additional action that you need to add to add MSBuild to the path ([`microsoft/setup-msbuild@v1.1`](https://github.com/marketplace/actions/setup-msbuild)). Also make sure to add the `/p:UseSharedCompilation=false` argument mentioned from [Troubleshooting the CodeQL workflow: No code found during the build](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/troubleshooting-the-codeql-workflow#no-code-found-during-the-build). Here's an example:
 
 ```yaml
 - name: Add msbuild to PATH
@@ -159,7 +159,7 @@ I've seen a few instances where a team is using an [API key to access Artifactor
 ```
 
 Notes:
-- The `-ConfigFile` argument can optionally be used to specify a `NuGet.config` file
+- The `-ConfigFile` argument can optionally be used to specify a `NuGet.config`{: .filepath} file
 - Reference the [`nuget setapikey`](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-setapikey) docs for more information
 
 {% endraw %}
