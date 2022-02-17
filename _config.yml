@@ -26,8 +26,7 @@ title: josh-ops                          # the main title
 tagline: A DevOps Blog   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  Blogging about Azure DevOps and GitHub practices, 
-  tips, and my continuous improvement DevOps journey.
+  Blogging about Azure DevOps and GitHub practices, tips, and my continuous improvement DevOps journey.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://josh-ops.com'
