@@ -125,7 +125,9 @@ You may have noticed a commented-out run command in the above workflow:
   run: dotnet nuget remove source ${{ env.nuget_feed_name }} --configfile ${{ env.nuget_config }}
 ```
 
-If your `NuGet.config` already has an Azure DevOps entry, you will need to remove it with [dotnet nuget remove source](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-remove-source) otherwise you will likely see `401 Unauthorized` errors during the `dotnet restore`. This is because that entry doesn't (or at least shouldn't!) have any credentials associated with it committed into source control, so it essentially tries to access it anonymously and will fail. 
+If your `NuGet.config` already has an Azure DevOps entry, you will need to remove it with [dotnet nuget remove source](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-remove-source) otherwise you will likely see `401 Unauthorized` errors during the `dotnet restore`. This is because that entry doesn't (or at least shouldn't!) have any credentials associated with it committed into source control, so it essentially tries to access it anonymously and will fail.
+
+Also, we have to remove it because we cannot add a sources entry to the `NuGet.config` with the same name.
 
 ## Improvement Ideas / Notes
 
