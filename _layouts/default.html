@@ -7,9 +7,11 @@ layout: compress
 
 {% include lang.html %}
 
+{% include assets-origin.html %}
+
 {% capture prefer_mode %}
   {% if site.theme_mode %}
-    mode="{{ site.theme_mode }}"
+    data-mode="{{ site.theme_mode }}"
   {% endif %}
 {% endcapture %}
 
@@ -21,7 +23,7 @@ layout: compress
     {% include mode-toggle.html %}
   {% endunless %}
 
-  <body data-spy="scroll" data-target="#toc">
+  <body data-spy="scroll" data-target="#toc" data-topbar-visible="true">
 
     {% include sidebar.html %}
 

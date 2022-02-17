@@ -5,23 +5,27 @@
 @import "colors/light-syntax";
 @import "colors/dark-syntax";
 
-html:not([mode]),
-html[mode=light] {
-  @include light-syntax;
-}
+html {
+  @media (prefers-color-scheme: light) {
+    &:not([data-mode]),
+    [data-mode=light] {
+      @include light-syntax;
+    }
 
-html[mode=dark] {
-  @include dark-syntax;
-}
-
-@media (prefers-color-scheme: dark) {
-  html:not([mode]),
-  html[mode=dark] {
-    @include dark-syntax;
+    &[data-mode=dark] {
+      @include dark-syntax;
+    }
   }
 
-  html[mode=light] {
-    @include light-syntax;
+  @media (prefers-color-scheme: dark) {
+    &:not([data-mode]),
+    &[data-mode=dark] {
+      @include dark-syntax;
+    }
+
+    &[data-mode=light] {
+      @include light-syntax;
+    }
   }
 }
 
@@ -95,7 +99,7 @@ $code-radius: 6px;
     user-select: none;
   }
 
-} //.highlight
+} /* .highlight */
 
 code {
   -webkit-hyphens: none;
@@ -110,8 +114,22 @@ code {
     background-color: var(--inline-code-bg);
   }
 
+  &.filepath {
+    background-color: inherit;
+    color: var(--filepath-text-color);
+    font-weight: 600;
+    padding: 0;
+  }
+
+  &.filepath {
+    background-color: inherit;
+    color: var(--filepath-text-color);
+    font-weight: 600;
+    padding: 0;
+  }
+
   a > &.highlighter-rouge {
-    padding-bottom: 0; // show link's underlinke
+    padding-bottom: 0; /* show link's underlinke */
     color: inherit;
   }
 
@@ -119,7 +137,7 @@ code {
     border-bottom: none;
   }
 
-  blockquote &.highlighter-rouge {
+  blockquote & {
     color: inherit;
   }
 
@@ -131,8 +149,10 @@ code {
 td.rouge-code {
   @extend %code-snippet-padding;
 
-  // Prevent some browser extends from
-  // changing the URL string of code block.
+  /*
+    Prevent some browser extends from
+    changing the URL string of code block.
+  */
   a {
     color: inherit !important;
     border-bottom: none !important;
@@ -186,9 +206,9 @@ div {
       ($dot-size + $dot-margin) * 2 0 0 var(--code-header-muted-color);
   }
 
-  // the label block
+  /* the label block */
   span {
-    // label icon
+    /* label icon */
     i {
       font-size: 1rem;
       margin-right: 0.4rem;
@@ -201,19 +221,19 @@ div {
 
     @at-root [file] #{&} > i {
       position: relative;
-      top: 1px; // center the file icon
+      top: 1px; /* center the file icon */
     }
 
-    // label text
+    /* label text */
     &::after {
-      content: attr(label-text);
+      content: attr(data-label-text);
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--code-header-text-color);
     }
   }
 
-  // clipboard
+  /* clipboard */
   button {
     @extend %cursor-pointer;
 
