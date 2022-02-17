@@ -49,7 +49,7 @@ Creating a GitHub App is pretty straightforward! I'll defer to [GitHub's documen
 3. Click "**New GitHub App**" in the upper right-hand corner
 4. Start filling in the details! The name and Homepage URL doesn't matter much right now (but it does need a valid URL here) 
 5. What does matter is the "**Webhook URL**" - if we want to _use_ this GitHub App in the next section, we'll need to grab the installation ID. The easiest way to do that is to start a new channel at [smee.io](https://smee.io/) and use the URL of the channel as the Webhook URL.
-6. Grant it the **repository permissions**, **organization permissions**, **user permissions**, and what events to subscribe to - for the examples in this blog post, we'll grant read access to `repository / contents`, `repository / issues`, and `organization / members` - if you change this after the it's already been installed to an organization, you'll have review and re-approve the permission changes for the GitHub App
+6. Grant it the **repository permissions**, **organization permissions**, **user permissions**, and what events to subscribe to - for the examples in this blog post, we'll grant **read-only** access to `repository / contents`, **read & write** access to `repository / issues`, and **read-only** access to `organization / members` - if you change this after the it's already been installed to an organization, you'll have review and re-approve the permission changes for the GitHub App
 7.  After creation, you should see a "ping" entry in your smee.io channel - this is a confirmation that the app was created
 8.  On the left-hand menu, you should now have a few options, one of those being "**Install App**" - click it, and install the app to the organization
 9.  in your smee.io channel, you should have a new payload from the installation - expand the "installation" property to find your "**installation ID**" - this is the ID that you'll need to use in the next section
@@ -132,7 +132,7 @@ If we use a PAT and a secret on the repository, we get the `@team` mention, but 
 ![GitHub Actions Comment Bot](pat-bot.png ){: .shadow }
 _Issues comment from GitHub Actions using a PAT_
 
-Instead, we can use a GitHub App that with the `organization / members` permissions to create the comment and then we'll have the mention as well as not coming from a regular user:
+Instead, we can use a GitHub App that with **read-only** permissions on `Organization / Members` and **Read & write** on `Repository / Issues` to create the comment and then we'll have the mention as well as not coming from a regular user:
 
 ![GitHub Actions Comment Bot](app-bot.png ){: .shadow }
 _Issues comment from GitHub Actions using a GitHub App_
