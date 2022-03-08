@@ -1,5 +1,5 @@
 ---
-title: 'My Experience Working with Azure Front Door Standard/Premium Preview'
+title: 'Azure Front Door Standard/Premium Preview - Tips, Tricks, and Lessons Learned'
 author: Josh Johanning
 date: 2021-10-01 16:30:00 -0500
 description: I share my experience, lessons-learned, and tips and tricks for working with the new Azure Front Door Standard/Premium (Preview) SKUs
@@ -14,7 +14,7 @@ image:
 
 ## Overview
 
-I want to talk about Azure Front Door - not the old Azure Front Door - the new Azure Front Door, the new PREVIEW Front Door with the Standard/Premium SKUs. But Josh, wait, this is a DevOps blog, why are you talking about Azure Front Door? Well, I had the ~~pleasure~~ experience of working with Front Door (Preview) on my most recent project, and thought I would be doing the world a disservice by not sharing a little bit of the ~~frustration~~ knowledge I have gained while working with it. Whether no one else is using this service or no one is talking about it, we struggled to find many resources online for how to do certain things in the Front Door (Preview), so this is where this article comes into play.
+I want to talk about Azure Front Door - not the old Azure Front Door - the new Azure Front Door, the new [PREVIEW Front Door with the Standard/Premium SKUs](https://docs.microsoft.com/en-us/azure/frontdoor/standard-premium/overview). But Josh, wait, this is a DevOps blog, why are you talking about Azure Front Door? Well, I had the ~~pleasure~~ experience of working with Front Door (Preview) on my most recent project, and thought I would be doing the world a disservice by not sharing a little bit of the ~~frustration~~ knowledge I have gained while working with it. Whether no one else is using this service or no one is talking about it, we struggled to find many resources online for how to do certain things in the Front Door (Preview), so this is where this article comes into play.
 
 I am not planning on writing an entire how-to article, this is just intended to serve as a resource that hopefully the SEO Gods can help make someone else's life easier. If you are unfamiliar with Azure Front Door (Preview), or want some official background and guidance from Microsoft, see the [What is Azure Front Door Standard/Premium (Preview)?](https://docs.microsoft.com/en-us/azure/frontdoor/standard-premium/overview) page.
 
