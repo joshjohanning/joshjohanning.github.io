@@ -20,9 +20,10 @@ GitHub Actions has a relatively little known feature where you can [run jobs in 
 Why would you want to use a container job, you may ask? Well imagine you have a Python application that uses a specific version of Python. Okay, simple enough, we can just use the [Setup Python](https://github.com/marketplace/actions/setup-python) action to install the right version. But what if we also require a specific / non-standard version of Node? And MySQL? We could use a script and install all our prerequisites using `apt install`, but this takes time. Over dozens of CI jobs, the extra minutes add up and you might even run against the cap of your limit. So instead, we can use a container job that has all the prerequisites our application needs to build / run already pre-installed.
 
 I won't really be covering it, but there is also the option to run a [service container alongside your job](https://docs.github.com/en/actions/using-containerized-services/about-service-containers). This would be useful if running tests against a containerized copy of a database, for example. The documentation uses Redis as an example. Similar with [Docker Container Actions](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action).
+
 ## Caveats
 
-Usually, I put the caveats after the implementation, but there are enough important ones here to mention to lead with. If none of these apply, head to the [Implementation](#implementation) section.
+Usually, I put the caveats after the implementation, but there are enough important ones here to lead with. If none of these apply, head to the [Implementation](#implementation) section.
 
 - Containers in GitHub Actions, including [Container Jobs](https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container), [Service Containers](https://docs.github.com/en/actions/using-containerized-services/about-service-containers), and [Docker Container Actions](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action) only work on **Linux** runners - they will not run on Windows runners 😔
     + Some Marketplace actions, such as [Checkmarx](https://github.com/marketplace/actions/checkmarx-cxflow-action), are Docker Container Actions, therefore they won't run on Windows
