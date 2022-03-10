@@ -88,9 +88,9 @@ Here's the action code to generate and sign an installation access token for aut
       - uses: tibdex/github-app-token@v1
         id: get_installation_token
         with: 
-          appId: 170544
-          installationId: 23052920
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          app_id: 170544
+          installation_id: 23052920
+          private_key: ${{ secrets.PRIVATE_KEY }}
 
       # clone using the `actions/checkout` step
       - name: Checkout
@@ -145,8 +145,8 @@ Here's the relevant action code:
       - uses: tibdex/github-app-token@v1
         id: get_installation_token
         with: 
-          appId: 170544
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          app_id: 170544
+          private_key: ${{ secrets.PRIVATE_KEY }}
           
       - if: ${{ steps.check-approval.outputs.approved == 'false' }}
         name: Create completed comment
