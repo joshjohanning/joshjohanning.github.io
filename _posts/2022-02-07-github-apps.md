@@ -39,7 +39,7 @@ GitHub Apps also have a [higher API rate limiting threshold](https://docs.github
 
 - Each organization can only own up to [100 GitHub Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-github-apps)
 - You'll have to be an organization owner to create and install a GitHub app in an organization
-- Each installation access token is only valid for a [maximum of 10 minutes](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app)
+- Each installation access token is only valid for a [maximum of one hour](https://docs.github.com/en/rest/reference/apps#create-an-installation-access-token-for-an-app)
 
 ## Creating a GitHub App
 
