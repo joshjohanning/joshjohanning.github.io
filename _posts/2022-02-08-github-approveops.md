@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2022-02-08 8:30:00 -0600
 description: Using GitHub Actions to build automation on top of Issues (IssueOps) with Approvals from someone in a designated GitHub team
 categories: [GitHub, Actions]
-tags: [GitHub, GitHub Issues, GitHub Actions, GitHub Apps, IssueOps]
+tags: [GitHub, GitHub Issues, GitHub Actions, GitHub Apps, IssueOps, ChatOps]
 img_path: /assets/screenshots/2022-02-08-github-approveops
 image:
   src: ../2022-02-07-github-apps/app-bot.png
