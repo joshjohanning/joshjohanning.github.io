@@ -36,6 +36,7 @@ I made this chart a while back for a client when helping them determine if the G
 | [Dependency Review in Pull Request (rich diff)](https://github.blog/changelog/2021-10-05-dependency-review-is-generally-available/) | | X | X |
 | [Secret Scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) | | X | X `*` |
 | [Secret Scanning - Custom Patterns](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/defining-custom-patterns-for-secret-scanning) | | X | |
+| [Secret Scanning - Push Protections (Beta)](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning) | | X | |
 
 Notes:
 - GHE = GitHub Enterprise
@@ -66,6 +67,7 @@ There are a few components of Dependabot, and while I tried to list each feature
 
 | Date        | Note |
 |-------------|----|
+| Apr 04 2022 | Adding [Secret Scanning - Push Protections (Beta)](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning) |
 | Mar 07 2022 | Adding new Security [Overview for the Enterprise (Beta)](https://github.blog/changelog/2022-03-01-security-overview-for-enterprise-in-beta/) and [secret scanning note for public repos](https://github.blog/changelog/2022-03-04-secret-scanning-advanced-security-customers-can-now-view-alerts-on-their-public-repositories/)
 | Jan 26 2022 | Adding [Dependabot section](#about-dependabot); reorganized chart
 | Dec 03 2021 | Initial post
