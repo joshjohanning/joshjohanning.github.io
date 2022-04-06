@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2021-12-03 16:30:00 -0600
 description: A feature comparison between GitHub Enterprise, GitHub Enterprise with GitHub Advanced Security (GHAS), and Public Repos on github.com
 categories: [GitHub, Advanced Security]
-tags: [GitHub, GitHub Advanced Security]
+tags: [GitHub, GitHub Advanced Security, Dependabot]
 image:
   src: /assets/screenshots/2021-12-03-github-advanced-security-feature-chart/organization-security-overview.png
   width: 100%
@@ -34,6 +34,7 @@ I made this chart a while back for a client when helping them determine if the G
 | [Security Overview for the Enterprise (Beta)](https://github.blog/changelog/2022-03-01-security-overview-for-enterprise-in-beta/) | | X | n/a |
 | [CodeQL Code Scanning](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning) | | X | X |
 | [Dependency Review in Pull Request (rich diff)](https://github.blog/changelog/2021-10-05-dependency-review-is-generally-available/) | | X | X |
+| [Dependency Review Action (Beta)](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement) | | X | X |
 | [Secret Scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) | | X | X `*` |
 | [Secret Scanning - Custom Patterns](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/defining-custom-patterns-for-secret-scanning) | | X | |
 | [Secret Scanning - Push Protections (Beta)](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning) | | X | |
@@ -66,8 +67,9 @@ There are a few components of Dependabot, and while I tried to list each feature
 ## Changelog
 
 | Date        | Note |
-|-------------|----|
+|-------------|------|
+| Apr 06 2022 | Adding [Dependency Review Action (Beta)](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement) |
 | Apr 04 2022 | Adding [Secret Scanning - Push Protections (Beta)](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning) |
-| Mar 07 2022 | Adding new Security [Overview for the Enterprise (Beta)](https://github.blog/changelog/2022-03-01-security-overview-for-enterprise-in-beta/) and [secret scanning note for public repos](https://github.blog/changelog/2022-03-04-secret-scanning-advanced-security-customers-can-now-view-alerts-on-their-public-repositories/)
-| Jan 26 2022 | Adding [Dependabot section](#about-dependabot); reorganized chart
-| Dec 03 2021 | Initial post
+| Mar 07 2022 | Adding new Security [Overview for the Enterprise (Beta)](https://github.blog/changelog/2022-03-01-security-overview-for-enterprise-in-beta/) and [secret scanning note for public repos](https://github.blog/changelog/2022-03-04-secret-scanning-advanced-security-customers-can-now-view-alerts-on-their-public-repositories/) |
+| Jan 26 2022 | Adding [Dependabot section](#about-dependabot); reorganized chart |
+| Dec 03 2021 | Initial post |
