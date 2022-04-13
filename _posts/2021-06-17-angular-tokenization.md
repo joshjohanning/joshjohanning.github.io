@@ -22,7 +22,7 @@ I'm taking the concepts from that post and my experience with a few other client
 
 ## The Problem
 
-The particular challenge with Angular is that the build output is not the same file name every time - you can't just swap in a new file with the proper values. See screenshot for th main.js files from two builds:
+The particular challenge with Angular is that the build output is not the same file name every time - you can't just swap in a new file with the proper values. See screenshot for th `main.js`{: .filepath} files from two builds:
 
 ![main.js example](/assets/screenshots/2021-06-17-angular-tokenization/main.js.png){: .shadow }
 _Compiled main.js output from two different builds_
@@ -37,7 +37,7 @@ Pre-requisites:
 
 ### angular.json
 
-Your `angular.json` file might look a little different, but what I did was take an existing configuration, copy/paste it, and change the `fileReplacements` section, specifically the `src/environments/environment.tokenized.ts` line.
+Your `angular.json`{: .filepath} file might look a little different, but what I did was take an existing configuration, copy/paste it, and change the `fileReplacements` section, specifically the `src/environments/environment.tokenized.ts`{: .filepath} line.
 
 ```json
           "configurations": {
@@ -73,7 +73,7 @@ Your `angular.json` file might look a little different, but what I did was take 
 
 ## environments.tokenized.ts
 
-Similarly, I copied an existing `src/environments/environments.*.ts` file to create the `environments.tokenized.ts` file that my new configuration will use. The important line here is the `baseUrl: '#{baseUrl}#'` line. Notice how I'm creating a token here with the `#{token-name}#` syntax. This is the syntax of the token that our deployment process will know to find and replace.
+Similarly, I copied an existing `src/environments/environments.*.ts`{: .filepath} file to create the `environments.tokenized.ts`{: .filepath} file that my new configuration will use. The important line here is the `baseUrl: '#{baseUrl}#'` line. Notice how I'm creating a token here with the `#{token-name}#` syntax. This is the syntax of the token that our deployment process will know to find and replace.
 
 ```js
 import { NgxLoggerLevel } from 'ngx-logger';
@@ -129,11 +129,11 @@ I'm assuming your build artifacts are [published to the Pipeline](https://docs.m
 ```
 
 * Unzip Note 1: If you are running on your own ubuntu agents, make sure `unzip` is installed first!
-* Unzip Note 2: Similarly, if you are running on your own agents, the above example requires the [workspace to be cleaned](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#workspace) for each run otherwise on the second run it will find more than one .zip file to extract. You could alternatively use a stronger typed pattern than the `**/*.zip` pattern in finding your zips, of course.
+* Unzip Note 2: Similarly, if you are running on your own agents, the above example requires the [workspace to be cleaned](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#workspace) for each run otherwise on the second run it will find more than one `.zip`{: .filepath} file to extract. You could alternatively use a stronger typed pattern than the `**/*.zip`{: .filepath} pattern in finding your zips, of course.
 
 ### 4. Replace Tokens
 
-Right after you extract the contents of the artifact zip, add in the **[Replace Tokens](https://marketplace.visualstudio.com/items?itemName=qetza.replacetokens)** task. Note how my `rootDirectory` parameter is the same as the `destinationFolder` parameter from the unzip task. Additionally, `targetFiles` parameter is using a pattern to find the `main*.js` file, no matter what the file gets named for each build.
+Right after you extract the contents of the artifact zip, add in the **[Replace Tokens](https://marketplace.visualstudio.com/items?itemName=qetza.replacetokens)** task. Note how my `rootDirectory` parameter is the same as the `destinationFolder` parameter from the unzip task. Additionally, `targetFiles` parameter is using a pattern to find the `main*.js`{: .filepath} file, no matter what the file gets named for each build.
 
 ```yaml
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
@@ -147,7 +147,7 @@ Right after you extract the contents of the artifact zip, add in the **[Replace 
 
 * Replace Tokens Note 1: Normally I don't use the *full* name when referencing pipeline tasks, but if you also have [Colin's ALM Corner Build and Release Tools](https://marketplace.visualstudio.com/items?itemName=colinsalmcorner.colinsalmcorner-buildtasks), you'll run into an ambiguous task name error.
 * Replace Tokens Note 2: If you opted to not use the default token prefix/suffix like `#{token-name}#`, you can add in the `tokenPrefix` and `tokenSuffix` parameters here as well. Further documentation is [here](https://github.com/qetza/vsts-replacetokens-task).
-* Replace Tokens Note 3: If you had tokens in other .js files, you could simply use a `**/*.js` pattern.
+* Replace Tokens Note 3: If you had tokens in other `.js`{: .filepath} files, you could simply use a `**/*.js`{: .filepath} pattern.
 
 ### 5. Azure Web App Deploy
 
@@ -165,7 +165,7 @@ Assuming your deploying this **[Web App to Azure](https://docs.microsoft.com/en-
 
 ## Summary
 
-The **build job** will use our `tokenized` configuration to run the build and use our `#{baseUrl}#` token to use when compiling instead of a Dev or Prod URL. When you build locally, you can still use whatever other configuration you want without having to worry about the tokenized value. Just be sure to keep your config in sync, that is if you add or change something to one `environment*.ts` file, make sure to remember to do the tokenized one as well.
+The **build job** will use our `tokenized` configuration to run the build and use our `#{baseUrl}#` token to use when compiling instead of a Dev or Prod URL. When you build locally, you can still use whatever other configuration you want without having to worry about the tokenized value. Just be sure to keep your config in sync, that is if you add or change something to one `environment*.ts`{: .filepath} file, make sure to remember to do the tokenized one as well.
 
 The **deployment job** will...
 * take your published artifact zip from build
@@ -179,7 +179,7 @@ _Replace Tokens output in the pipeline_
 
 ## Build Configuration / File Replacement Update 08/12/2021
 
-I saw this in an `angular.json` file and had to update this post. This might be a more elegant solution than creating an entirely new `tokenized` build configuration:
+I saw this in an `angular.json`{: .filepath} file and had to update this post. This might be a more elegant solution than creating an entirely new `tokenized` build configuration:
 
 ```json
           "configurations": {
@@ -196,6 +196,6 @@ I saw this in an `angular.json` file and had to update this post. This might be 
 ```
 {: file='angular.json'}
 
-This encapsulates the best of both worlds - we are still building once and deploying many, but we also don't need a specialized build configuration to run through. We can use the normal production build configuration and file replace the tokenized `environments.prod.ts` with `environment.ts` at build time. 
+This encapsulates the best of both worlds - we are still building once and deploying many, but we also don't need a specialized build configuration to run through. We can use the normal production build configuration and file replace the tokenized `environments.prod.ts`{: .filepath} with `environment.ts`{: .filepath} at build time. 
 
 The deployment replace tokens task will replace the tokens with the proper environment-specific variable configuration.

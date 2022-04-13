@@ -3,7 +3,7 @@ title: 'Azure Front Door Standard/Premium Preview - Tips, Tricks, and Lessons Le
 author: Josh Johanning
 date: 2021-10-01 16:30:00 -0500
 description: I share my experience, lessons-learned, and tips and tricks for working with the new Azure Front Door Standard/Premium (Preview) SKUs
-categories: [Azure]
+categories: [Azure, Front Door]
 tags: [Azure, Azure Front Door]
 image:
   src: /assets/screenshots/2021-10-01-azure-frontdoor-preview-experience/front-door-overview-expanded.png
@@ -56,7 +56,7 @@ Note: For the purposes of this article, I am going to abbreviate Azure Front Doo
     - Maybe we were just doing it wrong, but we struggled to do native URL Rewriting in Azure Front Door - it's incredibly ~~possible~~ likely that we are just misinterpreting how it's supposed to work
     - See my [Stack Overflow](https://stackoverflow.com/questions/68564910/url-rewrite-in-azure-front-door-preview-standard-premium) post of what we were trying to do, and someone's [suggestion](https://stackoverflow.com/a/68914412/4270353) on how to resolve (I have not had a chance to test yet)
     - We instead did [URL Rewriting](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/url-rewriting?view=aspnetcore-5.0) by using middleware at the app level. It just requires a making a [small modification in the startup.cs file](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/url-rewriting?view=aspnetcore-5.0#url-redirect) (and if you're serving a Swagger page, there too!). See: [examples below](#url-rewrite)
-    - If working with an Azure Function App, [modify the host.json's] . For Function Apps, there is no way to rewrite the incoming URL. However, you can edit the [host.json file and customize the base path](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-output#hostjson-settings) by modifying the `routePrefix` property. See: [example below](#function-apps---hostjson)
+    - For Function Apps, there is no way to rewrite the incoming URL. However, you can edit the [host.json file and customize the base path](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-output#hostjson-settings) by modifying the `routePrefix` property. See: [example below](#function-apps---hostjson)
 - Update Times
     - Okay minor gripe, but it takes anywhere from [5-20 minutes](https://docs.microsoft.com/en-us/azure/frontdoor/standard-premium/faq#how-long-does-it-take-to-deploy-an-azure-front-door-does-my-front-door-still-work-when-being-updated) for a change you make to Front Door to propagate down to you
     - Sometimes loading in a different browser / using a proxy can help alleviate cache/dns issues
@@ -73,7 +73,7 @@ Note: For the purposes of this article, I am going to abbreviate Azure Front Doo
     - It is considered best practice to redirect http to https. This can be done in the code by adding the following to the `startup.cs` file: `app.UseHttpsRedirection();`
     - The problem with this method when using Azure Front Door with Private Endpoints is that this causes the app to redirect to the host (azurewebsites.net) instead of the incoming host URL (custom domain on Azure Front Door)
     - To work around this, you should remove this line of code altogether from the application and let Front Door redirect traffic to HTTPS (a setting on the Route)
-    - If you're working with an Angular app, make sure to remove any HTTPS redirect from the `web.config`
+    - If you're working with an Angular app, make sure to remove any HTTPS redirect from the `web.config`{: .filepath}
 - Deleting Endpoints / Domains / Front Door
     - If you want to delete a domain, you will need to clean up all of the associations (i.e.: the Route)
     - You can delete the entire Endpoint the domain is associated to as well
@@ -167,7 +167,7 @@ app.UseSwaggerUI(c =>
 
 #### Function Apps - host.json
 
-host.json:
+`host.json`{: .filepath}:
 ```json
 {
   "version": "2.0",  
@@ -177,6 +177,7 @@ host.json:
     }
   }
 ```
+{: file='host.json'}
 
 ### AFD CLI Commands
 

@@ -13,6 +13,6 @@ Although linked in various posts in this blog, I never fully advertise my `pipel
 
 Link: [https://github.com/joshjohanning/pipeline-templates](https://github.com/joshjohanning/pipeline-templates)
 
-In each folder, you will typically see the build as well as the deployment yaml template. I also started including the `azure-pipelines-*.yml` file to show an example of how to consume/reference the pipeline templates.
+In each folder, you will typically see the build as well as the deployment yaml template. I also started including the `azure-pipelines-*.yml`{: .filepath} file to show an example of how to consume/reference the pipeline templates.
 
 Let me know if there are any questions or areas for improvement!

@@ -55,9 +55,13 @@ updates:
 
 Shortly after committing the `.dependabot.yml`{: .filepath} file, we can confirm it works as there's a new PR from Dependabot:
 ![Dependabot logs](dependabot-pr.png){: .shadow }
+_Pull request created by Dependabot_
 
-We can also look at our [Dependabot logs](https://docs.github.com/en/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/troubleshooting-dependabot-errors#investigating-errors-with-dependabot-version-updates): 
+We can also look at our [Dependabot logs](https://docs.github.com/en/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/troubleshooting-dependabot-errors#investigating-errors-with-dependabot-version-updates):
+
 ![Dependabot logs](dependabot-logs.png){: .shadow }
+_Dependabot logs showing that there is a new package version from Azure Artifacts_
+
 
 ## Troubleshooting
 
@@ -133,7 +137,7 @@ See the [docs](https://docs.github.com/en/code-security/supply-chain-security/ke
 
 ### Re-running Dependabot
 
-Even though you might have the schedule set to "daily", Dependabot will run again if you push (or merge a PR) to the default branch. You can also run it manually at any time by navigating to:
+Even though you might have the schedule set to "daily", Dependabot will run again if you push a change to the `.github/dependabot.yml`{: .filepath}. You can also run it manually at any time by navigating to:
 
 1. Insights
 2. Dependency Graph
@@ -142,6 +146,7 @@ Even though you might have the schedule set to "daily", Dependabot will run agai
 5. Check for updates
 
 ![Manually run Dependabot again](dependabot-update.png){: .shadow }
+_Check for Dependabot updates again manually_
 
 ## Summary
 

@@ -57,7 +57,7 @@ Note the test command here that we are using to generate the Cobertura code cove
 dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx
 ```
 
-We have to use a copy command to copy the `coverage.cobertura.xml` to a known location - the marketplace action we are using doesn't seem to support wildcards and Coverlet uses a random guid folder path.
+We have to use a copy command to copy the `coverage.cobertura.xml`{: .filepath} to a known location - the marketplace action we are using doesn't seem to support wildcards and Coverlet uses a random guid folder path.
 
 ```bash
 cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml

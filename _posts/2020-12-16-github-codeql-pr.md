@@ -21,14 +21,14 @@ I knew how to configure a branch protection rule in GitHub that enforces things 
 
 If you already have a Code Scanning workflow configured, skip to step #7.
 
-1. The first thing you need is a public repository or a private repository with the GitHub Advanced Security license purchased
+1. The first thing you need is a public repository (GHAS is free for public repos) or a private repository with the GitHub Advanced Security license enabled
 1. In the Security tab on the repository, navigate to 'Code scanning alerts' page
 1. I'm using the native 'CodeQL Analysis' workflow by GitHub - there are 3rd party analysis engines here too!
 1. Take a look at the workflow file - I didn't need to make any changes, but one can modify the language matrix if you want/don't want scans to run for a particular language
 1. There's an `Autobuild` step here that works most of the time, but for some repositories I found I had to build my app manually - further reading on [build steps for compiled languages](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-the-codeql-workflow-for-compiled-languages#adding-build-steps-for-a-compiled-language)
 1. Commit the workflow to your branch and merge it into Main - for best results we want an initial scan in the default branch before we test out the PR process
 1. Under the Settings tab in the repository, navigate to Branches
-1. Create a [rule](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-required-status-checks) for your default branch - check the 'Require status checks to pass before merging' box
+1. Create a [branch protection rule](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule#creating-a-branch-protection-rule) for your default branch - check the 'Require status checks to pass before merging' box
 1. If you used the GitHub CodeQL workflow, add the `CodeQL` status check and save the rule
    - You don't want the `Analyze (javascript)` status check; that just will show if the particular scan has completed, not that it found any vulnerabilities
    - If you don't see the `CodeQL` to add as a status check to the branch protection, **it won't appear as an option until you initiate at least one PR on the repository that triggers and completes the entire CodeQL scan** (meaning all of the `Analyze` jobs have finished) - as of December 2021, this is still an issue. It is vaguely alluded to in this [tidbit in the documentation](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/setting-up-code-scanning-for-a-repository#understanding-the-pull-request-checks) - emphasis mine: 
@@ -48,7 +48,7 @@ Another thing the GitHub Docs do not do a good job of spelling out is that only 
 
 Alright, so let's introduce an error...does anyone know of an easy vulnerability we can put in our code? Well neither do I, but we don't have to with the help of our friend, the [Semmle vulnerability database](https://web.archive.org/web/20200929073843/https://help.semmle.com/wiki/label/js/path-problem) (Note: The day before I wrote this, this link started redirecting to GitHub, but I found an archive.org link to use for the purposes of this demo).
 
-I'm going to use an incorrect suffix vulnerability. The easiest way to introduce this is to: 1) make sure `javascript` is in the language matrix in our CodeQL workflow like so: `language: [ 'csharp', 'javascript' ]` and 2) check in a simple `.js` file somewhere in the repository with the bad code:
+I'm going to use an incorrect suffix vulnerability. The easiest way to introduce this is to: 1) make sure `javascript` is in the language matrix in our CodeQL workflow like so: `language: [ 'csharp', 'javascript' ]` and 2) check in a simple `.js`{: .filepath} file somewhere in the repository with the bad code:
 
 ```javascript
 function endsWith(x,y) {
@@ -108,7 +108,7 @@ Okay, what if we were to have a repository with Terraform code and used the Shif
 
 Well, in the case of the ShiftLeft Analysis workflow, there is a [config file](https://slscan.io/en/latest/integrations/tips/#config-file) that can be uploaded to the root of the repository to define some of this, but I haven't played around much for this. For the GitHub CodeQL workflow, there is no fine-tuning configuration file that we can easily use (that I know of at this date).
 
-For this, I wrote a script that examines the `.sarif` and added another job to the workflow, like so:
+For this, I wrote a script that examines the `.sarif`{: .filepath} and added another job to the workflow, like so:
 
 {% raw %}
 
@@ -184,7 +184,7 @@ Depending on the workflow, you may have to modify the `path` in the Upload task 
 
 The entire workflow can be found in my [GitHub branch](https://github.com/joshjohanning/tailspin-spacegame-web-deploy/blob/2d4955b668ffde45a2f4ea6e742268a536249b27/.github/workflows/codeql-analysis.yml).
 
-Because the .sarif produced by the ShiftLeft analysis is slightly different and by default *doesn't* fail the job even with *errors*, I created a different workflow you can use to block pull requests if errors or warnings are found - see for [example](https://github.com/joshjohanning/azdo-terraform-tailspin/blob/05151b64818db1c4cabf5aaf51f0024c779d81f5/.github/workflows/shiftleft-analysis.yml).
+Because the `.sarif`{: .filepath} produced by the ShiftLeft analysis is slightly different and by default *doesn't* fail the job even with *errors*, I created a different workflow you can use to block pull requests if errors or warnings are found - see for [example](https://github.com/joshjohanning/azdo-terraform-tailspin/blob/05151b64818db1c4cabf5aaf51f0024c779d81f5/.github/workflows/shiftleft-analysis.yml).
 
 Now just like we did above, we can modify our branch rule to require the "Detect-Errors" job to finish successfully, as this job will run successfully if there are no errors/warnings.
 

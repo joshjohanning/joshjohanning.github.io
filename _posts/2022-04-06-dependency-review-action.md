@@ -41,13 +41,15 @@ jobs:
 
 ## Results
 
-To try this at home, you can attempt to `"tar": "2.2.2"` to the `dependencies` section of your `package.json` file. This will cause the action to fail since there are several vulnerabilities in this version of `tar`:
+To try this at home, you can attempt to `"tar": "2.2.2"` to the `dependencies` section of your `package.json`{: .filepath} file. This will cause the action to fail since there are several vulnerabilities in this version of `tar`:
 
 ![Attempt at adding a vulnerable dependency](dependency-review-action.png){: .shadow }
+_Dependency Review Action preventing a pull request with a vulnerable dependency added_
 
 I think this is _much_ better than the prior option for finding/preventing vulnerable dependencies in a pull request:
 
 ![Rich diff of dependencies in a pull request](dependency-review-rich-diff.png){: .shadow }
+_The previous option for dependency review in a pull request (rich diff)_
 
 ## Making this a required status check
 

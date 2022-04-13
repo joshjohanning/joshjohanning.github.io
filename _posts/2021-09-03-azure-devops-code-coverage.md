@@ -85,7 +85,7 @@ The `--collect:"XPlat Code Coverage"` argument is what tells `dotnet test` to us
 
 This argument creates a `$(Agent.TempDirectory)/*/coverage.cobertura.xml` code coverage report file. This folder is default output folder since Azure DevOps adds `--results-directory /home/vsts/work/_temp` to the command.
 
-Next, we have to specifically add the `PublishCodeCoverageResults@1` task to publish the code coverage output to the pipeline. It seems like at least with my project, it produces 2 `coverage.cobertura.xml` files and that throws a warning in the pipeline, so that's I used `$(Agent.TempDirectory)/*/coverage.cobertura.xml` not `$(Agent.TempDirectory)/**/coverage.cobertura.xml`
+Next, we have to specifically add the `PublishCodeCoverageResults@1` task to publish the code coverage output to the pipeline. It seems like at least with my project, it produces 2 `coverage.cobertura.xml`{: .filepath} files and that throws a warning in the pipeline, so that's I used `$(Agent.TempDirectory)/*/coverage.cobertura.xml` not `$(Agent.TempDirectory)/**/coverage.cobertura.xml`
 
 ![duplicate code coverage reports](/assets/screenshots/2021-09-03-azure-devops-code-coverage/find-code-coverage.png){: .shadow }
 _Duplicate coverage.cobertura.xml code coverage results_

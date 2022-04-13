@@ -43,11 +43,11 @@ steps:
   displayName: Cache npm
 ```
 
-Notice how the first screenshot is caching the `$(Build.SourcesDirectory)/Project/node_modules` folder vs Microsoft's code sample is caching `$(Pipeline.Workspace)/.npm` - quite a critical difference! It makes sense after thinking about it, when you run `npm install` locally, where is it going to download all of the modules to? The `node_modules` folder in the root of the project, of course.
+Notice how the first screenshot is caching the `$(Build.SourcesDirectory)/Project/node_modules`{: .filepath} folder vs Microsoft's code sample is caching `$(Pipeline.Workspace)/.npm`{: .filepath} - quite a critical difference! It makes sense after thinking about it, when you run `npm install` locally, where is it going to download all of the modules to? The `node_modules`{: .filepath} folder in the root of the project, of course.
 
-The way the task works is it zips up and saves the `path` you specify and stores it to the build (as a build-in post-build step). During the next build, if the `key` matches, it downloads the zip and extracts it to the aforementioned `path`. Both of the above examples use the `key: npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/Project/package-lock.json`, where it matches the OS the build is running on as well as the hashed content of the `package-lock.json` file. 
+The way the task works is it zips up and saves the `path` you specify and stores it to the build (as a build-in post-build step). During the next build, if the `key` matches, it downloads the zip and extracts it to the aforementioned `path`. Both of the above examples use the `key: npm | “$(Agent.OS)” | $(Build.SourcesDirectory)/Project/package-lock.json`{: .filepath}, where it matches the OS the build is running on as well as the hashed content of the `package-lock.json`{: .filepath} file. 
 
-This means, that if you flip a build from Windows to Ubuntu, the key won't match, and the contents of the cache won't be restored. Likewise, if the hash of the `package-lock.json` file changes (ie: you add a package, change a package version, remove a package, etc.), the cache won't be restored. In both cases, you would expect a full `npm install` from scratch. If the build completes successfully, you should expect a new cache to be uploaded as an automatically added post build step:
+This means, that if you flip a build from Windows to Ubuntu, the key won't match, and the contents of the cache won't be restored. Likewise, if the hash of the `package-lock.json`{: .filepath} file changes (ie: you add a package, change a package version, remove a package, etc.), the cache won't be restored. In both cases, you would expect a full `npm install` from scratch. If the build completes successfully, you should expect a new cache to be uploaded as an automatically added post build step:
 ![uploading cache to pipeline](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/upload-cache.png ){: .shadow }
 _Uploading of the cache as a post-job step_
 
@@ -66,7 +66,7 @@ Putting it all together, here's what my task looks like:
     cacheHitVar: CACHE_HIT
 ```
 
-- Note: You'll notice my example is using `package.json` and not `package-lock.json` - the team I was working with wasn't using the `package-lock.json` file, so I just wanted to illustrate that you can also use the `package.json` as a key and it will work just as well
+- Note: You'll notice my example is using `package.json`{: .filepath} and not `package-lock.json`{: .filepath} - the team I was working with wasn't using the `package-lock.json`{: .filepath} file, so I just wanted to illustrate that you can also use the `package.json`{: .filepath} as a key and it will work just as well
 - Note: The `cacheHitVar` set to `CACHE_HIT` will evaluate to `true` if the cache hit is a success - could be useful for a [conditional task](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/caching?view=azure-devops#conditioning-on-cache-restoration) where maybe you don't even run the `npm install` command at all
 
 ## Gotchas

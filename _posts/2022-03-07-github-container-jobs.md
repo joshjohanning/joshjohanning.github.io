@@ -29,11 +29,13 @@ Usually, I put the caveats after the implementation, but there are enough import
     + Some Marketplace actions, such as [Checkmarx](https://github.com/marketplace/actions/checkmarx-cxflow-action), are Docker Container Actions, therefore they won't run on Windows
 
 ![Container jobs/actions don't run on windows](container-action-only-windows.png){: .shadow }
+_Container jobs/actions don't run on Windows_
 
 - If you are using Docker to run the runner, example you are using the [Actions Runner Controller (ARC)](https://github.com/actions-runner-controller/actions-runner-controller) in a Kubernetes cluster, you cannot use a container in a Docker running in Docker scenario
     + Mentioned in this [issue](https://github.com/actions/runner/issues/367#issuecomment-597742895)
 
-![Container jobs/actions don't run on windows](container-cant-run-in-container.png){: .shadow }
+![Container jobs/actions can't run within another container](container-cant-run-in-container.png){: .shadow }
+_Container jobs/actions can't run within another container_
 
 - You cannot override the working directory that gets mapped in - the `/_work/`{: .filepath} directory on the host is mapped to `/__w/`{: .filepath} in the container
     + This is only a problem if you had intended to use an alternative work directory with permissions already set up in the container
@@ -115,6 +117,7 @@ jobs:
 When you run the workflow, you will notice an additional log entry to initialize the container. Subsequently, all steps in the job will run inside of the container:
 
 ![Container job](container-job.png){: .shadow }
+_Successful container job_
 
 For those wondering, here is what a sample `DOCKERFILE`{: .filepath} for this [looks like](https://github.com/joshjohanning/container-job-test/blob/main/Dockerfile) - hint there's nothing special. You can also test this with good 'ol `ubuntu:20.04` (or `ubuntu:latest`).
 

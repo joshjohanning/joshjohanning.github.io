@@ -122,7 +122,7 @@ I'll often use the [peter-evans/create-or-update-comment](https://github.com/mar
 
 {% raw %}
 ![GitHub Actions Comment Bot](github-actions-bot.png ){: .shadow }
-_GitHub Actions Comment Bot using `${{ secrets.GITHUB_TOKEN}}`_
+_GitHub Actions Comment Bot using GitHub Token from the Action run_
 {% endraw %}
 
 However, if you look closely, you might notice something: since the GitHub Token only has access to the repository, it can't create the proper `@team` mention in the comment. There is no hyperlink there. This might not be super important, but in my case the team was going to use their GitHub notifications to check if there were any issues that needed their attention, so this wasn't going to work.

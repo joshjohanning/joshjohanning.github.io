@@ -11,6 +11,7 @@ image:
   width: 100%
   height: 100%
   alt: Security Overview for an Organization with GitHub Advanced Security
+pin: true
 ---
 
 ## Overview
@@ -67,6 +68,7 @@ Note: Organization owners and repository administrators can only grant access to
 Organization administrators can create [Custom Repository Roles](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-peoples-access-to-your-organization-with-roles/managing-custom-repository-roles-for-an-organization) to customize and fine-tune different permission sets that repository administrators can grant. For example, I want to create a role that allows users to have Write access AND be able to view/dismiss Dependabot Alerts:
 
 ![Custom Repository Roles](custom-roles.png){: .shadow }
+_Custom repository roles - creating a custom role to allow viewing/managing of Dependabot alerts_
 
 ## Changelog
 

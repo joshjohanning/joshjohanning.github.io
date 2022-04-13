@@ -35,7 +35,7 @@ See the [official documentation](https://git-scm.com/book/en/v1/Git-and-Other-Sy
 
 The high-level process is as follows:
 
-1. Extract the authors from the SVN repo to create an `authors.txt` mapping file
+1. Extract the authors from the SVN repo to create an `authors.txt`{: .filepath} mapping file
 2. Modify the mapping file with the author names and email addresses
 3. Run `git svn clone` command
 4. Clean up tags and branches

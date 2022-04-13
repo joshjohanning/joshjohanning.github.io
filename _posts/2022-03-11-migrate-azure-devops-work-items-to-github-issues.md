@@ -20,3 +20,4 @@ The repo: [https://github.com/joshjohanning/ado_workitems_to_github_issues](http
 
 Screenshot:
 ![Azure DevOps work item migrated to GitHub Issues](migrated-issue.png){: .shadow }
+_Example of work item migrated from Azure DevOps to GitHub Issues_

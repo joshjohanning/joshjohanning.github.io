@@ -74,7 +74,7 @@ Fields not migrated with this method:
   - Date created
   - Attachments
   - History
-  - Other links in work items i.e.: related to, affected by, changeset, hyperlink..
+  - Other links in work items i.e.: related to, affected by, changeset, hyperlinks...
 
 ### Excel Office Integration Tools
 1. Create matching area paths / iteration paths

@@ -10,7 +10,7 @@ tags: [Azure DevOps, NuGet, Scripts]
 
 This is a *very* simple bash script that can assist you in migrating NuGet packages to a different Artifact feed. It's written with Azure DevOps in mind as a target, but there's no reason why you couldn't use any other artifact feed as a destination.
 
-I used the script after I ran a NuGet restore locally of a Visual Studio solution, found my .NuGet folder with all of the cached packages, placed my script in that folder, and ran it. This saved me a lot of time, migrating 102 packages while I grabbed a cup of coffee!
+I used the script after I ran a NuGet restore locally of a Visual Studio solution, found my `.NuGet`{: .filepath} folder with all of the cached packages, placed my script in that folder, and ran it. This saved me a lot of time, migrating 102 packages while I grabbed a cup of coffee!
 
 {% raw %}
 

@@ -43,7 +43,7 @@ There are a few steps:
 
 Now, we need to create a [dotfiles repository](https://docs.github.com/en/codespaces/customizing-your-codespace/personalizing-codespaces-for-your-account#dotfiles) - and it needs to be public. GitHub knows to use the `dotfiles` repository created under your username. For example, here is my [dotfiles repository](https://github.com/joshjohanning/dotfiles).
 
-**Bonus**: I've cloned this repository locally and created a `symlink` from `~/.zshrc` to `~/dotfiles/.zshrc`. I followed [this article](https://www.freecodecamp.org/news/dotfiles-what-is-a-dot-file-and-how-to-create-it-in-mac-and-linux/), but I know others who have used the [dotbot](https://github.com/anishathalye/dotbot) tool.
+**Bonus**: I've cloned this repository locally and created a `symlink` from `~/.zshrc`{: .filepath} to `~/dotfiles/.zshrc`{: .filepath}. I followed [this article](https://www.freecodecamp.org/news/dotfiles-what-is-a-dot-file-and-how-to-create-it-in-mac-and-linux/), but I know others who have used the [dotbot](https://github.com/anishathalye/dotbot) tool.
 
 The steps can be summarized by:
 
@@ -56,15 +56,15 @@ ln -s ~/dotfiles/.zshrc ~/.zshrc
 
 ### 2. Add your .zshrc and .p10k.zsh to your dotfiles repository
 
-Add in your `.zshrc` and `.p10k.zsh` files to this repository!
+Add in your `.zshrc`{: .filepath} and `.p10k.zsh`{: .filepath} files to this repository!
 
 My [.zshrc](https://github.com/joshjohanning/dotfiles/blob/main/.zshrc) and [.p10k.zsh](https://github.com/joshjohanning/dotfiles/blob/main/.p10k.zsh) are linked, respectively. 
 
-If you followed something similar to the symlink example above, adding your `.zshrc` and `.p10k.zsh` file could be as simple as doing: `git add .; git commit -m "adding dotfiles"; git push`
+If you followed something similar to the symlink example above, adding your `.zshrc`{: .filepath} and `.p10k.zsh`{: .filepath} file could be as simple as doing: `git add .; git commit -m "adding dotfiles"; git push`
 
 ### 3. Update your .zshrc file
 
-You're `.zshrc` likely hard codes your local user directory for the oh-my-zsh installation. Update it as such:
+You're `.zshrc`{: .filepath} likely hard codes your local user directory for the oh-my-zsh installation. Update it as such:
 
 ```shell
 # Path to your oh-my-zsh installation.
@@ -116,7 +116,7 @@ sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 zshrc
 
-# needs to be after zshrc
+# make directly highlighting readable - needs to be after zshrc line
 echo "" >> ~/.zshrc
 echo "# remove ls and directory completion highlight color" >> ~/.zshrc
 echo "_ls_colors=':ow=01;33'" >> ~/.zshrc
@@ -137,7 +137,7 @@ echo 'LS_COLORS+=$_ls_colors' >> ~/.zshrc
 
 Important: Don't `git add` this just yet! [Continue to the next step](#5-mark-the-install-script-as-executable-with-git).
 
-*This `install.sh` script is based on this [post](https://burkeholland.github.io/posts/codespaces-dotfiles/).*
+*This `install.sh`{: .filepath} script is based on this [post](https://burkeholland.github.io/posts/codespaces-dotfiles/).*
 
 ### 5. Mark the install script as executable with git
 
@@ -148,7 +148,7 @@ git add install.sh --chmod=+x
 ```
 {: .nolineno}
 
-Note: After you run this command, you still might see that the `.install.sh` file has a change that wants to be added/committed (viewed in the Source Control window in VS Code or with `git status`). Ignore or discard those changes (`git restore install.sh`).
+Note: After you run this command, you still might see that the `install.sh`{: .filepath} file has a change that wants to be added/committed (viewed in the Source Control window in VS Code or with `git status`). Ignore or discard those changes (`git restore install.sh`).
 
 If you've already added it, you can remove it and re-add it with:
 
@@ -168,13 +168,13 @@ Go to your [GitHub Codespaces settings](https://github.com/settings/codespaces) 
 
 ### 7. Set zsh as the default terminal in Codespaces
 
-By default, Codespaces will open up a `bash` terminal window. We just did all of this work to pimp out our Codespace, we should make sure it loads the `zsh` terminal by default instead. Add this line to your VS Code settings.json file by opening the command pallette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Preferences: Open Settings (JSON)` : 
+By default, Codespaces will open up a `bash` terminal window. We just did all of this work to pimp out our Codespace, we should make sure it loads the `zsh` terminal by default instead. Add this line to your VS Code `settings.json`{: .filepath} file by opening the command pallette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Preferences: Open Settings (JSON)` : 
 
 ```json
 "terminal.integrated.defaultProfile.linux": "zsh"
 ```
 
-This is an extended snippet of the relevant section in my VS Code's `settings.json` :
+This is an extended snippet of the relevant section in my VS Code's `settings.json`{: .filepath} :
 
 ```json
     "terminal.integrated.shell.osx": "/bin/zsh",
@@ -190,7 +190,7 @@ After firing up your Codespace, sign into [VS Code Settings sync](https://code.v
 
 ## Gotchas
 
-- Fonts - I was lucky as it seems that whatever configuration I had in my `.p10k.zsh` file and my font choice for my VS Code terminal (`MesloLGS NF`) seemed to work out of the box - but I could imagine some headache if you used a more custom font. You can [selectively *not* sync certain settings](https://code.visualstudio.com/docs/editor/settings-sync#_configuring-synced-data), so if you want a more default font to be used in your Codespace and a custom font to be used locally, you could probably do so.
+- Fonts - I was lucky as it seems that whatever configuration I had in my `.p10k.zsh`{: .filepath} file and my font choice for my VS Code terminal (`MesloLGS NF`) seemed to work out of the box - but I could imagine some headache if you used a more custom font. You can [selectively *not* sync certain settings](https://code.visualstudio.com/docs/editor/settings-sync#_configuring-synced-data), so if you want a more default font to be used in your Codespace and a custom font to be used locally, you could probably do so.
 - If you are using the [Brave Browser](https://brave.com/), the shield (AdBlock) functionality tends to show a degraded view of the terminal window. Flip that shield off for this site. Annoyingly, you have to do this for each Codespace you create, as there is not the ability to whitelist a subdomain - but there is a [GitHub issue made for it](https://github.com/brave/brave-browser/issues/5290). Full error with shields on for those interested: 
    > Error loading webview: Error: Could not register service workers: NotSupportedError: Failed to register a ServiceWorker for scope ('https://1c1b9171-108f-4374-9efc-20593a07163b.vscode-webview.net/stable/ccbaa2d27e38e5afa3e5c21c1c7bef4657064247/out/vs/workbench/contrib/webview/browser/pre/') with script ('https://1c1b9171-108f-4374-9efc-20593a07163b.vscode-webview.net/stable/ccbaa2d27e38e5afa3e5c21c1c7bef4657064247/out/vs/workbench/contrib/webview/browser/pre/service-worker.js?id=1c1b9171-108f-4374-9efc-20593a07163b&swVersion=2&extensionId=vscode.markdown-language-features&platform=browser&vscode-resource-base-authority=vscode-resource.vscode-webview.net&parentOrigin=https%3A%2F%2Fjoshjohanning-pipeline-templates-6497vrprh5r7v.github.dev'): The user denied permission to use Service Worker..
 
