@@ -49,6 +49,21 @@ I think this is _much_ better than the prior option for finding/preventing vulne
 
 ![Rich diff of dependencies in a pull request](dependency-review-rich-diff.png){: .shadow }
 
+## Making this a required status check
+
+## How To
+
+To make this a required status check on the pull request, follow these instructions: 
+
+1. The first thing you need is a public repository (GHAS is free for public repos) or a private repository with the GitHub Advanced Security license enabled
+1. Under the Settings tab in the repository, navigate to Branches
+1. Create a [branch protection rule](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule#creating-a-branch-protection-rule) for your default branch - check the 'Require status checks to pass before merging' box
+1. Add the dependency review job as a status check - in the example above, it's `dependency-review`
+   - If you don't see the `dependency-review` to add as a status check to the branch protection, **it won't appear as an option until you initiate at least one PR on the repository that triggers this job**.
+
+![Status checks required for a pull request](pull-request-status-checks.png){: .shadow }
+_Branch Protection Policy with the dependency-review status check configured_
+
 ## Summary
 
 This [new Dependency Review action](https://github.com/actions/dependency-review-action) uses the [dependency review API endpoint](https://docs.github.com/en/rest/reference/dependency-graph#dependency-review) to determine if you are adding a new vulnerable package version to your codebase. It doesn't catch/block if there are _any_ vulnerable dependencies, only dependencies added/modified in the pull request.
