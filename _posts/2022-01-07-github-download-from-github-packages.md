@@ -52,7 +52,7 @@ Extrapulating to `curl`, this was how to replicate this in the command line:
 curl 'https://maven.pkg.github.com/<org>/<repo>/com/<group>/<artifact>/<version>/<file-name>.jar' \
     -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
     -L \
-    -o <file>.jar
+    -O
 ```
 
 And because my biggest pet peave is when someone has this awesome blog post but then hides/obfuscates all the good stuff, here's my actual CURL command I used to download a file:
@@ -61,10 +61,12 @@ And because my biggest pet peave is when someone has this awesome blog post but 
 curl 'https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package/com/sherlock/herokupoc/1.0.0-202201071559/herokupoc-1.0.0-202201071559.jar' \
     -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
     -L \
-    -o herokupoc-1.0.0-202201071559.jar
+    -O
 ```
 
 The `-L` is important here as this tells `curl` to follow redirects. Without it, you'll get a '301 Moved Permanently' because it's trying to use use the expanded URL as mentioned above. If you added the `-v` option to the command, you would see a similar long URL that our `curl` follows the redirect to.
+
+The `-O` downloads the file locally with the same name as in the URL.
 
 ## GraphQL Endpoint
 
