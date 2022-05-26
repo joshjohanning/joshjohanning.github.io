@@ -28,14 +28,14 @@ Usually, I put the caveats after the implementation, but there are enough import
 - Containers in GitHub Actions, including [Container Jobs](https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container), [Service Containers](https://docs.github.com/en/actions/using-containerized-services/about-service-containers), and [Docker Container Actions](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action) only work on **Linux** runners - they will not run on Windows runners 😔
     + Some Marketplace actions, such as [Checkmarx](https://github.com/marketplace/actions/checkmarx-cxflow-action), are Docker Container Actions, therefore they won't run on Windows
 
-![Container jobs/actions don't run on windows](container-action-only-windows.png){: .shadow }
-_Container jobs/actions don't run on Windows_
+![Container jobs/actions can't run on windows, macos](container-action-only-windows.png){: .shadow }
+_Container jobs/actions can't run on Windows or MacOS_
 
-- If you are using Docker to run the runner, example you are using the [Actions Runner Controller (ARC)](https://github.com/actions-runner-controller/actions-runner-controller) in a Kubernetes cluster, you cannot use a container in a Docker running in Docker scenario
-    + Mentioned in this [issue](https://github.com/actions/runner/issues/367#issuecomment-597742895)
+- If you are using Docker to run the runner without doing the docker-in-docker magic, you might see an error - but if you are using something like [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller), this is a non-issue
+    + Error mentioned in this [issue](https://github.com/actions/runner/issues/367#issuecomment-597742895)
 
 ![Container jobs/actions can't run within another container](container-cant-run-in-container.png){: .shadow }
-_Container jobs/actions can't run within another container_
+_Container jobs/actions can't run within another container unless you have docker-in-docker setup_
 
 - You cannot override the working directory that gets mapped in - the `/_work/`{: .filepath} directory on the host is mapped to `/__w/`{: .filepath} in the container
     + This is only a problem if you had intended to use an alternative work directory with permissions already set up in the container
@@ -126,3 +126,5 @@ Perhaps more interestingly, my workflow for publishing my Docker image is [here]
 ## Summary
 
 I've used Container Jobs in Azure DevOps before, and I was excited to see we had similar functionality in GitHub! This can be much more practical than writing a large script to `apt install` everything for each job run. Just note some of the [caveats](#caveats), most of which only apply to self-hosted and non-Linux runners. 
+
+You can take this to the next step, instead of running your jobs in containers, you could additionally run your runners in containers using something like [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller). actions-runner-controller, which is running a runner in a container in k8s, supports running container jobs with Docker actions no problem! 
