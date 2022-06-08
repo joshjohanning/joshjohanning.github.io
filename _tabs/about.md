@@ -7,7 +7,7 @@ order: 4
 
 ### Hi there 👋
 
-⚡ I am a Senior DevOps Architect with GitHub on the FastTrack team 🚀
+⚡ My name is Josh Johanning and I am a Senior DevOps Architect with GitHub on the FastTrack team 🚀
 
 ⚡ Previously I was a Senior Cloud Automation Engineer with the Cognizant Microsoft Business Group (formerly 10th Magnitude)
 
