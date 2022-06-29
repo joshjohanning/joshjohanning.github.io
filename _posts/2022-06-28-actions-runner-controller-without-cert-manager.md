@@ -167,12 +167,12 @@ kubectl apply -f runner.yaml --namespace default
 16\. Ensure that your runner pods have started (describe them if not); check GitHub to see if your runner(s) show there also
 
 Here's me running [`k9s`](https://k9scli.io/) to visualize the pods and ensure they are running:
-![Rich diff of dependencies in a pull request](pods.png){: .shadow }
+![Using k9s to ensure pods are running](pods.png){: .shadow }
 _The controller running in the actions-runner-system namespace; the runner pods running in the default namespace_
 
 Corresponding runners show up as org runners in GitHub:
-![Rich diff of dependencies in a pull request](runners.png){: .shadow }
-_The previous option for dependency review in a pull request (rich diff)_
+![Org runners in GitHub](runners.png){: .shadow }
+_Runners with the same name as the pod name show up as org runners in GitHub_
 
 ## Summary
 
