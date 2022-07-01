@@ -72,9 +72,9 @@ I'll just highlight some of my favorite extensions that I use in VS Code:
 
 1. [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) - Because of course
 2. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) - I love this because I can highlight a piece of text and paste in a link and it will automatically format the markdown for me, similar to [this feature in GitHub](https://github.blog/changelog/2022-02-02-paste-links-directly-in-markdown/)
-3. [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) - to help me from misspelling words
+3. [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) - to help me from misspelling, and as a bonus if you're using [VS Code settings sync](https://code.visualstudio.com/docs/editor/settings-sync), you can keep a custom dictionary synced across VS Code instances / Codespaces by using the "quick fix" on aka `⌘` + `.` on unrecognized words and "add to user settings"
 4. [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) - for YAML syntax highlighting in the editor
-7. Bracket Pair Colorizer - I used to use [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2), but this is now [built-in to VS Code](https://code.visualstudio.com/blogs/2021/09/29/bracket-pair-colorization) by adding this to your settings: `"editor.guides.bracketPairs": true`
+5. Bracket Pair Colorizer - I used to use [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2), but this is now [built-in to VS Code](https://code.visualstudio.com/blogs/2021/09/29/bracket-pair-colorization) by adding this to your settings: `"editor.guides.bracketPairs": true`
 6. [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) - for creating charts/architecture diagrams directly in VS Code
 7. [GitLense](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - it's nice to be able to do things such as opening up a Git Blame view inline [like you can in GitHub](https://github.blog/2017-01-18-navigate-file-history-faster-with-improved-blame-view/)
 
