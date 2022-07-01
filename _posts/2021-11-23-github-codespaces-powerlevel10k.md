@@ -18,7 +18,7 @@ image:
 Hello 👋 ! This is my first post since joining the GitHub FastTrack team last week. I'm still learning a lot of information as well as tips and tricks from other Hubbers. One of the things I have started playing around more with now is [GitHub Codespaces](https://github.com/features/codespaces). I wanted to have my GitHub Codespace to have the exact same look and feel that my local environment had - including my Zsh plugins and Zsh theme: [Powerlevel10k](https://github.com/romkatv/powerlevel10k). I found a [post from Burke Holland](https://burkeholland.github.io/posts/codespaces-dotfiles/) that got me close, but it didn't have the Powerlevel10k bit in it.
 
 > If you are interested to seeing my local development environment setup, see: [My macOS Development Environment: iTerm2, oh-my-zsh, and VS Code](/posts/my-macos-development-environment/)
-{: .prompt-info }
+{: .prompt-tip }
 
 ## What is GitHub Codespaces? 
 
