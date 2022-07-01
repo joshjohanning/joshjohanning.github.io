@@ -17,6 +17,9 @@ image:
 
 Hello 👋 ! This is my first post since joining the GitHub FastTrack team last week. I'm still learning a lot of information as well as tips and tricks from other Hubbers. One of the things I have started playing around more with now is [GitHub Codespaces](https://github.com/features/codespaces). I wanted to have my GitHub Codespace to have the exact same look and feel that my local environment had - including my Zsh plugins and Zsh theme: [Powerlevel10k](https://github.com/romkatv/powerlevel10k). I found a [post from Burke Holland](https://burkeholland.github.io/posts/codespaces-dotfiles/) that got me close, but it didn't have the Powerlevel10k bit in it.
 
+> If you are interested to seeing my local development environment setup, see: [My macOS Development Environment: iTerm2, oh-my-zsh, and VS Code](/posts/my-macos-development-environment/)
+{: .prompt-info }
+
 ## What is GitHub Codespaces? 
 
 I'll try not to belabor the point, but [GitHub Codespaces](https://github.com/features/codespaces) is a convenient way for teams to build a consistent development environment baseline that everyone can tap into. Gone are the days where the amount of time spent setting up a new development environment when switching teams or receiving a new laptop is measured in DAYS. I could use a machine (or iPad!) anywhere in the world, and if I connected to my Codespace, I could start development immediately.
@@ -160,7 +163,7 @@ git add install.sh --chmod=+x
 
 There's an alternative command you can run to mark the file as executable in-place with `git update-index --chmod=+x install.sh`, but if you do that, every time you change the file the executable bit will get flipped off and you’ll have to run that command again. Inevitably, you will forget, and your Codespace's Zsh environment will be broken.
 
-You can view the Codespaces creation logs by opening the command pallette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Codespaces: View Creation Log`
+You can view the Codespaces creation logs by opening the command palette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Codespaces: View Creation Log`
 
 ### 6. Link your dotfiles repo to Codespaces
 
@@ -168,7 +171,7 @@ Go to your [GitHub Codespaces settings](https://github.com/settings/codespaces) 
 
 ### 7. Set zsh as the default terminal in Codespaces
 
-By default, Codespaces will open up a `bash` terminal window. We just did all of this work to pimp out our Codespace, we should make sure it loads the `zsh` terminal by default instead. Add this line to your VS Code `settings.json`{: .filepath} file by opening the command pallette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Preferences: Open Settings (JSON)` : 
+By default, Codespaces will open up a `bash` terminal window. We just did all of this work to pimp out our Codespace, we should make sure it loads the `zsh` terminal by default instead. Add this line to your VS Code `settings.json`{: .filepath} file by opening the command palette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Preferences: Open Settings (JSON)` : 
 
 ```json
 "terminal.integrated.defaultProfile.linux": "zsh"
