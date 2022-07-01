@@ -1,7 +1,7 @@
 ---
 title: 'My macOS Development Environment: iTerm2, oh-my-zsh, and VS Code'
 author: Josh Johanning
-date: 2022-06-29 9:00:00 -0500
+date: 2022-07-01 14:30:00 -0500
 description: Detailing out my local macOS development environment with iTerm, oh-my-zsh with the powerlevel10k theme, VS Code, and more.
 categories: []
 tags: [VS Code]
