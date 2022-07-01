@@ -57,6 +57,7 @@ To allow VS Code's terminal to look similar to the iTerm terminal, there are a f
     "terminal.integrated.fontFamily": "MesloLGS NF",
 }
 ```
+{: file='settings.json'}
 
 Now the terminal in VS Code looks nice also!
 
