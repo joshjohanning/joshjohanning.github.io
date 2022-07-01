@@ -6,10 +6,10 @@ description: Using GitHub Actions to add a code coverage summary report comment 
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Pull Requests, Code Coverage]
 image:
-  src: /assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png
+  path: /assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png
   width: 933   # in pixels
   height: 280   # in pixels
-  alt: GitHub Action Code Coverage Pull Request Comment
+  alt: Code Coverage summary posted to a pull request comment using an Action from the GitHub Actions Marketplace
 ---
 
 ## Overview

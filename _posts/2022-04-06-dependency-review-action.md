@@ -7,10 +7,10 @@ categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, Actions, Pull Requests, Policy Enforcement, Branch Protection Rules]
 img_path: /assets/screenshots/2022-04-06-dependency-review-action
 image:
-  src: dependency-review-action.png
+  path: dependency-review-action.png
   width: 100%
   height: 100%
-  alt: Dependency Review Action
+  alt: Dependency Review action
 ---
 
 ## Overview

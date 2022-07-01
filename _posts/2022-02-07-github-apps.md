@@ -7,7 +7,7 @@ categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, GitHub Apps, GitHub Issues]
 img_path: /assets/screenshots/2022-02-07-github-apps
 image:
-  src: github-apps.png
+  path: github-apps.png
   width: 100%
   height: 100%
   alt: An example GitHub App

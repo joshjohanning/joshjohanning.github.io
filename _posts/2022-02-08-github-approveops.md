@@ -7,7 +7,7 @@ categories: [GitHub, Actions]
 tags: [GitHub, GitHub Issues, GitHub Actions, GitHub Apps, IssueOps, ChatOps]
 img_path: /assets/screenshots/2022-02-08-github-approveops
 image:
-  src: ../2022-02-07-github-apps/app-bot.png
+  path: ../2022-02-07-github-apps/app-bot.png
   width: 100%
   height: 100%
   alt: ApproveOps - GitHub IssueOps with Approvals

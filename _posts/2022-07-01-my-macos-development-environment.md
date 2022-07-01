@@ -7,10 +7,10 @@ categories: []
 tags: [VS Code]
 img_path: /assets/screenshots/2022-07-01-my-macos-development-environment
 image:
-  src: iterm2.png
+  path: iterm2.png
   width: 100%
   height: 100%
-  alt: iTerm2 with powerlevel10k
+  alt: iTerm2 with oh-my-zsh and the powerlevel10k theme
 ---
 
 ## Overview

@@ -7,7 +7,7 @@ categories: [GitHub, Codespaces]
 tags: [GitHub, GitHub Codespaces, VS Code]
 img_path: /assets/screenshots/2021-11-23-github-codespaces-powerlevel10k
 image:
-  src: codespace.png
+  path: codespace.png
   width: 1123   # in pixels
   height: 606   # in pixels
   alt: A GitHub Codespace with the Powerlevel10k Zsh theme

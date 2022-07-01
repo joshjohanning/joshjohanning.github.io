@@ -6,7 +6,7 @@ description: Using the Azure Boards GitHub app to connect a single GitHub organi
 categories: [GitHub, Integrations]
 tags: [GitHub, Azure Boards, Azure DevOps, Work Items]
 image:
-  src: /assets/screenshots/2021-12-09-github-connecting-to-azure-boards-multiple-orgs/azure-boards-github.png
+  path: /assets/screenshots/2021-12-09-github-connecting-to-azure-boards-multiple-orgs/azure-boards-github.png
   width: 1458   # in pixels
   height: 838   # in pixels
   alt: Connecting multiple Azure DevOps organizations to a GitHub organization with the Azure Boards GitHub app

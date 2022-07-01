@@ -5,10 +5,10 @@ date: 2020-12-16 20:00:00 -0600
 categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Actions, Pull Requests, CodeQL, GitHub Advanced Security, Policy Enforcement, Branch Protection Rules]
 image:
-  src: /assets/screenshots/2020-12-16-github-codeql-pr/pr.png
+  path: /assets/screenshots/2020-12-16-github-codeql-pr/pr.png
   width: 918   # in pixels
   height: 390   # in pixels
-  alt: Connecting multiple Azure DevOps organizations to a GitHub organization with the Azure Boards GitHub app
+  alt: Pull Request that is blocked because Code Scanning Alerts are found
 ---
 
 ## Overview

@@ -6,10 +6,10 @@ description: Migrating work items to a different project or organization in Azur
 categories: [Azure DevOps, Work Items]
 tags: [Azure DevOps, Work Items]
 image:
-  src: /assets/screenshots/2021-09-29-azure-devops-migrate-work-items/bulk-move-team-project.png
+  path: /assets/screenshots/2021-09-29-azure-devops-migrate-work-items/bulk-move-team-project.png
   width: 584   # in pixels
   height: 361   # in pixels
-  alt: Migrating Work Items to New Project
+  alt: Migrating work items to a new project in Azure DevOps
 ---
 
 ## Overview

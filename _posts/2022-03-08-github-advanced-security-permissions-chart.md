@@ -7,7 +7,7 @@ categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, Dependabot]
 img_path: /assets/screenshots/2022-03-08-github-advanced-security-permissions-chart
 image:
-  src: ../2021-12-03-github-advanced-security-feature-chart/organization-security-overview.png
+  path: ../2021-12-03-github-advanced-security-feature-chart/organization-security-overview.png
   width: 100%
   height: 100%
   alt: Security Overview for an Organization with GitHub Advanced Security

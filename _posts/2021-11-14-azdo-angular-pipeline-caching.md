@@ -6,10 +6,10 @@ description: I share how I finally got the Pipeline Cache task to work with my A
 categories: [Azure DevOps, Pipelines]
 tags: [Azure DevOps, Pipelines, Angular]
 image:
-  src: /assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/load-npm-cache.png
+  path: /assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/load-npm-cache.png
   width: 1212   # in pixels
   height: 614   # in pixels
-  alt: Azure DevOps Pipeline Cache Task in Action
+  alt: Azure DevOps Pipeline Cache Task in action
 ---
 
 ## Overview

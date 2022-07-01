@@ -6,7 +6,7 @@ description: Publishing Code Coverage and making it look pretty in Azure DevOps 
 categories: [Azure DevOps, Pipelines]
 tags: [Azure DevOps, Code Coverage]
 image:
-  src: /assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png
+  path: /assets/screenshots/2021-09-03-azure-devops-code-coverage/good-code-coverage.png
   width: 816   # in pixels
   height: 582   # in pixels
   alt: Cobertura Code Coverage in Azure DevOps

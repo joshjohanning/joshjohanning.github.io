@@ -7,10 +7,10 @@ categories: [GitHub, Dependabot]
 tags: [GitHub, Dependabot, Azure Artifacts, Azure DevOps, GitHub Packages, Pull Requests]
 img_path: /assets/screenshots/2022-03-10-github-dependabot-with-azure-artifacts
 image:
-  src: dependabot-pr.png
+  path: dependabot-pr.png
   width: 100%
   height: 100%
-  alt: Pull request from Dependabot
+  alt: Pull request from Dependabot with package residing in Azure Artifacts
 ---
 
 ## Overview

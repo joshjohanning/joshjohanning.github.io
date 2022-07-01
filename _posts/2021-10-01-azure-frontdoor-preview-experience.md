@@ -6,7 +6,7 @@ description: I share my experience, lessons-learned, and tips and tricks for wor
 categories: [Azure, Front Door]
 tags: [Azure, Azure Front Door]
 image:
-  src: /assets/screenshots/2021-10-01-azure-frontdoor-preview-experience/front-door-overview-expanded.png
+  path: /assets/screenshots/2021-10-01-azure-frontdoor-preview-experience/front-door-overview-expanded.png
   width: 500   # in pixels
   height: 530   # in pixels
   alt: Front Door Overview

@@ -6,7 +6,7 @@ description: A feature comparison between GitHub Enterprise, GitHub Enterprise w
 categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, Dependabot]
 image:
-  src: /assets/screenshots/2021-12-03-github-advanced-security-feature-chart/organization-security-overview.png
+  path: /assets/screenshots/2021-12-03-github-advanced-security-feature-chart/organization-security-overview.png
   width: 100%
   height: 100%
   alt: Security Overview for an Organization with GitHub Advanced Security

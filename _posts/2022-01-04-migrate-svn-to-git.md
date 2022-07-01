@@ -7,7 +7,7 @@ categories: [GitHub, Migrations]
 tags: [GitHub, Azure DevOps, SVN]
 img_path: /assets/screenshots/2022-01-04-migrate-svn-to-git
 image:
-  src: svn-to-git.png
+  path: svn-to-git.png
   width: 100%
   height: 100%
   alt: Migrating SVN to Git

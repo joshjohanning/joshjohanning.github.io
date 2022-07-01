@@ -7,10 +7,10 @@ categories: [GitHub, Actions]
 tags: [GitHub, Actions, actions-runner-controller]
 img_path: /assets/screenshots/2022-06-28-actions-runner-controller-without-cert-manager
 image:
-  src: pods.png
+  path: pods.png
   width: 100%
   height: 100%
-  alt: actions-runner-controller pods
+  alt: actions-runner-controller pods for our autoscaling GitHub runners
 ---
 
 ## Overview

@@ -7,10 +7,10 @@ categories: [GitHub, Packages]
 tags: [GitHub, GitHub Packages, Maven, NuGet]
 img_path: /assets/screenshots/2022-01-07-github-download-from-github-packages
 image:
-  src: github-packages.png
+  path: github-packages.png
   width: 100%
   height: 100%
-  alt: GitHub Packages
+  alt: Assets for a package in GitHub Packages
 ---
 
 ## Overview
