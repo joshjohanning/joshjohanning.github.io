@@ -11,7 +11,7 @@ image:
   width: 100%
   height: 100%
   alt: Security Overview for an Organization with GitHub Advanced Security
-pin: true
+pin: false
 ---
 
 ## Overview
