@@ -33,7 +33,7 @@ GitHub Apps are certainly preferred and recommended from GitHub. From [GitHub's 
 >
 > GitHub Apps are first-class actors within GitHub. A GitHub App acts on its own behalf, taking actions via the API directly using its own identity, which means you don't need to maintain a bot or service account as a separate user.
 
-GitHub Apps also have a [higher API rate limiting threshold](https://docs.github.com/en/rest/overview/resources-in-the-rest-api#requests-from-user-accounts) than requests from user accounts and GitHub Actions. [Installed in an Enterprise](https://github.blog/changelog/2020-07-27-increase-to-api-limits-in-github-enterprise-subscriptions/), GitHub Apps can have up to 15,000 requests per hour whereas the limit is 5,000 requests per hour coming from a user account and 1,000 requests per hour coming from GitHub Actions.
+GitHub Apps also have a [higher API rate limiting threshold](https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting) than requests from user accounts and GitHub Actions. [Installed in an Enterprise](https://github.blog/changelog/2020-07-27-increase-to-api-limits-in-github-enterprise-subscriptions/), GitHub Apps can have up to 15,000 requests per hour whereas the limit is 5,000 requests per hour coming from a user account and 1,000 requests per hour coming from GitHub Actions.
 
 ### Caveats
 
