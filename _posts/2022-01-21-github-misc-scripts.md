@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2022-01-20 13:00:00 -0600
 description: Miscellaneous GitHub scripts written against GitHub API's, GraphQL, GitHub CLI, etc. for automation
 categories: [GitHub]
-tags: [GitHub, Scripts]
+tags: [GitHub, Scripts, gh cli]
 ---
 
 ## Overview
