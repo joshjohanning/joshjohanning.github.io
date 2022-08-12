@@ -160,7 +160,7 @@ Here is a high-level list of steps that you need to do in order to run the migra
 1. Add the `ReflectedWorkItemId` field to each of the work items you are migrating in both the source and target project. I believe you can get away without adding it to the source project, but then it makes it impossible to re-start a migration
 1. Install the version you want
     - `choco install vsts-sync-migrator` (oh yeah, this only runs on Windows only the last I checked)
-    - Or download from the [releases page](https://github.com/nkdAgility/azure-devops-migration-tools/releases); I have most recently used[version 11.9.34](https://github.com/nkdAgility/azure-devops-migration-tools/releases/tag/v11.9.34)
+    - Or download from the [releases page](https://github.com/nkdAgility/azure-devops-migration-tools/releases); I have most recently used [version 11.9.34](https://github.com/nkdAgility/azure-devops-migration-tools/releases/tag/v11.9.34)
 1. Set up your configuration file - my sample configuration file is found in this [gist](https://gist.github.com/joshjohanning/baa2de38466302f0c173e0dccdd887c0)
 1. I usually run the Area Path processor (`TfsTeamSettingsProcessorOptions`, which references`TeamSettingsSource` and `TeamSettingsTarget`) by itself first to make sure the area path / iteration nodes are created. Decide if you want to enable `PrefixProjectToNodes`, where it will prefix the source project name in the area/iteration structure
 1. Command to run migration and save the log to file: `migration.exe execute -c configuration.json > log.txt`
