@@ -6,7 +6,8 @@ order: 5
 
 Interested in having me speak? Contact me through [LinkedIn](https://www.linkedin.com/in/joshua-johanning/)!
 
-![Error in Dependabot using custom action](/assets/img/sample/speaking.jpg){: .shadow }
+![VS Live 2022 Redmond - How to Implement Developer-optimized Application Security](/assets/img/sample/speaking.jpg){: .shadow }
+_VS Live 2022 Redmond - How to Implement Developer-optimized Application Security_
 
 ## Speaking Engagements
 
