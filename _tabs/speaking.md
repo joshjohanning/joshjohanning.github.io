@@ -1,6 +1,6 @@
 ---
 title: Speaking
-icon: fas fa-info-circle
+icon: fas fa-comment
 order: 5
 ---
 
