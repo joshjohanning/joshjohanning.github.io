@@ -6,6 +6,8 @@ order: 5
 
 Interested in having me speak? Contact me through [LinkedIn](https://www.linkedin.com/in/joshua-johanning/)!
 
+![Error in Dependabot using custom action](/assets/img/sample/speaking.jpg){: .shadow }
+
 ## Speaking Engagements
 
 | Event   	| Location      	| Dates            	| Session(s)                                                                                                                                                                                                              	|
