@@ -34,10 +34,12 @@ The [action](https://github.com/joshjohanning/azdo_commit_message_validator) loo
 
 ### YML
 
-This should only run on pull requests.
+This should only be triggered via pull requests.
 
 {% raw %}
 ```yml
+name: pr-commit-message-enforcer-and-linker
+
 on:
   pull_request:
     branches: [ "main" ]
@@ -56,14 +58,19 @@ jobs:
         fail-if-missing-workitem-commit-link: true # Fail the action if a commit in the pull request is missing AB# in the commit message
         link-commits-to-pull-request: true # Link the work items found in commits to the pull request
 ```
+{: file='.github/workflows/pr-commit-message-enforcer-and-linker.yml'}
+
 {% endraw %}
 
 ### Branch Protection Policy
 
 After you create the workflow, you can add this as a status check to the branch protection policy on your default branch. If you aren't seeing the `pr-commit-message-enforcer-and-linker` job name, you might have to create a pull request that triggers the job first and then add the branch protection policy.
-
 ![Branch protection policy](branch-protection-policy.png){: .shadow }
 _Configuring the status check in the branch protection policy_
+
+Once added, if commit message(s) don't contain an `AB#123` link, the pull request will be blocked from merging.
+![Status checks failing on pull request](checks-failing-on-pr.png){: .shadow }
+_The status checks on the pull request are failing because of missing work item links in the commit message(s)_
 
 ## Screenshots
 
