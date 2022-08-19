@@ -58,10 +58,9 @@ _Container jobs/actions can't run within another container unless you have docke
 
     + A fix was to `chmod` the `/_work/`{: .filepath} directory on the **host** to [work around this permissions issue](https://github.com/actions/runner/issues/878#issuecomment-1030686369)
 
-- Container jobs execute as a shell script `shell: sh -e {0}` vs. non-container jobs execute as a bash script `shell: /usr/bin/bash -e {0}`
-    + This is important because bashisms, such as if statements that contain `[[ ]]`, will not work in a shell script
+- The default shell for `run` steps inside a container is `sh` instead of `bash`. This can be overridden with [`jobs.<job_id>.defaults.run`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_iddefaultsrun) or [`jobs.<job_id>.steps[*].shell`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell).
+    + This is important because bashisms, such as if statements that contain `[[ ]]`, will not work in a `sh` script
     + As an example, you might see an `[[: not found` error when running the container job that works when not running as a container job
-    + Add `#/bin/bash` to the top of the script you are running to ensure it runs in bash
 
 ## Implementation
 
