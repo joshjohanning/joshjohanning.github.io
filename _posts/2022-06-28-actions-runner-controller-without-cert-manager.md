@@ -23,7 +23,7 @@ However, sometimes organizations have their own certificate requirements, and pr
 
 I'm going to be creating self-signed certificates, but you could imagine this working with certificates provided to you from the security team. If creating your own certificates, you will need `openssl` installed and callable via the command line.
 
-1\. Create RSA keys for CA cert and Server cert - this will output `ca-key.key`{: .filepath} and `server-key.key`{: .filepath}
+1\. Create RSA keys for CA cert and Server cert - this will output `ca.key`{: .filepath} and `server.key`{: .filepath}
 
 ```bash
 openssl genrsa -out ca.key 4096
@@ -51,7 +51,7 @@ CN = actionrunners.yourorg.com
 3\. Create the CA certificate with the `ca.conf`{: .filepath} file - this will output `ca.crt`{: .filepath}
 
 ```bash
-openssl req -x509 -new -sha512 -nodes -key ./ca-key.key -days 7307 -out ./ca.crt -config ./ca.conf
+openssl req -x509 -new -sha512 -nodes -key ./ca.key -days 7307 -out ./ca.crt -config ./ca.conf
 ```
 {: .nolineno}
 
