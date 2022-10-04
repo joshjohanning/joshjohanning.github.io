@@ -38,28 +38,38 @@ GitHub Apps also have a [higher API rate limiting threshold](https://docs.github
 ### Caveats
 
 - Each organization can only own up to [100 GitHub Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-github-apps)
-- You'll have to be an organization owner to create and install a GitHub app in an organization
+- You'll have to be an [organization owner](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#organization-owners) to create an app that's owned by the organization, and only organization owners can install a GitHub App
+    - Non-organization owners can create a personal app and request it to be installed by the org, but it will be owned by the user and not the organization
 - Each installation access token is only valid for a [maximum of one hour](https://docs.github.com/en/rest/reference/apps#create-an-installation-access-token-for-an-app)
+- GitHub Apps [can't be used to authenticate to GitHub Packages](https://github.com/orgs/community/discussions/26920) (have to use personal access tokens for this)
+- If you make a [GitHub App private](https://docs.github.com/en/enterprise-cloud@latest/developers/apps/managing-github-apps/making-a-github-app-public-or-private), other apps can't see it / interact with it
+  - Example: You can't use GitHub App A to modify a branch protection policy to let GitHub App B to bypass the policy if GitHub App B is private - GitHub App B would have to be a Public app
 
 ## Creating a GitHub App
 
 Creating a GitHub App is pretty straightforward! I'll defer to [GitHub's documentation for the details](https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app), but here's a quick overview:
+
 1. Navigate to the organization's settings page
 2. Expand the "**Developer Settings**" section at the bottom of the page and navigate to **GitHub Apps**
 3. Click "**New GitHub App**" in the upper right-hand corner
-4. Start filling in the details! The name and Homepage URL doesn't matter much right now (but it does need a valid URL here) 
-5. What does matter is the "**Webhook URL**" - if we want to _use_ this GitHub App in the next section, we'll need to grab the installation ID. The easiest way to do that is to start a new channel at [smee.io](https://smee.io/) and use the URL of the channel as the Webhook URL.
+4. Start filling in the details! 
+    - The name and Homepage URL doesn't matter much right now (but it does need a valid URL here) 
+    - *(Optional - for use with webhooks)* - If you want the GitHub app to send webhooks based on events, and want an easy way to inspect the payload that is being sent, you can use something like [smee.io](https://smee.io/) to create a channel and use the [URL of the channel](https://smee.io/cm3xXguj5Ds9hs8) as the Webhook URL
 6. Grant it the **repository permissions**, **organization permissions**, **user permissions**, and what events to subscribe to - for the examples in this blog post, we'll grant **read-only** access to `repository / contents`, **read & write** access to `repository / issues`, and **read-only** access to `organization / members` - if you change this after the it's already been installed to an organization, you'll have review and re-approve the permission changes for the GitHub App
-7.  After creation, you should see a "ping" entry in your smee.io channel - this is a confirmation that the app was created
-8.  On the left-hand menu, you should now have a few options, one of those being "**Install App**" - click it, and install the app to the organization
-9.  in your smee.io channel, you should have a new payload from the installation - expand the "installation" property to find your "**installation ID**" - this is the ID that you'll need to use in the next section
-10. You'll also want to grab your **App ID** here (although note the App ID can also be found within GitHub)
-11. Lastly, navigate back to your GitHub App's administration page and **[generate a private key for the app](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#generating-a-private-key)** - download the file and grab the contents of the certificate by opening it in VSCode or if you are on macOS: `cat approveops-bot.2022-02-07.private-key | pbcopy`
+8. After creation, you should see the **App ID** - we will need this later on
+    - *(Optional - for use with webhooks)* - After creation, you should see a "ping" entry in your [smee.io channel](https://smee.io/cm3xXguj5Ds9hs8) - this is a confirmation that the app was created - the **App ID** is available in this payload as well
+9.  On the left-hand menu, you should now have a few options, one of those being "**Install App**" - click it, and install the app to the organization, or alternatively, install the app to selected repositories that you want it to be able to access
+10. After installing the application, pay attention to the URL in the browser (see screenshot below) - the number at the end of the URL is the installation ID, which we'll need later on 
+    - *(Optional - for use with webhooks)* - In your [smee.io channel](https://smee.io/cm3xXguj5Ds9hs8), you should have a new payload from the installation - expand the "installation" property to find your "**installation ID**" - this is the ID that you'll need to use in the next section
+11. Lastly, navigate back to your GitHub App's administration page, scroll down, and **[generate a private key for the app](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#generating-a-private-key)** - download the file and grab the contents of the certificate by opening it in VSCode or if you are on macOS: `cat approveops-bot.2022-02-07.private-key | pbcopy`
+
+🎉 With the **App ID**, **Installation ID**, and **Private Key**, we now have everything we need to use the app in Actions! 🥳
+
+![Installation ID after installing GitHub App](installation-id-github.png ){: .shadow }
+_An example of an Installation ID in the address bar after installing a GitHub app_
 
 ![Installation and App ID from a payload in smee.io](installation-id.png ){: width="600" }{: .shadow }
 _An example of an Installation ID and App ID from a payload in smee.io_
-
-🎉 We now have everything we need to use the app in GitHub Actions! 🥳
 
 ## Using the GitHub App in a GitHub Actions workflow
 
@@ -89,10 +99,11 @@ Here's the action code to generate and sign an installation access token for aut
         id: get_installation_token
         with: 
           app_id: 170544
-          installation_id: 23052920
+          # installation_id not needed IF the app is installed on this current repo
+          installation_id: 29881931
           private_key: ${{ secrets.PRIVATE_KEY }}
 
-      # clone using the `actions/checkout` step
+      # example 1 - cloning repo - clone using the `actions/checkout` step
       - name: Checkout
         uses: actions/checkout@v2.4.0
         with:
@@ -100,11 +111,26 @@ Here's the action code to generate and sign an installation access token for aut
           token: ${{ steps.get_installation_token.outputs.token }}
           path: my-repo
 
-        # run the git clone ourselves
-        name: Clone Repository
+      # example 1 - cloning repo - using git clone command
+      - name: Clone Repository
         run: | 
           mkdir my-repo-2 && cd my-repo-2
           git clone https://x-access-token:${{ steps.get_installation_token.outputs.token }}@github.com/my-org/my-repo.git
+
+      # example 2 - api - call an api using curl
+      - name: Get Repo (curl)
+        run: | 
+          curl \
+            -H "Authorization: Bearer ${{ steps.get_installation_token.outputs.token }}" \
+            https://api.github.com/repos/joshjohanning-org/composite-caller-1
+
+      # example 2 - api - call an api using the GitHub CLI
+      - name: Get Repo (gh api)
+        env:
+          GH_TOKEN: ${{ steps.get_installation_token.outputs.token }}
+        run: | 
+          gh api \
+            /repos/joshjohanning-org/composite-caller-1
 ```
 {: file='.github/workflows/test-permissions.yml'}
 {% endraw %}
