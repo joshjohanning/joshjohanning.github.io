@@ -1,8 +1,8 @@
 ---
-title: 'Azure Front Door Standard/Premium Preview - Tips, Tricks, and Lessons Learned'
+title: 'Azure Front Door Standard/Premium - Tips, Tricks, and Lessons Learned'
 author: Josh Johanning
 date: 2021-10-01 16:30:00 -0500
-description: I share my experience, lessons-learned, and tips and tricks for working with the new Azure Front Door Standard/Premium (Preview) SKUs
+description: I share my experience, lessons-learned, and tips and tricks for working with the new Azure Front Door Standard/Premium SKUs
 categories: [Azure, Front Door]
 tags: [Azure, Azure Front Door]
 image:
@@ -11,6 +11,21 @@ image:
   height: 530   # in pixels
   alt: Front Door Overview
 ---
+
+## Update
+
+Since writing this article, Azure Front Door Standard/Premium has been released to GA (on March 29, 2022). You can read more about it here: [Introducing the new Azure Front Door: Reimagined for modern apps and content](https://azure.microsoft.com/en-us/blog/introducing-the-new-azure-front-door-reimagined-for-modern-apps-and-content/).
+
+Likewise, [Azure Front Door Terraform resources](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_endpoint) have since become available to help manage:
+
+- [**AzureRM v3.25.0**](https://github.com/hashicorp/terraform-provider-azurerm/releases/tag/v3.25.0) (Sept 29, 2022): Additions of [azurerm_cdn_frontdoor_route](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_route), [azurerm_cdn_frontdoor_custom_domain](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_custom_domain), and[azurerm_cdn_frontdoor_route_disable_link_to_default_domain](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_route_disable_link_to_default_domain)
+- [**AzureRM v3.21.0**](https://github.com/hashicorp/terraform-provider-azurerm/releases/tag/v3.21.0) (Sept 2, 2022): Additions of [azurerm_cdn_frontdoor_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_rule) and [azurerm_cdn_frontdoor_secret](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_secret)
+- [**AzureRM v3.19.9**](https://github.com/hashicorp/terraform-provider-azurerm/releases/tag/v3.19.0) (Aug 18, 2022): Additions of [azurerm_cdn_frontdoor_firewall_policy](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_firewall_policy) and [azurerm_cdn_frontdoor_security_policy](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_security_policy)
+- [**AzureRM v3.15.0**](https://github.com/hashicorp/terraform-provider-azurerm/releases/tag/v3.15.0) (July 21, 2022): Additions of [azurerm_cdn_frontdoor_origin](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_origin) and [azurerm_cdn_frontdoor_origin_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_origin_group)
+- [**AzureRM v3.10.0**](https://github.com/hashicorp/terraform-provider-azurerm/releases/tag/v3.10.0) (June 10, 2022): Addition of [azurerm_cdn_frontdoor_rule_set](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_rule_set)
+- [**AzureRM v3.9.0**](https://github.com/hashicorp/terraform-provider-azurerm/releases/tag/v3.9.0) (June 2, 2022): Additions of [cdn_frontdoor_profile](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_profile) (with options of `Standard_AzureFrontDoor` or `Premium_AzureFrontDoor`) and [azurerm_cdn_frontdoor_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cdn_frontdoor_endpoint)
+
+The bulk of this article should still be relevant, but if anything is strikingly wrong or has changed, leave a comment to let me know!
 
 ## Overview
 
