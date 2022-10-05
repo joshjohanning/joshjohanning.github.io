@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2022-01-04 23:00:00 -0600
 description: Migrate SVN to Git using either the import repository feature in GitHub or git-svn
 categories: [GitHub, Migrations]
-tags: [GitHub, Azure DevOps, SVN]
+tags: [GitHub, Azure DevOps, SVN, Git, Migrations]
 img_path: /assets/screenshots/2022-01-04-migrate-svn-to-git
 image:
   path: svn-to-git.png
