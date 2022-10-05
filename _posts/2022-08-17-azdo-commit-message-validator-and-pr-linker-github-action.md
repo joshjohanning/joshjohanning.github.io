@@ -5,7 +5,7 @@ date: 2022-08-17 13:00:00 -0500
 description: Enforce that each commit in a pull request has AB# in the commit message and link all of the work items to the pull request
 categories: [GitHub, Actions]
 tags: [Azure DevOps, Work Items, GitHub, GitHub Actions, Pull Requests, Branch Protection Rules]
-img_path: /assets/screenshots/2022-08-17-azdo-commit-message-validator-and-pr-linker-github-action.md
+img_path: /assets/screenshots/2022-08-17-azdo-commit-message-validator-and-pr-linker-github-action
 image:
   path: blocking-pr.png
   width: 100%
