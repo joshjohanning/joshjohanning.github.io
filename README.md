@@ -35,6 +35,10 @@ See: [#8](https://github.com/joshjohanning/joshjohanning.github.io/pull/8)
 
 Used an icon from [fontawesome](https://fontawesome.com/v4/icons/).
 
+### Tucking in List Item Margins
+
+See: [#18](https://github.com/joshjohanning/joshjohanning.github.io/pull/18)
+
 ## Upgrading the Theme
 
 Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way: 
