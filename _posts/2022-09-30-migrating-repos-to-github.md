@@ -5,7 +5,7 @@ date: 2022-09-30 12:00:00 -0500
 description: The different options available for migrating repos to GitHub or any other Git provider
 categories: [GitHub, Migrations]
 tags: [Azure DevOps, GitHub, TFVC, SVN, Git, Migrations]
-img_path: /assets/screenshots/2022-09-30-migrate-repos-to-github
+img_path: /assets/screenshots/2022-09-30-migrating-repos-to-github
 image:
   path: import-repo-github.gif
   width: 66%
@@ -40,7 +40,7 @@ If using SVN or Mercurial, you will have the ability to [update commit author at
 
 > Note: The [docs](https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/about-github-importer) say that this tool supports TFVC, but I've never been able to get it to work, so if you're looking for TFVC, [keep reading](#option-6-tfvc-to-git)!
 > 
-> > No source repositories were detected at https://organization.visualstudio.com/_versionControl. Please check the URL and try again.
+> > No source repositories were detected at \<url\>/_versionControl. Please check the URL and try again.
 {: .prompt-info }
 
 ## Option 2: Git Clone Mirror
