@@ -57,8 +57,7 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
 1. Rebase the number of commits you just brought in (you should see icon in VS Code): `git rebase -i HEAD~16`
     - Leave the top commit as `pick` but change the rest to `squash`
     - Update the commit message as appropriate
-1. Update author: `git commit --amend --author "Josh Johanning <joshjohanning@github.com>"`
-1. Update commit time: `git commit --date=now --amend`
+1. Update author and commit time: `git commit --amend --author "Josh Johanning <joshjohanning@github.com>" --date=now`
 1. [Test changes locally before pushing](#building--testing-locally) 
 
 ## Building / Testing Locally
