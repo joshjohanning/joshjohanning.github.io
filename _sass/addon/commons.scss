@@ -29,11 +29,11 @@ html {
 }
 
 body {
-  line-height: 1.75rem;
   background: var(--body-bg);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   font-family: 'Source Sans Pro', 'Microsoft Yahei', sans-serif;
+  line-height: 1.75;
 }
 
 /* --- Typography --- */
@@ -91,21 +91,25 @@ blockquote {
   color: var(--blockquote-text-color);
 
   &[class^="prompt-"] {
+    display: flex;
     border-left: 0;
     border-radius: 6px;
-    padding: 0.75rem 1.2rem 0.75rem 3rem;
+    padding: 1rem;
     color: var(--prompt-text-color);
 
     &::before {
       font-family: "Font Awesome 5 Free";
       text-align: center;
       width: 1.25rem;
-      position: absolute;
-      left: 2.5rem;
+      margin-right: 0.75rem;
     }
 
-    p:last-child {
-      margin-bottom: 0rem;
+    > div {
+      max-width: calc(100% - 2rem);
+
+      > :last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -440,7 +444,6 @@ img[data-src] {
 
 .post-content {
   font-size: 1.08rem;
-  line-height: 1.8;
   margin-top: 2rem;
   overflow-wrap: break-word;
 
@@ -461,20 +464,17 @@ img[data-src] {
 
   > ol,
   > ul {
-    $start-padding: 1.25rem;
-
-    padding-inline-start: $start-padding;
-    margin: 1.25rem 0;
+    padding-inline-start: 1.75rem;
 
     li {
-      margin: 0.0rem 0;
+      margin: 0.25rem 0;
       padding-left: 0.4rem;
     }
 
     ol,
     ul {
-      padding-inline-start: $start-padding;
-      margin: 0.0rem 0;
+      padding-inline-start: 1.25rem;
+      margin: 0.5rem 0;
     }
   }
 
@@ -484,7 +484,7 @@ img[data-src] {
       list-style-type: none;
 
       > i { /* checkbox icon */
-        margin: 0 0.4rem 0.2rem -1.4rem;
+        margin: 0 0.5rem 0.2rem -1.4rem;
         vertical-align: middle;
         color: var(--checkbox-color);
 
@@ -1203,12 +1203,11 @@ $sidebar-display: "sidebar-display";
 
     .post-content {
       > blockquote[class^=prompt-] {
+        @include pl-pr(1.25rem);
         @include ml-mr(-1.25rem);
-        border-radius: 0;
 
-        &::before {
-          left: 1rem;
-        }
+        border-radius: 0;
+        max-width: none;
       }
     }
 
