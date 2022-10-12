@@ -72,11 +72,11 @@ Alright, here's the good part of the article! Let me explain what type of action
 
 1. An action to create the check:
     - I'm going to use [LouisBrunner/checks-action](https://github.com/LouisBrunner/checks-action) to create the check for us
-    - We could alternatively write our own [API call](https://docs.github.com/en/rest/checks/runs#create-a-check-run) or use the 'Create a check run' [octokit](https://octokit.github.io/rest.js/v19#create-a-workflow-dispatch-event) method for this, but the action allows us to [import a markdown file as the summary of the check](https://github.com/LouisBrunner/checks-action/pull/24), which is quite nice
+    - We could alternatively write our own [API call](https://docs.github.com/en/rest/checks/runs#create-a-check-run) or use the 'Create a check run' [octokit](https://octokit.github.io/rest.js/v19#checks-create) method for this, but the action allows us to [import a markdown file as the summary of the check](https://github.com/LouisBrunner/checks-action/pull/24), which is quite nice
 2. An action to queue the deployment workflow with the `workflow_dispatch` event. A few more options here:
     - The [benc-uk/workflow-dispatch](https://github.com/benc-uk/workflow-dispatch) action
     - The [colindembovsky/deployment-lifecycle-actions/create-deployment-from-label](https://github.com/colindembovsky/deployment-lifecycle-actions) - this action creates a deployment when a label is added to the PR
-    - The [actions/github-script](https://github.com/actions/github-script) to call the 'Create a workflow dispatch event' [octokit](https://octokit.github.io/rest.js/v19#create-a-workflow-dispatch-event) method
+    - The [actions/github-script](https://github.com/actions/github-script) to call the 'Create a workflow dispatch event' [octokit](https://octokit.github.io/rest.js/v19#actions-create-workflow-dispatch) method
       - Since it's a pretty simple call, I am going to use this option. This is what this would look like as an action:
 
         {% raw %}
