@@ -113,6 +113,7 @@ git push -u origin main
     - If self-hosted, requires TFS 2017.2 or later
     - Note that it can only migrate 180 days of history and only supports 1 branch 
 2. For more advanced migrations, use the [Git-TFS tool](https://github.com/git-tfs/git-tfs)
+    - See this page for more information on the [`git-tfs clone`](https://github.com/git-tfs/git-tfs/blob/master/doc/commands/clone.md) command
     - There are various blog posts [here](https://gist.github.com/AAugustine/268f7eed2043de24526b9254a0881579), [here](https://medium.com/sestek/how-to-migrate-projects-from-tfs-to-git-ff23d6b0c910), and [here](https://gitstack.com/how-to-migrate-from-tfs-to-git/) if you need additional guidance
 
 See [Microsoft's documentation](https://learn.microsoft.com/en-us/devops/develop/git/migrate-from-tfvc-to-git) for more information on this topic.
