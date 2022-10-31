@@ -48,7 +48,7 @@ social:
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/joshua-johanning/
 
-google_site_verification: google-site-verification=eTIC71VhPBtwll8rNv7qlXud1yJh6E88No39MdcM_MI # change to your verification string
+google_site_verification: eTIC71VhPBtwll8rNv7qlXud1yJh6E88No39MdcM_MI # change to your verification string
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
