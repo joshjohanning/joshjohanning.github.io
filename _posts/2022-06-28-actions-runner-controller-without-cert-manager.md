@@ -62,7 +62,7 @@ openssl x509 -noout -text -in ./ca.crt
 ```
 {: .nolineno}
 
-5\. Create your Server certificate config file - ie `server.cnf`{: .filepath}
+5\. Create your Server certificate config file - ie `server.conf`{: .filepath}
 
 - All 3 SANs (`alt_names`) are needed
 - For the 3rd `alt_name`, the `actions-runner-system` is the namespace - if you are installing into a different namespace, replace `actions-runner-system` with the namespace you are installing to (ie: `default`)
