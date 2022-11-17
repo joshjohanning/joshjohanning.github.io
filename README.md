@@ -37,10 +37,6 @@ See: [#8](https://github.com/joshjohanning/joshjohanning.github.io/pull/8)
 
 Used an icon from [fontawesome](https://fontawesome.com/v4/icons/).
 
-### Search Results
-
-This [commit](https://github.com/cotes2020/jekyll-theme-chirpy/commit/647eea8dbd716f9d3cb8330c3139fa753903f51d) re-introduced truncation of the search results. It only brings results for the first 200 words. I removed this truncation in my version.
-
 ## Upgrading the Theme
 
 Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way: 
