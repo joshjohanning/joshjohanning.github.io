@@ -43,25 +43,25 @@ After spending a few hours on this, there were a few ways I found to do this wit
 
 ## Mysteriously hidden CURL url
 
-In hindsight, it's so simple, yet it's not documented anywhere! I was trying to use the `mvn dependency:get/copy` cli and kept getting stuck on a '401 unauthorized` error message. In the logs, I saw the URL to the `.jar` file I was trying to download and decided to paste that into my browser. I received a username/password basic auth prompt, and I simply pasted in my PAT as a password and I was able to download that file.
+In hindsight, it's so simple, yet it's not documented anywhere! I was trying to use the `mvn dependency:get/copy` cli and kept getting stuck on a `401 unauthorized` error message. In the logs, I saw the URL to the `.jar` file I was trying to download and decided to paste that into my browser. I received a username/password basic auth prompt, and I simply pasted in my PAT as a password and I was able to download that file.
 
 Extrapulating to `curl`, this was how to replicate this in the command line:
 
 {% raw %}
 ```bash
 curl 'https://maven.pkg.github.com/<org>/<repo>/com/<group>/<artifact>/<version>/<file-name>.jar' \
-    -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-    -L \
-    -O
+  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+  -L \
+  -O
 ```
 
 And because my biggest pet peave is when someone has this awesome blog post but then hides/obfuscates all the good stuff, here's my actual CURL command I used to download a file:
 
 ```bash
 curl 'https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package/com/sherlock/herokupoc/1.0.0-202201071559/herokupoc-1.0.0-202201071559.jar' \
-    -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-    -L \
-    -O
+  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+  -L \
+  -O
 ```
 
 The `-L` is important here as this tells `curl` to follow redirects. Without it, you'll get a '301 Moved Permanently' because it's trying to use use the expanded URL as mentioned above. If you added the `-v` option to the command, you would see a similar long URL that our `curl` follows the redirect to.
