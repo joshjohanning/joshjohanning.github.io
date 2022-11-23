@@ -19,9 +19,9 @@ We had a team that wanted to push to GitHub packages, which is relatively easily
 
 There are a couple of different ways you could think about this.
 
-1) Maybe the `docker build` step should occur in the same job as the `mvn build` step so that it has access to the same binary outputs
-1) Perhaps instead of GitHub Packages we create a Release on the repository - we can use an [Action](https://github.com/softprops/action-gh-release) to do this and an [API](https://docs.github.com/en/rest/reference/releases#get-a-release-asset) to download the release
-1) If we really just want to download the package binary from GitHub Packages...that should be simple enough, right?
+1. Maybe the `docker build` step should occur in the same job as the `mvn build` step so that it has access to the same binary outputs
+2. Perhaps instead of GitHub Packages we create a Release on the repository - we can use an [Action](https://github.com/softprops/action-gh-release) to do this and an [API](https://docs.github.com/en/rest/reference/releases#get-a-release-asset) to download the release
+3. If we really just want to download the package binary from GitHub Packages...that should be simple enough, right?
 
 ## Just use the Packages API, right?
 
@@ -37,13 +37,13 @@ Nope -- check the URL of one of the files in my repo:
 
 > https://github-registry-files.githubusercontent.com/445574648/92585100-6fe8-11ec-8a00-38630c14852f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220107%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220107T193611Z&X-Amz-Expires=300&X-Amz-Signature=96f4809aebb229ea01b80832c12e546810837194203927c39a31f2c875b177fd&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=445574648&response-content-disposition=filename%3Dherokupoc-1.0.0-202201071835.jar&response-content-type=application%2Foctet-stream
 
-Pretty nasty huh?
+Pretty nasty huh? It looks to be a timed download URL.
 
 After spending a few hours on this, there were a few ways I found to do this with various levels of monstrocities committed in finding. I'll start with the best / easiest and work my way down. 
 
-## Mysteriously hidden CURL url
+## Mysteriously hidden URL to CURL
 
-In hindsight, it's so simple, yet it's not documented anywhere! I was trying to use the `mvn dependency:get/copy` cli and kept getting stuck on a `401 unauthorized` error message. In the logs, I saw the URL to the `.jar` file I was trying to download and decided to paste that into my browser. I received a username/password basic auth prompt, and I simply pasted in my PAT as a password and I was able to download that file.
+In hindsight, it's so simple (at least for Maven), yet it's not documented anywhere! I was trying to use the `mvn dependency:get/copy` cli and kept getting stuck on a `401 unauthorized` error message. In the logs, I saw the URL to the `.jar` file I was trying to download and decided to paste that into my browser. I received a username/password basic auth prompt, and I simply pasted in my PAT as a password and I was able to download that file.
 
 Extrapulating to `curl`, this was how to replicate this in the command line:
 
@@ -72,11 +72,14 @@ The `-O` downloads the file locally with the same name as in the URL.
 
 You can also query against the [GraphQL Endpoint](https://docs.github.com/en/graphql/reference/objects#package). It's not pretty, but here are my examples:
 
-Getting the latest download url:
+### Getting the latest download url
+
+Use this GraphQL to get the latest package version download url:
+
 ```graphql
 {
-  repository(owner: "joshjohanning-org", name: "sherlock-heroku-poc-mvn-package") {
-    packages(first: 10, packageType: MAVEN, names: "com.sherlock.herokupoc") {
+  repository(owner: "joshjohanning", name: "Wolfringo-github-packages") {
+    packages(first: 10, packageType: NUGET, names: "Wolfringo.Commands") {
       edges {
         node {
           id
@@ -146,19 +149,40 @@ jq -r '.data.repository.packages.edges[].node.versions.nodes[].files.nodes[].url
 ```
 {: .nolineno}
 
-This is how you can run this GraphQL command via `curl` and `jq` to output the download url (generated from Postman):
+This is how you can run this GraphQL command via [`gh cli`](https://cli.github.com/) to output the download url:
 
 ```bash
-curl 'https://api.github.com/graphql' \
-  -s \
-  -X POST \
-  -H 'content-type: application/json' \
-  -H "Authorization: Bearer xxx" \
-  --data '{"query":"{\n  repository(owner: \"joshjohanning-org\", name: \"Wolfringo-github-packages\") {\n    packages(first: 10, packageType: NUGET, names: \"Wolfringo.Commands\") {\n      edges {\n        node {\n          id\n          name\n          packageType\n          versions(first: 100) {\n            nodes {\n              id\n              version\n              files(first: 10) {\n                nodes {\n                  name\n                  url\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}","variables":{}}' \
-  | jq -r '.data.repository.packages.edges[].node.versions.nodes[].files.nodes[].url'
+gh api graphql -f packageType="NUGET" -f owner="joshjohanning-org" -f repo="Wolfringo-github-packages" -f packageName="Wolfringo.Core" -f query='
+query ($packageType: PackageType!, $owner: String!, $repo: String!, $packageName: [String!]) {
+  repository(owner: $owner, name: $repo) {
+    packages(first: 10, packageType: $packageType, names: $packageName) {
+      edges {
+        node {
+          id
+          name
+          packageType
+          versions(first: 100) {
+            nodes {
+              id
+              version
+              files(first: 10) {
+                nodes {
+                  name
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}' -q '.data.repository.packages.edges[].node.versions.nodes[].files.nodes[].url'
 ```
 
-If you need to grab a specific version, you can use the following GraphQL query:
+### Getting a specific version download url
+
+Use this GraphQL to get a package's specific version download url:
 
 ```graphql
 {
@@ -186,6 +210,37 @@ If you need to grab a specific version, you can use the following GraphQL query:
     }
   }
 }
+```
+
+Similar example with specific version, using [`gh cli`](https://cli.github.com/) again:
+
+```bash
+gh api graphql -f packageType="NUGET" -f owner="joshjohanning" -f repo="Wolfringo-github-packages" -f packageName="Wolfringo.Commands" -f packageVersion="1.1.2" -f query='
+query ($packageType: PackageType!, $owner: String!, $repo: String!, $packageName: [String!], $packageVersion: String!) {
+  repository(owner: $owner, name: $repo) {
+    packages(first: 100, packageType: $packageType, names: $packageName) {
+      edges {
+        node {
+          id
+          name
+          packageType
+          version(version: $packageVersion) {
+            id
+            version
+            files(first: 10) {
+              nodes {
+                name
+                updatedAt
+                size
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}' -q '.data.repository.packages.edges[].node.version.files.nodes[].url'
 ```
 
 ## mvn install and mv
@@ -245,7 +300,7 @@ But gives us an authentication error:
 
 > Error:  Failed to execute goal org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get (default-cli) on project herokupoc: Couldn't download artifact: org.eclipse.aether.resolution.DependencyResolutionException: Could not transfer artifact com.sherlock:herokupoc:jar:sources:1.0.0-202201071835 from/to fix_world (https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package): authentication failed for **https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package/com/sherlock/herokupoc/1.0.0-202201071835/herokupoc-1.0.0-202201071835-sources.jar**, status: 401 Unauthorized -> [Help 1]
 
-But this was still useful though as this what led me to just try to `curl` that `.jar` file URL successfully :). 
+But this was still useful though as this what led me to just try to [`curl` that `.jar` file URL](#mysteriously-hidden-url-to-curl) successfully :). 
 
 ## Wrap-up
 
