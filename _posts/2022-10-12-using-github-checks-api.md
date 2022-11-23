@@ -1,7 +1,7 @@
 ---
 title: 'Using the GitHub Checks API to Link Workflow Statuses in a PR'
 author: Josh Johanning
-date: 2022-10-11 20:30:00 -0500
+date: 2022-10-12 20:30:00 -0500
 description: Using the GitHub Checks API to report back the status of another GitHub Action workflow triggered via the workflow_dispatch event in a pull request
 categories: [GitHub]
 tags: [GitHub, Scripts, gh cli]
