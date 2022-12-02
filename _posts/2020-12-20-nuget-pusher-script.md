@@ -1,9 +1,15 @@
 ---
-title: 'Quickly Migrate NuGet Packages to a New Feed in Bulk'
+title: 'Quickly Migrate NuGet Packages to a New Feed'
 author: Josh Johanning
 date: 2020-12-23 16:45:00 -0600
 categories: [Azure DevOps]
-tags: [Azure DevOps, NuGet, Scripts]
+tags: [Azure DevOps, NuGet, Scripts, Migrations]
+img_path: /assets/screenshots/2020-12-20-nuget-pusher-script
+image:
+  path: azure-artifacts.png
+  width: 100%
+  height: 100%
+  alt: NuGet packages in Azure Artifacts
 ---
 
 ## Summary
@@ -11,6 +17,15 @@ tags: [Azure DevOps, NuGet, Scripts]
 This is a *very* simple bash script that can assist you in migrating NuGet packages to a different Artifact feed. It's written with Azure DevOps in mind as a target, but there's no reason why you couldn't use any other artifact feed as a destination.
 
 I used the script after I ran a NuGet restore locally of a Visual Studio solution, found my `.NuGet`{: .filepath} folder with all of the cached packages, placed my script in that folder, and ran it. This saved me a lot of time, migrating 102 packages while I grabbed a cup of coffee ☕️!
+
+> Note that this won't work for migrating NuGet packages to **GitHub Packages** since the `<repository url="..." />` element in the `.nuspec`{: .filepath} file in the `.nupkg`{: .filepath} needs to be updated. See my other posts: 
+> - [Migrate NuGet Packages Between GitHub Instances](/posts/github-packages-migrate-nuget-packages/)
+> - [Migrate NuGet Packages to GitHub Packages](/posts/github-packages-migrate-nuget-packages-to-github-packages/)
+{: .prompt-info }
+
+## The Script
+
+Copy the script below and save it as `nuget-pusher.sh`{: .filepath} in the folder where your `.nupkg`{: .filepath} files are located. Don't forget to `chmod +x nuget-pusher.sh`{: .filepath} to make it executable!
 
 {% raw %}
 
@@ -60,6 +75,23 @@ echo "..."
 
 > According to the [docs](https://learn.microsoft.com/en-us/azure/devops/artifacts/nuget/dotnet-exe?view=azure-devops#publish-packages), any string will work for the `--api-key` parameter.
 {: .prompt-info }
+
+## Running the Script
+
+The script below can be called via:
+
+```bash
+./nuget-pusher-script.sh <nuget-feed-name> <nuget-feed-source> <PAT>
+```
+
+An example:
+
+```bash
+./nuget-pusher-script.sh \
+  azure-devops \
+  https://pkgs.dev.azure.com/jjohanning0798/_packaging/my-nuget-feed/nuget/v3/index.json \
+  xyz_my_pat
+```
 
 ## Bonus: Locating .nupkg Packages
 
