@@ -103,7 +103,7 @@ Here's the action code to generate and sign an installation access token for aut
           installation_id: 29881931
           private_key: ${{ secrets.PRIVATE_KEY }}
 
-      # example 1 - cloning repo - clone using the `actions/checkout` step
+      # example 1a - cloning repo - clone using the `actions/checkout` step
       - name: Checkout
         uses: actions/checkout@v2.4.0
         with:
@@ -111,26 +111,25 @@ Here's the action code to generate and sign an installation access token for aut
           token: ${{ steps.get_installation_token.outputs.token }}
           path: my-repo
 
-      # example 1 - cloning repo - using git clone command
+      # example 1b - cloning repo - using git clone command
       - name: Clone Repository
         run: | 
           mkdir my-repo-2 && cd my-repo-2
           git clone https://x-access-token:${{ steps.get_installation_token.outputs.token }}@github.com/my-org/my-repo.git
 
-      # example 2 - api - call an api using curl
+      # example 2a - api - call an api using curl
       - name: Get Repo (curl)
         run: | 
           curl \
             -H "Authorization: Bearer ${{ steps.get_installation_token.outputs.token }}" \
             https://api.github.com/repos/joshjohanning-org/composite-caller-1
 
-      # example 2 - api - call an api using the GitHub CLI
+      # example 2b - api - call an api using the GitHub CLI
       - name: Get Repo (gh api)
         env:
           GH_TOKEN: ${{ steps.get_installation_token.outputs.token }}
         run: | 
-          gh api \
-            /repos/joshjohanning-org/composite-caller-1
+          gh api /repos/joshjohanning-org/composite-caller-1
 ```
 {: file='.github/workflows/test-permissions.yml'}
 {% endraw %}

@@ -28,23 +28,35 @@ Here's an example GitHub Action sample for logging into the `gh cli` and using [
 
 ## Example 2 - env variable
 
-However, there is another way. If you try to run a `gh` command without authenticating, you will see the following error message:
+However, there is a better way. If you try to run a `gh` command without authenticating, you will see the following error message:
 
-```
-gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable. Example:
-  env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+> gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable. Example:
+> ```yml
+> env:
+>   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+> ```
+
+With this, you will notice you don't have to run `gh auth login` at all. You can just set the `GH_TOKEN` environment variable to the value of `${{ secrets.GITHUB_TOKEN }}` and the `gh cli` will use that token to authenticate. You can set the environment variable at the [workflow](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#env) level, [job](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idenv) level, or [step](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv) level.
+
+This is an example of the least privilege approach, setting the `env` variable at the [step](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv) level, and allowing different steps to use different tokens if needed:
+
+```yml
+      - run: gh issue create --title "My new issue" --body "Here are more details."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-If you are using the `gh cli` in multiple steps or jobs in a workflow, setting the `GH_TOKEN` as an [`env`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#env) might be better:
+If you are using `gh cli` in multiple steps or jobs in a workflow, setting the `GH_TOKEN` as a [workflow](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#env) (or https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#env) level, [job](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idenv) [`env`] variable might be more efficient:
 
 ```yml
 env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # setting GH_TOKEN for the entire workflow
 
 jobs:
   prebuild:
     runs-on: ubuntu-latest
+    # env: 
+    #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # setting GH_TOKEN for the entire job
     steps:
     - run: |
         gh api -X GET /repos/${{ GITHUB.REPOSITORY }}/topics --jq='.names'
@@ -55,8 +67,30 @@ jobs:
         gh api -X GET /repos/${{ GITHUB.REPOSITORY }}/branches --jq='.[].name'
 ```
 
-With this, you will notice you don't have to run `gh auth login` at all. 
+## Example 3 - Authenticate with GitHub App
 
-You can alternatively use [`jobs.<job_id>.steps[*].env`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv) or [`jobs.<job_id>.env`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idenv) to set an environment variable for a particular step or job instead of the whole workflow, but this would have to be added to each step/job that you were running `gh` commands in.
+This example combines concepts learned in this post with the [*Demystifying GitHub Apps: Using GitHub Apps to Replace Service Accounts*](/posts/github-apps/) post. 
+
+You may want to use a GitHub app to authenticate and use the `gh cli` in a GitHub Action workflow to do something. You can manage permissions more with the GitHub App, and installing it on the org / granting access to multiple repositories whereas `${{ secrets.GITHUB_TOKEN }}` only has access to resources inside of the repository running the action. In addition, you can give the actor a more meaningful name (e.g.: PR-Enforcer-Bot) vs. the default `github-actions[bot]` name.
+
+Here's an example that uses an app to create an issue in a *different* repository: 
+
+```yml
+    steps:
+      - uses: tibdex/github-app-token@v1
+        id: get_installation_token
+        with: 
+          app_id: 170544
+          # installation_id not needed IF the app is installed on this current repo
+          installation_id: 29881931
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Create Issue
+        env:
+          GH_TOKEN: ${{ steps.get_installation_token.outputs.token }}
+        run: | 
+          gh issue create --title "My new issue" --body "Here are more details." \
+            -R my-org/my-repo
+```
 
 {% endraw %}
