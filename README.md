@@ -35,7 +35,12 @@ See: [#8](https://github.com/joshjohanning/joshjohanning.github.io/pull/8)
 
 ### Adding Speaking tab
 
-Used an icon from [fontawesome](https://fontawesome.com/v4/icons/).
+Used an icon from [fontawesome](https://fontawesome.com/v4/icons/)
+
+### Reverting 'preview image ratio to 1.91 : 1'
+
+- Upstream commit: [4b6ccbc](https://github.com/cotes2020/jekyll-theme-chirpy/commit/4b6ccbcbccce27b9fcb035812efefe4eb69301cf)
+- My changes so that preview image still shimmers before loading, but no image cropping: [b282712^..bb1dc1f](https://github.com/joshjohanning/joshjohanning.github.io/compare/b282712087028da95e292e3159d20cdf63d59feb^..bb1dc1f1bdbba4ee7d62858d834e0ca19f7745db)
 
 ## Upgrading the Theme
 
