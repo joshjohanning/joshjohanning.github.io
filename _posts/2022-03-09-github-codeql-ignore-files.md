@@ -61,24 +61,24 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
 
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      uses: github/codeql-action/autobuild@v2
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
       with:
         upload: false # disable the upload here - we will upload in a different action
         output: sarif-results
 
     - name: filter-sarif
-      uses: zbazztian/filter-sarif@master
+      uses: advanced-security/filter-sarif@v1
       with:
         # filter out all test files unless they contain a sql-injection vulnerability
         patterns: |
@@ -88,13 +88,13 @@ jobs:
         output: sarif-results/${{ matrix.language }}.sarif
 
     - name: Upload SARIF
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: sarif-results/${{ matrix.language }}.sarif
 
     # optional: for debugging the uploaded sarif
     - name: Upload loc as a Build Artifact
-      uses: actions/upload-artifact@v2.2.0
+      uses: actions/upload-artifact@v3
       with:
         name: sarif-results
         path: sarif-results
