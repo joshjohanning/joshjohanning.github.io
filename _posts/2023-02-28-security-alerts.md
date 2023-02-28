@@ -38,6 +38,7 @@ I recently had the opportunity to work with a large organization to help them ma
   - If you're asking "**How can I snooze a Dependabot alert**", your team's approach is **wrong**. It's okay to get alerts, new vulnerabilities are discovered in packages every day, but you should be working to fix them
 - Great **testing** is effective at helping you resolve alerts
   - If a Dependabot Security Alert PR is created, if your **build job and unit tests pass**, then you can be reasonably confident that the **PR is safe to merge**
+  - There isn't a great way to **distinguish between a Dependabot Security Update PR vs. a [Dependabot Version Update](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) PR** (non-security related), but you can use something like **labels** defined in your `dependabot.yml`{: .filepath} file to help you distinguish between the two
 - Some teams ask if they can ignore **development-scoped dependencies (such as devDependencies)**
   - This was added as a feature to [**Dependabot in June 2022**](https://github.blog/changelog/2022-06-23-dependabot-alerts-filter-alerts-by-the-scope-of-the-dependency-runtime-and-development/)
   - While it is true your end users won't be affected by a vulnerability in a development dependency, your developers very well may be, and your developers certainly have access to privileged information that make them a **prime attack vector**
