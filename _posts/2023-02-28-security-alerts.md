@@ -21,22 +21,22 @@ I recently had the opportunity to work with a large organization to help them ma
 
 - It might seem obvious, but organizations should **focus on the critical and high alerts first**
   - Teams can get overwhelmed by the sheer number of alerts that Dependabot finds, but should instead be focusing on the **critical/high alert count**
-- **Pull requests gates**
+- Leverage **Pull requests gates**
   - For **Dependencies**: Introduce **gates during pull requests** to at least not allow people to introduce *new* vulnerable dependencies (ie: use the [Dependency Review Action](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement))
   - I would **advise against blocking all PRs from being merged if ANY** high/critical Dependabot alerts are present. This would affect PRs that didn't touch dependencies as well
   - Certainly, in some high-regulated environments, this could have the desired effect of **forcing** teams to fix their security issues, but in nearly all cases, **I would advise against this**
-  - While you can't set up a **[Required Workflow](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/required-workflows) for CodeQL**, you can use this for the **[Dependency Review action](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement)/status check** ([sample here](https://gist.github.com/joshjohanning/0d3c49431ee8e7e3a30a306f6017604a))
-  - Same concept for **Code Scanning**: Introduce gates to **prevent people from merging new code that contains a potential vulnerability**. 
-  - This can be done by adding the **CodeQL status check to the [branch protection rule](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/triaging-code-scanning-alerts-in-pull-requests#code-scanning-results-check)**. For best coverage, add the `CodeQL` status check as well as the `Analyze` status checks (ie: `Analyze (java)`)
+  - While you can't set up a **[Required Workflow](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/required-workflows) for CodeQL**, you can use this for the **[Dependency Review action](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement)/status check for Dependabot** ([sample here](https://gist.github.com/joshjohanning/0d3c49431ee8e7e3a30a306f6017604a)) for enforcing this across an organization
+  - For **Code Scanning**: Same idea, introduce gates to **prevent people from merging new code that contains a potential vulnerability**. 
+  - This can be done by adding the **CodeQL status check to the [branch protection rule](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/triaging-code-scanning-alerts-in-pull-requests#code-scanning-results-check)**. For best coverage, add the `CodeQL` status check as well as the `Analyze` status check(s) (ie: `Analyze (java)`)
 - Some organizations introduce an **SLA** for Dependabot Alerts that are found
   - Example: If a **critical Dependabot alert is found, you have 10 days** to fix it. High = 30, Medium = 60, Low = 90 (or similar)
   - Typically, a **grace period** is given when turning on security settings to allow teams to burn down the backlog of alerts
   - One could potentially use **[webhook event](https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#dependabot_alert) to trigger when alerts** are found and post them to a Slack or Teams channel or even as Issues on their repository!
-  - Ideally, you wouldn't need to rely on the SLA for Code Scanning results after initial onboarding as often since vulnerabilities should be caught and fixed during pull requests 😄. There are **more likely to be Dependabot Alerts that are found out of band than CodeQL alerts**
+  - Ideally, **you wouldn't need to rely on the SLA for Code Scanning results** after initial onboarding since vulnerabilities should be caught and fixed during pull requests with **gates** 😄. There are **more likely to be Dependabot Alerts that are found out of band than CodeQL alerts**
 - Some organizations introduce an **“alert cap”** similar to a **“bug cap”** - if we get more than 10 Dependabot alerts for example, we have to burn them down
 - Ultimately, organizations **need to have procedural practices in place** (culture) to make security a concern so that people don’t “ignore” alerts and instead work to fix them
   - If you're asking "**How can I snooze a Dependabot alert**", your team's approach is **wrong**. It's okay to get alerts, new vulnerabilities are discovered in packages every day, but you should be working to fix them
-- Great **testing** is effective at helping you resolve alerts
+- Great **testing** is effective at helping you resolve Dependabot alerts
   - If a Dependabot Security Alert PR is created, if your **build job and unit tests pass**, then you can be reasonably confident that the **PR is safe to merge**
   - There isn't a great way to **distinguish between a Dependabot Security Update PR vs. a [Dependabot Version Update](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) PR** (non-security related), but you can use something like **labels** defined in your `dependabot.yml`{: .filepath} file to help you distinguish between the two
 - Some teams ask if they can ignore **development-scoped dependencies (such as devDependencies)**
@@ -46,6 +46,7 @@ I recently had the opportunity to work with a large organization to help them ma
   - Upon merging the PR with the package version fix, the **Dependabot Alert will automatically be closed** (**same with Code Scanning alerts**, once the code is fixed, the alert is automatically closed)
   - Not all Dependabot Alerts get created as Security Update pull requests **([there’s a limit of 10](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/troubleshooting-dependabot-errors#dependabot-cannot-open-any-more-pull-requests))**, but can be slightly less than that due to various factors
   - Sometimes dependencies have a **vulnerability disclosed with no new version to update to** - in those situations you have to evaluate the risk and decide if you want to continue using that dependency or not
+  - Some ecosystems, like Python's `pip`, can show you if you are **[referencing a vulnerable code path in a dependency](https://github.blog/2022-04-14-dependabot-alerts-now-surface-if-code-is-calling-vulnerability/)**
 - Using a co-worker's **[tspascoal/dependabot-alerts-helper](https://github.com/tspascoal/dependabot-alerts-helper) scripts** to export Dependabot alerts to a CSV file
   - This can be used for further **analysis / grouping / management** of alerts, especially if you are responsible for a lot of repositories
   - The **[Security Overview](https://docs.github.com/en/enterprise-cloud@latest/code-security/security-overview/about-the-security-overview)** is great, but if you only care about specific repositories but have access to a lot of repositories, it can be a little noisy 
@@ -53,13 +54,17 @@ I recently had the opportunity to work with a large organization to help them ma
   - This analysis and testing could be useful **if a single package was causing a high percentage of alerts** across a team/organization
   - Maybe you can’t do this throughout the organization, but a single team could use some of the tools to at least make changes in **their x number of repos that they own**
   - Also, who doesn't like pulling up Excel for some pretty tables/charts? 📊
-- Additional **useful apps**:
+- Additional **useful apps**
   - **[kenmuse/probot-codescan-alerts](https://github.com/kenmuse/probot-codescan-alerts)** - A Probot app to ensure that people are not closing security alerts without actually fixing them / require them to have the proper permissions to do so
   - **[advanced-security/ghas-reviewer-app](https://github.com/advanced-security/ghas-reviewer-app)** - Similar to the above
   - **[github/safe-settings](https://github.com/github/safe-settings)** - This can be useful to ensure repositories have a pull request review requirement as well as requiring the [Dependency Review](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement) status check
   - **[NickLiffen/ghas-enablement](https://github.com/NickLiffen/ghas-enablement)** - Useful to push CodeQL workflows as well as enabling Security features to a set of repositories
 - Integration GitHub Advanced Security with **other SIEM tools** (**resource**)
   - Such as **[Splunk's dashboard](https://github.com/splunk/github_app_for_splunk#code-scanning-alerts)**
+- What to do when you find **Secret Scanning** results
+  - Turn on **[push protections](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning)**! This won't block all secrets, but it will block secret types with a high confidence score to minimize disruptive false positives
+  - It is easier/more secure to **rotate secrets** than to **clean the repo history** with something like [BFG to remove the commit](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+  - You still might want to clean the repo history for reasons, but regardless, **you should still rotate the secret**!
 
 ## Further Reading
 
