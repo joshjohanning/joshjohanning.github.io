@@ -1,5 +1,5 @@
 ---
-title: 'Musings on Handling Dependabot, CodeQL, and Secret Scanning Alerts'
+title: 'Tips for Handling Dependabot, CodeQL, and Secret Scanning Alerts'
 author: Josh Johanning
 date: 2023-02-28 15:30:00 -0600
 description: My musings on handling security alerts in GitHub
@@ -68,7 +68,8 @@ I recently had the opportunity to work with a large organization to help them ma
 
 ## Further Reading
 
-- Check out some of **[@colindembovsky](https://github.com/colindembovsky/)**'s posts, such as [Shift Left - How far is too far?](https://colinsalmcorner.com/shift-left-how-far-is-too-far/), [Fine Tuning CodeQL Scans using Query Filters](https://colinsalmcorner.com/fine-tuning-codeql-scans/), and [GHAS Will Win the AppSec Wars](https://colinsalmcorner.com/ghas-will-win-the-appsec-wars/)
-- Check out **[@kenmuse](https://github.com/kenmuse)**'s [Security Theater](https://www.kenmuse.com/blog/security-theater/) post - just because a different vendor says they are cover every compliance rule, doesn't mean they really do
-- Check out **[@nickliffen](https://github.com/nickliffen)**'s [Why Advanced Security?](https://nickliffen.dev/articles/why-advanced-security.html) post - "there is more to a security tool than the number of results found!"
-- From GitHub's official docs, [Adopting GitHub Advanced Security at scale](https://docs.github.com/en/enterprise-cloud@latest/code-security/adopting-github-advanced-security-at-scale)
+- Check out some of [@colindembovsky](https://github.com/colindembovsky/)'s posts, such as [Shift Left - How far is too far?](https://colinsalmcorner.com/shift-left-how-far-is-too-far/), [Fine Tuning CodeQL Scans using Query Filters](https://colinsalmcorner.com/fine-tuning-codeql-scans/), and [GHAS Will Win the AppSec Wars](https://colinsalmcorner.com/ghas-will-win-the-appsec-wars/)
+- Check out [@kenmuse](https://github.com/kenmuse)'s [Security Theater](https://www.kenmuse.com/blog/security-theater/) post - just because a different vendor says they are cover every compliance rule, doesn't mean they really do
+- Check out [@nickliffen](https://github.com/nickliffen)'s [Why Advanced Security?](https://nickliffen.dev/articles/why-advanced-security.html) post - "there is more to a security tool than the number of results found!"
+- Check out this post from the GitHub Blog, [5 tips for prioritizing Dependabot alerts](https://github.blog/2022-09-19-5-tips-for-prioritizing-dependabot-alerts/), for additional ideas with Dependabot alerts
+- Check out this page from the GitHub docs, [Adopting GitHub Advanced Security at scale](https://docs.github.com/en/enterprise-cloud@latest/code-security/adopting-github-advanced-security-at-scale), for ideas on using a phased approach to rollout GitHub Advanced Security across your organization
