@@ -10,7 +10,7 @@ image:
   path: security-overview-light.png
   width: 100%
   height: 100%
-  alt: The Latest Release in a GitHub Repo
+  alt: Security Overview for an Organization
 ---
 
 ## Overview
