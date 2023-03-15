@@ -2,7 +2,7 @@
 title: 'Configure GitHub Dependabot to Keep Actions Up to Date'
 author: Josh Johanning
 date: 2022-07-02 08:00:00 -0500
-description: Using Dependabot to keep Actions in GitHub Actions Workflows up to date, including how this works for custom actions within an organization
+description: Using Dependabot to keep Actions in GitHub Actions Workflows up to date, including how this works for custom private/internal actions within an organization
 categories: [GitHub, Dependabot]
 tags: [GitHub, Dependabot, Pull Requests, GitHub Actions]
 img_path: /assets/screenshots/2022-07-02-github-dependabot-for-actions
@@ -89,7 +89,7 @@ registries:
     type: git
     url: https://github.com
     username: x-access-token # username doesn't matter
-    password: ${{ secrets.GHEC_TOKEN }}
+    password: ${{ secrets.GHEC_TOKEN }} # dependabot secret
 ```
 {: file='.github/dependabot.yml'}
 
@@ -112,6 +112,10 @@ Once you configure the `dependabot.yml`{: .filepath} and Dependabot secret as di
 
 ![Dependabot created pull requests for both marketplace and private / custom actions](dependabot-pr.png){: .shadow }
 _Dependabot created pull requests for both marketplace and private / custom actions_
+
+## What About Reusable Workflows?
+
+You're in luck! Check out this [post](/posts/dependabot-reusable-workflows/) of mine for the details.
 
 ## Summary
 
