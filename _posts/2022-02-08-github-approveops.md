@@ -45,34 +45,55 @@ _The ApproveOps run in GitHub Actions - the migration job is skipped if no one h
 
 ## The Code
 
-I recently created a [GitHub Action published on the marketplace](https://github.com/marketplace/actions/approveops-approvals-in-issueops) that consolidates the various actions and bash commands. If you're not interested in using the marketplace action or want to extend what I've done, my [GitHub Actions workflow sample](https://github.com/joshjohanning/ApproveOps/blob/main/.github/workflows/approveops.yml) is still available in its entirety.
+I recently created a [GitHub Action published on the marketplace](https://github.com/marketplace/actions/approveops-approvals-in-issueops) that consolidates the various actions and bash commands. If you're not interested in using the marketplace action or want to extend what I've done, you can see the [logic](https://github.com/joshjohanning/approveops/blob/main/action.yml#L39) in the composite action in its entirety.
 
-Here's how you can use my Action in a GitHub Action workflow:
+Here's how you can use my Action in a GitHub Action workflow ([link to sample YML](https://github.com/joshjohanning-org/approveops-action-validating/blob/main/.github/workflows/approveops.yml)):
 
 {% raw %}
 ```yml
-name: Approve Ops
+name: ApproveOps
 on:
   issue_comment:
-    types: [created, edited]
+    types: [created]
 
 jobs:
   approveops:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/run-migration')
+    # only run the job if the comment body contains the command proper command
+    if: contains(github.event.comment.body, '/do-stuff')
     # optional - if we want to use the output to determine if we run the migration job or not
     outputs: 
       approved: ${{ steps.check-approval.outputs.approved }}
 
     steps:
-      - name: ApproveOps - ApproveOps in IssueOps
-        uses: joshjohanning/ApproveOps@v1
-        id: check-approval
-        with:
-          app-id: 170284
-          app-private-key: ${{ secrets.PRIVATE_KEY }}
-          team-name: approver-team
-          fail-if-approval-not-found: false
+    # get the app's installation token (required for v2)
+    - uses: tibdex/github-app-token@v1
+      id: get_installation_token
+      with:
+        app_id: 170284
+        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+    # V2 - GitHub APp logic pulled out so you can use different action or PAT
+    - name: ApproveOps - ApproveOps in IssueOps
+      uses: joshjohanning/approveops@v2
+      id: check-approval
+      with:
+        approve-command: '/approved'
+        token: ${{ steps.get_installation_token.outputs.token }} # use a github app token or a PAT
+        team-name: ${{ env.approver_team_name }} # The name of the team in GitHub to check for the approval command; e.g.: approver-team
+        fail-if-approval-not-found: true # Fail the action (show the action run as red) if the command is not found in the comments from someone in the approver team"
+        post-successful-approval-comment: true # Boolean whether to post successful approval comment
+        successful-approval-comment: ':tada:  You were able to run the workflow because someone left an approval in the comments!! :tada:' # Comment to post if there is an approval is found
+
+    # V1 - GitHub App logic baked in
+    #   - name: ApproveOps - ApproveOps in IssueOps
+    #     uses: joshjohanning/ApproveOps@v1
+    #     id: check-approval
+    #     with:
+    #       app-id: 170284
+    #       app-private-key: ${{ secrets.PRIVATE_KEY }}
+    #       team-name: approver-team
+    #       fail-if-approval-not-found: false
 
   migration:
     runs-on: ubuntu-latest
@@ -95,7 +116,7 @@ jobs:
 
 ### Explanation
 
-I am using a [bash script in my composite action](https://github.com/joshjohanning/ApproveOps/blob/main/.github/workflows/approveops.yml#L28:L53) to:
+I am using a [bash script in my composite action](https://github.com/joshjohanning/approveops/blob/main/action.yml#L45:L72) to:
 
 1. Get a list of users in the approval team
 2. Get a list of comments on the issue (note that I am converting the comments to base64 otherwise comments that had spaces in them would throw the loop off - this was a [good resource for explaining that](https://www.starkandwayne.com/blog/bash-for-loop-over-json-array-using-jq/))
