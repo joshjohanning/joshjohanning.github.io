@@ -15,13 +15,13 @@ image:
 
 ## Overview
 
-We already can use [Dependabot Version Updates](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) for keeping marketplace actions (in addition to custom internal/private actions) up to date (see my [post]((/posts/github-dependabot-for-actions/) for more details). However, as of [March 2023](https://github.blog/changelog/2023-03-13-dependabot-updates-support-reusable-workflows-for-github-actions/), we can use Dependabot for keeping Reusable Workflows up to date as well. 
+We already can use [Dependabot Version Updates](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) for keeping marketplace actions (in addition to custom internal/private actions) up to date (see my [post](/posts/github-dependabot-for-actions/)) for more details). However, as of [March 2023](https://github.blog/changelog/2023-03-13-dependabot-updates-support-reusable-workflows-for-github-actions/), we can use Dependabot for keeping Reusable Workflows up to date as well. 
 
 ## Configuration
 
 ### Authorization
 
-My previous [post]((https://github.blog/changelog/2023-03-13-dependabot-updates-support-reusable-workflows-for-github-actions/)) discusses how there are two ways that you can configure Dependabot when working with resources in internal or private repositories. To summarize, you can either:
+My previous [post](https://github.blog/changelog/2023-03-13-dependabot-updates-support-reusable-workflows-for-github-actions/) discusses how there are two ways that you can configure Dependabot when working with resources in internal or private repositories. To summarize, you can either:
 
 1. Click some buttons in the UI to [grant authorization to Dependabot to access your repository](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies).
 2. Or you can create a [Dependabot Secret](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use) (preferably as an org-level Dependabot secret) with the value of a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) (preferably a [fine-grained token](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/)) that has read-access to the required repositories. I don't find it as detrimental to use a personal access token as a Dependabot secret since Dependabot secrets can *only be access by Dependabot*; you can't use a GitHub Actions workflow to expose the secret accidentally/intentionally.
