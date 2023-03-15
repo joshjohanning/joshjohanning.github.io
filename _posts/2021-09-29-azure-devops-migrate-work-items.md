@@ -26,7 +26,7 @@ I want to highlight at a high level the options:
 
 ## Moving work items to a project within the same organization
 
-Lucky you, this is the easiest. In the [April 13 2016 sprint update](https://docs.microsoft.com/en-us/azure/devops/release-notes/2016/apr-13-team-services#work-item-move-single-or-bulk) (that didn't make it to Azure DevOps Server until 2019!!), the Azure DevOps team added the ability to move a work item between projects within the same organization. As quoted from the sprint note:
+Lucky you, this is the easiest. In the [April 13 2016 sprint update](https://web.archive.org/web/20220110230445/https://docs.microsoft.com/en-us/azure/devops/release-notes/2016/apr-13-team-services) (that didn't make it to Azure DevOps Server until 2019!!), the Azure DevOps team added the ability to move a work item between projects within the same organization. As quoted from the sprint note:
 
 > Users may now move a work item(s) between team projects. The work item ID remains the same and all of the work item's revisions are moved. Users may also change type during a move and add a comment to be included as part of the work item's discussion section.
 
@@ -114,7 +114,7 @@ Fields not migrated with this method:
 
 There are a couple tools to do this, but the tool that I have the most experience in is the [nkdAgility/azure-devops-migration-tools](https://github.com/nkdAgility/azure-devops-migration-tools) tool. Microsoft has a tool, [Microsoft/vsts-work-item-migrator](https://github.com/Microsoft/vsts-work-item-migrator), but I have not used.
 
-If you are going to go down this route, I recommend checking out Martin's [video](https://www.youtube.com/watch?v=RCJsST0xBCE) about how this works and how you can configure the tool. Since the video was posted, the configuration and 'Processors' have changed slightly. Enabling and modifying the processor settings is how you configure the various components you want migrated. There is additional documentation for the tool on this [page](https://nkdagility.github.io/azure-devops-migration-tools/), and more information specifically on the processors on this [page](https://nkdagility.github.io/azure-devops-migration-tools/Processors/WorkItemMigrationConfig.html).
+If you are going to go down this route, I recommend checking out Martin's [video](https://www.youtube.com/watch?v=RCJsST0xBCE) about how this works and how you can configure the tool. Since the video was posted, the configuration and 'Processors' have changed slightly. Enabling and modifying the processor settings is how you configure the various components you want migrated. There is additional documentation for the tool on this [page](https://nkdagility.github.io/azure-devops-migration-tools/), and more information specifically on the processors on this [page](https://web.archive.org/web/20220523111946/https://nkdagility.github.io/azure-devops-migration-tools/Processors/WorkItemMigrationConfig.html).
 
 It's a great tool and it works really well, but one thing I found difficult when I got started was getting a sample configuration file to use. Now, I haven't used the migrator tool in a while, but I do have a v11 configuration file that I have used. Specifically, I have used [version 11.9.34](https://github.com/nkdAgility/azure-devops-migration-tools/releases/tag/v11.9.34).
 

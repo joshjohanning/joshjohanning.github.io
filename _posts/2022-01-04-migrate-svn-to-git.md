@@ -31,7 +31,7 @@ If this does work for you, provide the repository url, credentials, and if appli
 
 This is the tool I have the most experience with. Using `git svn` commands, you can create a Git repo from a repo hosted in Subversion (history included). The larger the repo is and the more history there is, the longer the migration will take. Once the repo has been migrated, it can be pushed to GitHub, Azure DevOps, or any other Git host. 
 
-See the [official documentation](https://git-scm.com/book/en/v1/Git-and-Other-Systems-Migrating-to-Git) for migrating from SVN to Git with the `git svn` commands.
+See the [official documentation](https://git-scm.com/book/en/v2/Git-and-Other-Systems-Migrating-to-Git) for migrating from SVN to Git with the `git svn` commands.
 
 The high-level process is as follows:
 

@@ -106,7 +106,7 @@ I originally had this section in here to assist with blocking PR's from results 
 
 Okay, what if we were to have a repository with Terraform code and used the ShiftLeft Analysis marketplace code scanning workflow? Or, we used the native GitHub CodeQL workflow but want it to block merges when it finds any result, including warnings?
 
-Well, in the case of the ShiftLeft Analysis workflow, there is a [config file](https://slscan.io/en/latest/integrations/tips/#config-file) that can be uploaded to the root of the repository to define some of this, but I haven't played around much for this. For the GitHub CodeQL workflow, there is no fine-tuning configuration file that we can easily use (that I know of at this date).
+Well, in the case of the ShiftLeft Analysis workflow, there is a [config file](https://web.archive.org/web/20210615164536/https://slscan.io/en/latest/integrations/tips/#config-file) that can be uploaded to the root of the repository to define some of this, but I haven't played around much for this. For the GitHub CodeQL workflow, there is no fine-tuning configuration file that we can easily use (that I know of at this date).
 
 For this, I wrote a script that examines the `.sarif`{: .filepath} and added another job to the workflow, like so:
 

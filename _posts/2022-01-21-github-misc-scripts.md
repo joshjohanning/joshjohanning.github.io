@@ -32,7 +32,7 @@ Here's an example of some of the scripts I have populated in there so far:
 - [create repo](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/create-repo.sh) (api)
 - [download file from private repo](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-file-from-private-repo.sh) (api)
 - [download workflow artifacts](https://github.com/joshjohanning/github-misc-scripts/blob/main/api/download-workflow-artifacts.sh) (api)
-- [list enterprise](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/list-enterprise-id.sh) (graphql)
+- [get enterprise id](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/get-enterprise-id.sh) (graphql)
 - [create organization](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/create-organization.sh) (graphql)
 - [delete repository branch policy](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/delete-repository-branch-policy.sh) (graphql)
 - [get issue id](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/get-issue-id.sh) (graphql)

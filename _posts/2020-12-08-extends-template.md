@@ -38,7 +38,7 @@ stages:
       environment: 'prod'
 ```
 
-However, there is nothing here that *enforces* a developer to use these templates - they could either write their own or just create their pipeline inline. This is where [Extends](https://docs.microsoft.com/en-us/azure/devops/pipelines/security/templates?view=azure-devops#use-extends-templates) comes into play!
+However, there is nothing here that *enforces* a developer to use these templates - they could either write their own or just create their pipeline inline. This is where [Extends](https://learn.microsoft.com/en-us/azure/devops/pipelines/security/templates?view=azure-devops#use-extends-templates) comes into play!
 
 I remember when this was first announced in a [sprint release note](https://docs.microsoft.com/en-us/azure/devops/release-notes/2019/sprint-162-update#use-extends-keyword-in-pipelines) in December 2019, we tried it and couldn't really get it to work the way we wanted to. But with the client's requirements, this seemed like a perfect time to give it another shot. I wanted to reference a separate configuration repository where the secret scanning config would be stored without the developer having to worry or care about it, and we found a way to do just that using Extends.
 
