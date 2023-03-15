@@ -41,6 +41,7 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 5
 ```
+{: file='.github/dependabot.yml'}
 
 You will then have to check your [Dependabot run logs](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/troubleshooting-dependabot-errors#investigating-errors-with-dependabot-version-updates) to authorize Dependabot for that repository (or [add it in the organization settings](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies)).
 
@@ -52,6 +53,7 @@ _Granting access to Dependabot for this repository_
 
 For the **second option** (using a Dependabot secret), you will need to add the `registries` property to the YML configuration. The `registries` will reference `type: git` and use a [Dependabot Secret](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use) (preferably an org-level Dependabot secret):
 
+{% raw %}
 ```yml
 version: 2
 updates:
@@ -69,6 +71,8 @@ registries:
     username: x-access-token # username doesn't matter
     password: ${{ secrets.GHEC_TOKEN }} # dependabot secret
 ```
+{: file='.github/dependabot.yml'}
+{% endraw %}
 
 ### Results
 

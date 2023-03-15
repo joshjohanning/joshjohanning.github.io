@@ -78,6 +78,7 @@ registries:
     url: https://pkgs.dev.azure.com/.../_packaging/My_Feed/nuget/v3/index.json
     token: ${{secrets.MY_AZURE_DEVOPS_TOKEN}} # this doesn't work
 ```
+{: file='.github/dependabot.yml'}
 
 {% endraw %}
 
@@ -93,6 +94,7 @@ registries:
     username: octocat@example.com
     password: ${{secrets.MY_AZURE_DEVOPS_TOKEN}} # this works
 ```
+{: file='.github/dependabot.yml'}
 
 {% endraw %}
 
