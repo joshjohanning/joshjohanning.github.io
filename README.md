@@ -69,6 +69,7 @@ On Ubuntu / Intel-based Mac:
 
 ```sh
 bundle install
+npm run build
 bundle exec jekyll s
 ```
 
