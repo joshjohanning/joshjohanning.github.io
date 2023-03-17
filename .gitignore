@@ -18,9 +18,6 @@ package-lock.json
 .idea
 .vscode
 
-# Misc
-assets/js/dist
-
 # Link Checker
 link-checker.json
 error.txt
