@@ -15,7 +15,7 @@ image:
 
 ## Overview
 
-If you've ever had to delete several repositories in GitHub, you know it can be a pain as you have to copy/paste the name of each repo in the verification prompt. This script aims to simplify that by providing a list of repositories that you want to delete in a CSV, and then looping through each repo and deleting it with the `gh cli`.
+If you've ever had to delete several repositories in GitHub, you know it can be a pain as you have to copy/paste the name of each repo in the verification prompt. This script aims to simplify that by providing a list of repositories that you want to delete in a CSV, and then looping through each repo and deleting it with the [`gh cli`](https://cli.github.com/).
 
 ## The Scripts
 
@@ -26,26 +26,36 @@ These scripts are in my [github-misc-scripts](https://github.com/joshjohanning/g
 
 ## Using the Scripts
 
-Prerequisite: You need to make sure to have the [`gh cli`](https://cli.github.com/) installed and authorized (`gh auth login`).
+Prerequisites:
+
+- You need to make sure to have the [`gh cli`](https://cli.github.com/) installed and authorized (`gh auth login`).
+- Add the `delete_repo` scope:
+  ```bash
+  gh auth refresh -h github.com -s delete_repo
+  ```
+  {: .nolineno}
+
+Usage:
 
 1. Prepare a list of repositories that you want to delete and place in a CSV file, one per line, with the last line empty.
     - You can use the [`generate-repos-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/generate-repos-list.sh) script to generate a list of repos in a GitHub org, and then modify accordingly: 
-        ```bash
-        ./generate-repos.sh octohol > repos.csv
-        ```
-        {: .nolineno}
+      ```bash
+      ./generate-repos.sh octohol > repos.csv
+      ```
+      {: .nolineno}
     - Or, create your own CSV file with the list of repos you want to delete, one per line, and leave a trailing empty line/whitespace at the end of the file. The file should look like: 
-        ```
-        org/repo1
-        org/repo2
-        
-        ```
-        {: file='repos.csv'}
+      ```sh
+      org/repo1
+      org/repo2
+
+      ```
+      {: file='repos.csv'}
 2. From there, it's pretty simple - run the script, passing in the `repos.csv`{: .filepath} file:
-    ```bash
-    ./delete-repos-from-list.sh repos.csv
-    ```
-    {: .nolineno}
+
+```bash
+./delete-repos-from-list.sh repos.csv
+```
+{: .nolineno}
 
 ## Summary
 
