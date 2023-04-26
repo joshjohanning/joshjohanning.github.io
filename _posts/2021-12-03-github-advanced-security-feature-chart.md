@@ -31,6 +31,7 @@ I made this chart a while back for a client when helping them determine if the G
 | [Dependabot Alerts for Vulnerable Dependencies](https://docs.github.com/en/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/about-alerts-for-vulnerable-dependencies) | ✔️ | ✔️ | ✔️ |
 | [Dependabot Security Updates (PRs for vulnerabilities)](https://docs.github.com/en/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/about-dependabot-security-updates) | ✔️ | ✔️ | ✔️ |
 | [Dependabot Version Updates (PRs for package updates)](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/about-dependabot-version-updates) | ✔️ | ✔️ | ✔️ |
+| [Generate SBOM](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/exporting-a-software-bill-of-materials-for-your-repository) | ✔️ | ✔️ | ✔️ |
 | [GitHub Security Advisories](https://docs.github.com/en/code-security/security-advisories/about-github-security-advisories) | ✔️ | ✔️ | ✔️ |
 | [Security Policies](https://docs.github.com/en/code-security/getting-started/adding-a-security-policy-to-your-repository) | ✔️ | ✔️ | ✔️ |
 | [Security Overview for the Org](https://docs.github.com/en/enterprise-cloud@latest/code-security/security-overview/about-the-security-overview) | ✔️ | ✔️ | ✔️ |
@@ -38,15 +39,13 @@ I made this chart a while back for a client when helping them determine if the G
 | [CodeQL Code Scanning](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning) | | ✔️ | ✔️ |
 | [Dependency Review in Pull Request (rich diff)](https://github.blog/changelog/2021-10-05-dependency-review-is-generally-available/) | | ✔️ | ✔️ |
 | [Dependency Review Action (Beta)](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement) | | ✔️ | ✔️ |
-| [Secret Scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) | | ✔️ | ✔️<sup>[1]</sup> |
+| [Secret Scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) | | ✔️ | ✔️ |
 | [Secret Scanning - Custom Patterns](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/defining-custom-patterns-for-secret-scanning) | | ✔️ | |
 | [Secret Scanning - Push Protections (Beta)](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning) | | ✔️ | |
 
 Notes:
 - GHE = GitHub Enterprise
 - GHAS = GitHub Advanced Security
-- [1] Note that you won't see a secret scanning menu for public repos, you will just get an email when a secret was committed to the repo and that the secret was (likely) automatically rolled or disabled
-    + If you subscribe to GitHub Advanced Security and have a public repo, [you can still see the alerts](https://github.blog/changelog/2022-03-04-secret-scanning-advanced-security-customers-can-now-view-alerts-on-their-public-repositories/)
 - This chart primarily focuses on **GitHub Enterprise Cloud**, but note that Advanced Security is available for GitHub Enterprise Server [3.0 or higher](https://docs.github.com/en/get-started/learning-about-github/about-github-advanced-security). There may be slight differences in the features available for GitHub Enterprise Server based on the version
 
 ## About Dependabot
@@ -71,6 +70,7 @@ There are a few components of Dependabot, and while I tried to list each feature
 
 | Date        | Note |
 |-------------|------|
+| Apr 26 2023 | Removing subscript note on [secret scanning for public repos](https://github.blog/2023-02-28-secret-scanning-alerts-are-now-available-and-free-for-all-public-repositories/), added SBOM generation
 | Oct 11 2022 | Removing Beta from [Security Overview for the Org](https://github.blog/changelog/2022-04-07-security-overview-for-organizations-is-generally-available/),<br>[Security Overview is available to all GitHub Enterprise customers](https://github.blog/changelog/2022-08-08-security-overview-is-now-available-to-all-github-enterprise-users/)<br> |
 | Apr 06 2022 | Adding [Dependency Review Action (Beta)](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement) |
 | Apr 04 2022 | Adding [Secret Scanning - Push Protections (Beta)](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning) |
