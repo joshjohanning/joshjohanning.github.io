@@ -47,9 +47,15 @@ check_init() {
   fi
 }
 
-checkout_latest_tag() {
-  tag=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-  git reset --hard "$tag"
+check_env() {
+  _check_cli
+  _check_status
+  _check_init
+}
+
+checkout_latest_release() {
+  hash=$(git log --grep="chore(release):" -1 --pretty="%H")
+  git reset --hard "$hash"
 }
 
 init_files() {
@@ -67,21 +73,29 @@ init_files() {
     rm -f _config.yml.$TEMP_SUFFIX
   fi
 
-  # remove the other fies
+  # remove the other files
   rm -rf _posts/*
 
-  # save changes
+  # build assets
+  npm i && npm run build
+
+  # track the js output
+  _sedi "/^assets.*\/dist/d" .gitignore
+}
+
+commit() {
   git add -A
   git commit -m "chore: initialize the environment" -q
 
   echo "[INFO] Initialization successful!"
 }
 
-check_status
-
-check_init
-
-_no_gh=false
+main() {
+  check_env
+  checkout_latest_release
+  init_files
+  commit
+}
 
 while (($#)); do
   opt="$1"
