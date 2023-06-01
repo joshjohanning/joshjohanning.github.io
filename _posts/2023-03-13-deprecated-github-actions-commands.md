@@ -2,7 +2,7 @@
 title: 'Finding deprecated set-output and save-state commands in GitHub Actions'
 author: Josh Johanning
 date: 2023-03-13 3:00:00 -0500
-description: Using a bash script to find usage of deprecated set-output and save-state commands in GitHub Actions
+description: A bash script to find usage of deprecated set-output and save-state commands as well as finding deprecated Node.js 12 actions in GitHub Actions workflows
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, gh cli, Scripts]
 img_path: /assets/screenshots/2023-03-13-deprecated-github-actions-commands
@@ -20,7 +20,9 @@ You might have been noticing some of these warnings in your GitHub Actions workf
 > Warning: The `set-output` command is deprecated and will be disabled soon. Please upgrade to using Environment Files. For more information see: [https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/)
 {: .prompt-warning }
 
-GitHub is disabling the `set-output` and `save-state` commands in GitHub Actions on May 31, 2023, so it's crunch time in ensuring your workflows are updated to use the new command syntax. For actions that you are authoring, the fix is relatively simply. 
+~~GitHub is disabling the `set-output` and `save-state` commands in GitHub Actions on May 31, 2023, so it's crunch time in ensuring your workflows are updated to use the new command syntax.~~ The [changelog post](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/) has been updated to note that telemetry shows that there is still high usage of the deprecated workflow commands and they won't be disabled just yet.
+
+For actions that you are authoring, the fix is relatively simply. 
 
 Old: 
 
@@ -44,9 +46,18 @@ New:
 
 You could simply perform a code search and update instances of `set-output` and `save-state` to the new syntax. However, this wouldn't work for actions that you are consuming from the marketplace. For example, if you were using `actions/stale@v5.2.0` in your workflows, you would see this warning in your workflow run logs.
 
-## Finding Deprecated Workflow Command Usage
+Thanks to [@teddyteh](https://github.com/teddyteh) in this [PR](https://github.com/joshjohanning/github-actions-log-warning-checker/pull/6), this script now also searches for deprecated [Node.js 12 actions](https://github.blog/changelog/2022-09-22-github-actions-all-actions-will-begin-running-on-node16-instead-of-node12/). The fix is relatively simply here too, in the `action.yml`{: .filepath} file, use `'node16'` instead of `'node12'`:
 
-I created a [bash solution](https://github.com/joshjohanning/github-actions-log-warning-checker) to audit a list of repositories for deprecated workflow commands. It checks through recent workflow runs (configurable) to see if there are any `set-output` or `save-state` deprecation warnings in the logs. The outputs are stored to a specified CSV file and denotes if the deprecation message was found in the most recent workflow run or not. The reason why I'm searching through multiple workflow runs is that there is a possibility that certain actions aren't run on every workflow run, such as a PR build, so I wanted to ensure proper coverage.
+```yml
+runs:
+  using: 'node16'
+  main: 'main.js'
+```
+{: file='action.yml'}
+
+## Finding Deprecation Warning Command Usage
+
+I created a [bash solution](https://github.com/joshjohanning/github-actions-log-warning-checker) to audit a list of repositories for deprecated workflow commands. It checks through recent workflow runs (configurable) to see if there are any `set-output`, `save-state`, or `Node.js 12` deprecation warnings in the workflow run logs. The outputs are stored to a specified CSV file and denotes if the deprecation message was found in the most recent workflow run or not. The reason why I'm searching through multiple workflow runs is that there is a possibility that certain actions aren't run on every workflow run, such as a PR build, so I wanted to ensure proper coverage.
 
 ### Usage
 
@@ -61,15 +72,27 @@ Repository: [joshjohanning/github-actions-log-warning-checker](https://github.co
 ### Example Output
 
 ```
-repo,workflow_name,workflow_url,found_in_latest_workflow_run
-joshjohanning-org/actions-linter-testing,CI,https://github.com/joshjohanning-org/actions-linter-testing/blob/main/.github/workflows/blank.yml,no
-joshjohanning-org/actions-linter-testing,new-workflow,https://github.com/joshjohanning-org/actions-linter-testing/blob/main/.github/workflows/new-file.yml,yes
+repo,workflow_name,workflow_url,finding,found_in_latest_workflow_run
+joshjohanning-org/actions-linter-testing,CI,https://github.com/joshjohanning-org/actions-linter-testing/blob/main/.github/workflows/blank.yml,Workflow command,no
+joshjohanning-org/actions-linter-testing,new-workflow,https://github.com/joshjohanning-org/actions-linter-testing/blob/main/.github/workflows/new-file.yml,Workflow command,yes
+joshjohanning-org/actions-linter-testing,node12,https://github.com/joshjohanning-org/actions-linter-testing/blob/main/.github/workflows/node12.yml,Node.js 12 action,yes
 ```
 {: file='output.csv'}
 
+### Sample repos.csv file to use for testing
+
+You can use this `repos.csv`{: .filepath} file for testing. It has a finding for a result for a deprecated Node.js 12 action as well as a deprecated workflow command. 
+
+```
+joshjohanning-org/actions-linter-testing
+joshjohanning-org/actions-linter-testing-clean
+
+```
+{: file='repos.csv'}
+
 ### To do
 
-- [ ] [Find deprecated Node.js 12 actions](https://github.com/joshjohanning/github-actions-log-warning-checker/issues/2)
+- [x] [Find deprecated Node.js 12 actions](https://github.com/joshjohanning/github-actions-log-warning-checker/issues/2) (thanks to [@teddyteh](https://github.com/teddyteh) in this [PR](https://github.com/joshjohanning/github-actions-log-warning-checker/pull/6))
 - [ ] [Use annotations to be able to return workflow run log line links](https://github.com/joshjohanning/github-actions-log-warning-checker/issues/3) (for easier discoverability of which action is using the deprecated command(s))
 
 ## Summary
