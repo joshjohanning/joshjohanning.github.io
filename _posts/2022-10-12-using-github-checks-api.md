@@ -49,7 +49,7 @@ graph LR
 
 But first, let's take a step back and explain what the Checks API is. We can use the [Checks API](https://docs.github.com/en/rest/checks), specifically the [create a check run API](https://docs.github.com/en/rest/checks/runs#create-a-check-run), to create a check run that will show up as a [status check](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks) on the PR. 
 
-From the [docs](https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api), the Check Runs API is described as:
+From the [docs](https://web.archive.org/web/20221230233914/https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api), the Check Runs API is described as:
 
 > The Check Runs API enables you to build GitHub Apps that run powerful checks against code changes in a repository. You can create apps that perform continuous integration, code linting, or code scanning services and provide detailed feedback on commits.
 > 
@@ -239,6 +239,8 @@ jobs:
 
 When updating and/or concluding the check run, we just have to make sure we use the same `name` as the initial check run.
 
+The resulting status check can be seen in the sample pull request [here](https://github.com/joshjohanning-org/PrimeService-unit-testing-using-dotnet-test/pull/11).
+
 ## Advanced Checks
 
 We've just scratched the surface with how powerful Checks can be! The Checks API allows you to report rich details about each check run, including statuses, images, summaries, annotations, and requested actions. There is a [really great example in the GitHub docs](https://docs.github.com/en/enterprise-server@3.4/developers/apps/guides/creating-ci-tests-with-the-checks-api) demonstrating all of these features in an example app.
@@ -252,7 +254,7 @@ _Example using Checks to create a line annotation_
 
 ### Requested Actions
 
-You can also have your check run implement certain fixes with the click of a button using [requested actions](https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api#check-runs-and-requested-actions). An example the [docs](https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api#check-runs-and-requested-actions) gives is how a code linting app could automatically fix detected syntax errors:
+You can also have your check run implement certain fixes with the click of a button using [requested actions](https://web.archive.org/web/20221230233914/https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api#check-runs-and-requested-actions). An example the [docs](https://web.archive.org/web/20221230233914/https://docs.github.com/en/rest/guides/getting-started-with-the-checks-api#check-runs-and-requested-actions) gives is how a code linting app could automatically fix detected syntax errors:
 
 ![Example using Checks to create a line annotation](github_apps_checks_fix_this_button.png){: .shadow }
 _Example using Checks to create a line annotation_
