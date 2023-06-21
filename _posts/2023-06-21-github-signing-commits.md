@@ -52,7 +52,8 @@ This tutorial will cover the first two option: using a GPG key and using an SSH 
 10. After you push, you should see the verified tag on your commit in GitHub
   - You can click on the verified tag to see the GPG key that was used to sign the commit (same in step #2 above)
 
-> Note: In macOS, I received an error when committing 'gpg: signing failed: Inappropriate ioctl for device' until I ran: `export GPG_TTY=$(tty)`
+> Note: In macOS, I received an error when committing ("*gpg: signing failed: Inappropriate ioctl for device*") until I ran: `export GPG_TTY=$TTY`. 
+> It is recommended to add this to the **top** of your shell profile (ie: `~/.bash_profile`{: .filepath } or `~/.zshrc`{: .filepath })
 {: .prompt-info }
 
 ### Using an SSH Key
@@ -71,7 +72,7 @@ This tutorial will cover the first two option: using a GPG key and using an SSH 
 
 ## Summary
 
-It's relatively easy to sign commits so there isn't really an excuse to not do so. 🔐 ✅
+It's relatively easy to sign commits, so there really isn't an excuse to not do so! 🔐 ✅
 
 ![Verified commits](verified-commits.png){: .light }
 ![Verified commits](verified-commits-dark-mode.png){: .dark }
