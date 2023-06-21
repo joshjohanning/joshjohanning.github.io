@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2023-06-21 15:00:00 -0500
 description: Signing commits locally to show up as verified commits in GitHub
 categories: [GitHub]
-tags: [GitHub]
+tags: [GitHub, Git]
 img_path: /assets/screenshots/2023-06-21-github-signing-commits
 image:
   path: verified-commits.png
