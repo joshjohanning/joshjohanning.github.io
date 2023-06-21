@@ -7,7 +7,7 @@ categories: [GitHub, Actions]
 tags: [Azure DevOps, Work Items, GitHub, GitHub Actions, Pull Requests, Branch Protection Rules]
 img_path: /assets/screenshots/2022-08-17-azdo-commit-message-validator-and-pr-linker-github-action
 image:
-  path: blocking-pr.png
+  path: blocking-pr-post-image.png
   width: 100%
   height: 100%
   alt: Blocking a PR from merging because it's missing an AB# in the commit message

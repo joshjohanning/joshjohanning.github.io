@@ -7,7 +7,7 @@ categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Containers]
 img_path: /assets/screenshots/2022-03-07-github-container-jobs
 image:
-  path: container-job.png
+  path: container-job-post-image.png
   width: 100%
   height: 100%
   alt: Container Job in GitHub

@@ -5,8 +5,9 @@ date: 2021-09-08 22:00:00 -0500
 description: Using GitHub Actions to add a code coverage summary report comment to a pull request
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Pull Requests, Code Coverage]
+img_path: /assets/screenshots/2021-09-08-github-code-coverage
 image:
-  path: /assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png
+  path: github-action-pr-post-image.png
   width: 100%
   height: 100%
   alt: Code Coverage summary posted to a pull request comment using an Action from the GitHub Actions Marketplace
@@ -87,7 +88,7 @@ The next action is the [Code Coverage Summary Report](https://github.com/irongut
 ```
 
 This would be enough to show the code coverage in the action run: 
-![github action code coverage report](/assets/screenshots/2021-09-08-github-code-coverage/github-action-code-coverage.png){: .shadow }
+![github action code coverage report](github-action-code-coverage.png){: .shadow }
 _Code Coverage Summary Report in the Action run logs_
 
 However, the fun doesn't stop there. How useful would it be to post this to the PR so it's nice and easy for reviewers? Well, the next [action](https://github.com/marketplace/actions/sticky-pull-request-comment) shows a simple way we can add (and sticky) a PR comment with our code coverage report:
@@ -103,7 +104,7 @@ However, the fun doesn't stop there. How useful would it be to post this to the 
 
 Perfect - nothing for us to configure here, either. On the pull request, this comment is added: 
 
-![github action pull request](/assets/screenshots/2021-09-08-github-code-coverage/github-action-pr.png){: .shadow }
+![github action pull request](github-action-pr.png){: .shadow }
 _Code Coverage Summary Report added as a pinned comment to the Pull Request_
 
 This is also demonstrated on my [pull request here](https://github.com/joshjohanning/PrimeService-unit-testing-using-dotnet-test/pull/2). 
@@ -125,7 +126,7 @@ Since the CodeCoverageSummary action is already generating the markdown for us, 
 
 Now, it publishes to the job summary page right next to the action run logs! See the screenshot below:
 
-![Job Summary in GitHub Actions](/assets/screenshots/2021-09-08-github-code-coverage/github-action-code-coverage-job-summary.png){: .shadow }
+![Job Summary in GitHub Actions](github-action-code-coverage-job-summary.png){: .shadow }
 _Code Coverage Summary Report added to the job summary_
 
 ## ReportGenerator?
