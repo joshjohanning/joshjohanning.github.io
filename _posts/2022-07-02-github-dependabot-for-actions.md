@@ -7,7 +7,7 @@ categories: [GitHub, Dependabot]
 tags: [GitHub, Dependabot, Pull Requests, GitHub Actions]
 img_path: /assets/screenshots/2022-07-02-github-dependabot-for-actions
 image:
-  path: dependabot-pr.png
+  path: dependabot-pr-post-image.png
   width: 100%
   height: 100%
   alt: Dependabot created pull requests for both marketplace and private / custom actions

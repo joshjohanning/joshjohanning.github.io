@@ -7,7 +7,7 @@ categories: [GitHub]
 tags: [GitHub, Scripts, gh cli]
 img_path: /assets/screenshots/2022-08-11-github-script-to-add-users-to-teams
 image:
-  path: add-member-button.png
+  path: github-team.png
   width: 100%
   height: 100%
   alt: Adding a user to a team in GitHub

@@ -41,13 +41,15 @@ Used an icon from [fontawesome](https://fontawesome.com/v4/icons/)
 
 - Upstream commit: [4b6ccbc](https://github.com/cotes2020/jekyll-theme-chirpy/commit/4b6ccbcbccce27b9fcb035812efefe4eb69301cf)
 - My changes so that preview image still shimmers before loading, but no image cropping: [b282712^..bb1dc1f](https://github.com/joshjohanning/joshjohanning.github.io/compare/b282712087028da95e292e3159d20cdf63d59feb^..bb1dc1f1bdbba4ee7d62858d834e0ca19f7745db)
+  - Really only need to get rid of `aspect-ratio: 40 / 21;` line
+- June 2023: Updated most of the post images to reflect the 1.91:1 aspect ratio since that's what the ratio the home page uses for the post preview images, but I still left out the `40 / 21;` line in the `post.scss` file for the images I didn't update
 
 ## Upgrading the Theme
 
 Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way: 
 
 1. Ensure chirpy is set as a remote: `git remote add chirpy https://github.com/cotes2020/jekyll-theme-chirpy.git`
-2. . Ensure you have the latest upstream commit: `git fetch chirpy`
+2. Ensure you have the latest upstream commit: `git fetch chirpy`
 3. Compare the upstream [releases](https://github.com/cotes2020/jekyll-theme-chirpy/releases) and [commits](https://github.com/cotes2020/jekyll-theme-chirpy/commits/master) to find the first and last commit in the range you want to update. 
     - Recommendation is to use release tag milestones instead of loose commits that aren't contained in a release yet
     - For example, updating from 4.3.0 to 4.3.4 was referencing [a887f1d](https://github.com/cotes2020/jekyll-theme-chirpy/commit/a887f1d57d9ac8e08c789c6201147bf68c459573) (one right after [945e8d1](https://github.com/cotes2020/jekyll-theme-chirpy/commit/945e8d195393f73f38c4782cb31b808f09acc6f5)) and [602e984](https://github.com/cotes2020/jekyll-theme-chirpy/commit/602e98448d419e9c5710cb0c8a002a6538562150) (the merge commit for 4.3.4)
@@ -56,6 +58,7 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
     - To cherry-pick a range of commits (more common): `git cherry-pick "v5.6.0^..v5.6.1" -m 1`
     - The `^` is important otherwise you will not be including the first commit - but the commit might get picked up in the maintainer's merge commit for the release anyways - and the quotes are necessary around the commits in `zsh` b/c of the `^`
     - To cherry-pick a single commit (probably not as common): `git cherry-pick a887f1d -m 1`
+    - If getting GPG errors, modify the git config: `git config commit.gpgsign false`
 5. Review merge conflicts - use a combination of `git cherry-pick --skip` (for when readme/starter posts are updated) and `cherry-pick --continue` (to continue after you resolve real merge conflicts)
 6. Starting in 5.6.0, run: `npm run build && git add assets/js/dist -f && git commit -m "update js assets"`
 7. Rebase the number of commits you just brought in (you should see icon in VS Code): `git rebase -i HEAD~16`
@@ -82,4 +85,11 @@ arch -arch x86_64 bundle exec jekyll s
 
 # if still having issues with ffi, also run:
 arch -x86_64 sudo gem install ffi
+```
+
+In Codespaces, resolve `racc 1.6.2` permission error:
+
+```sh
+sudo chown -R codespace /usr/local/rvm/gems/ruby-3.1.4/extensions/x86_64-linux/3.1.0
+bundle install
 ```
