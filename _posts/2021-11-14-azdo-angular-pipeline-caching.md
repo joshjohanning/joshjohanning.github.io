@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2021-11-14 20:30:00 -0600
 description: I share how I finally got the Pipeline Cache task to work with my Angular build pipeline
 categories: [Azure DevOps, Pipelines]
-tags: [Azure DevOps, Pipelines, Angular]
+tags: [Azure DevOps, Azure Pipelines, Angular]
 image:
   path: /assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/load-npm-cache.png
   width: 1212   # in pixels
