@@ -107,7 +107,7 @@ Secrets should not be stored in the repository (obviously). Create these as secr
 
 {% endraw %}
 
-Note that if you are injecting a secret into a raw file, ensure that wherever this file is ending up is not somewhere where it can be accessed by the general viewing public. If using self-hosted runners, it also might be a good idea to have a post job step to delete the tokenized file.
+Note that if you are injecting a secret into a raw file, ensure that wherever this file is ending up is not somewhere where it can be accessed by the general viewing public. If using self-hosted runners, it is a good idea to have a step that always runs to delete the tokenized file.
 
 ## iOS?
 

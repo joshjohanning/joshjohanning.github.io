@@ -1,10 +1,16 @@
 ---
-title: 'Using GitHub Actions Secrets to store Certificates/Keys'
+title: 'Using GitHub Actions Secrets to Store Certificates/Keys'
 author: Josh Johanning
 date: 2023-06-21 16:00:00 -0500
 description: Storing a certificate/private key as a GitHub Actions secret
 categories: [GitHub, GitHub Actions]
 tags: [GitHub, GitHub Actions]
+img_path: /assets/screenshots/2023-06-21-storing-certificates-as-github-secrets
+image:
+  path: secrets.png
+  width: 100%
+  height: 100%
+  alt: Secrets stored in a repository with a base64-encoded value
 ---
 
 ## Overview
@@ -33,8 +39,15 @@ Sample steps:
 
 Easy, right?
 
-> Note: This works well for secret values that can be copied/pasted as plaintext. This does not work well for binary files, such as `.p12`{: .filepath } files.
+> Note: This method works well for secret values that can be copied/pasted as plaintext. This method does not work well for binary files, such as `.p12`{: .filepath } files - see the next section!
 {: .prompt-info }
+
+> Note: There is also a [CLI](https://cli.github.com/manual/gh_secret) command for setting secrets: 
+> ```sh
+> gh secret set SIGNING_CERTIFICATE_BASE64 --body $value -R myorg/myrepo
+> ```
+> {: .nolineno}
+{: .prompt-tip }
 
 ## Storing the Value of a File
 
@@ -51,17 +64,28 @@ Sample steps:
 ```yml
 - name: save secret to file
   run: | 
-    echo -n $MY_CERTIFICATE | base64 -d -o ./my-certificate.p12
+    echo -n $SIGNING_CERTIFICATE_BASE64 | base64 -d -o ./my-certificate.p12
   env:
-    MY_CERTIFICATE: ${{ secrets.MY_CERTIFICATE }}
+    SIGNING_CERTIFICATE_BASE64: ${{ secrets.SIGNING_CERTIFICATE_BASE64 }}
 ```
 
-This is pretty much the exact same thing with the added step of decoding the `base64` value to a file.
+This is pretty much the exact same thing with the added step of decoding the `base64` value to a file. GitHub has additional documentation on storing binary content as `base64` secrets [here](https://docs.github.com/en/actions/security-guides/encrypted-secrets#storing-base64-binary-blobs-as-secrets).
 
-> Note: This option will work regardless of the type of file you're storing.
+> Note: This method will work regardless of the type of file you're storing.
 {: .prompt-info }
 
 {% endraw %}
+
+## Notes
+
+There are a few things to consider:
+
+- The text of the secret is limited to 48 KB (workaround using [`gpg` encryption](https://docs.github.com/en/actions/security-guides/encrypted-secrets#storing-large-secrets))
+- You can store up to 1,000 organization secrets, 100 repository secrets, and 100 environment secrets
+- A workflow created in a repository can access the following number of secrets:
+  - All 100 repository secrets
+  - If the repository is assigned access to more than 100 organization secrets, the workflow can only use the first 100 organization secrets (sorted alphabetically by secret name)
+  - All 100 environment secrets
 
 ## Summary
 
