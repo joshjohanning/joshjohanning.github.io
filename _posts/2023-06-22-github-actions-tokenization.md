@@ -47,6 +47,11 @@ Here is the workflow:
         tokenPrefix: '#{'
         tokenSuffix: '}#'
         files: '["**/*_tokenized.json"]'
+
+    - name: replace app settings
+      run: |
+        rm appsettings.json
+        mv appsettings_tokenized.json appsettings.json
 ```
 
 There is an alternative to the `actions-variable-groups` action where you instead use [configuration variables](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-an-environment) defined on a repository's environment. I prefer the `actions-variable-groups` action for a few reasons:
@@ -75,6 +80,11 @@ If you wanted to see how it would look using configuration variables, it would l
         tokenPrefix: '#{'
         tokenSuffix: '}#'
         files: '["**/*_tokenized.json"]'
+
+    - name: replace app settings
+      run: |
+        rm appsettings.json
+        mv appsettings_tokenized.json appsettings.json
 ```
 
 ## Secrets?
@@ -103,6 +113,11 @@ Secrets should not be stored in the repository (obviously). Create these as secr
         tokenPrefix: '#{'
         tokenSuffix: '}#'
         files: '["**/*_tokenized.json"]'
+
+    - name: replace app settings
+      run: |
+        rm appsettings.json
+        mv appsettings_tokenized.json appsettings.json
 ```
 
 {% endraw %}
