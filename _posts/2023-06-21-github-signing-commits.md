@@ -25,7 +25,9 @@ There are a couple of ways to sign commits:
 2. Use an [SSH key](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#ssh-commit-signature-verification) (if you already use the SSH protocol to connect to GitHub, add the same key as a signing key in GitHub)
 3. Use an [S/MIME x.509 certificate](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#smime-commit-signature-verification) issued by your organization
 
-This tutorial will cover the first two option: using a GPG key and using an SSH key. Regardless of which option you choose, all signing options can be used for both HTTPS and SSH git protocols.
+This tutorial will cover the first two option: using a GPG key and using an SSH key. Regardless of which option you choose, all signing options can be used for both HTTPS and SSH git protocols. GPG keys allow for an expiration date to be set when created whereas SSH keys do not. 
+
+See my co-worker Ken Muse's [post](https://www.kenmuse.com/blog/comparing-github-commit-signing-options/) for more advanced and considerations for the various commit signing options.
 
 ## Using a GPG Key
 
