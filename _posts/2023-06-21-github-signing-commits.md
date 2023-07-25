@@ -43,7 +43,7 @@ See my co-worker Ken Muse's [post](https://www.kenmuse.com/blog/comparing-github
 2. List the keys: `gpg --list-secret-keys --keyid-format=long`
   - For example, this returns a string like `rsa3072/1BB5F381EEE9CC5A`, `1BB5F381EEE9CC5A` is the value you are looking for (the value after the `<key type>/`) - this is the GPG key ID
 4. Add the GPG key ID to your local git config: `git config --global user.signingkey 1BB5F381EEE9CC5A`
-5. Retrieve the public key using the GPG key ID: `gpg --armor --export 1BB5F381EEE9CC5A`
+5. Retrieve the entire public key using the GPG key ID: `gpg --armor --export 1BB5F381EEE9CC5A` (on macOS, add ` | pbcopy` to copy the result to clipboard)
 6. Add the public GPG key to your [GitHub profile under the GPG keys section](https://github.com/settings/keys)
 7. If you have used an alternative method to sign commits (like SSH), run this to set GPG back to the default: 
   - `git config --global --unset gpg.format`
@@ -55,6 +55,10 @@ See my co-worker Ken Muse's [post](https://www.kenmuse.com/blog/comparing-github
   - You can click on the verified tag to see the GPG key that was used to sign the commit (same in step #2 above)
 
 > Note: In macOS, I received an error when committing ("*gpg: signing failed: Inappropriate ioctl for device*") until I ran: `export GPG_TTY=$TTY`. 
+> It is recommended to add this to the **top** of your shell profile (ie: `~/.bash_profile`{: .filepath } or `~/.zshrc`{: .filepath })
+{: .prompt-info }
+
+> Note: In WSL, I was working with someone who received an error when committing ("*error: gpg failed to sign the data*, *fatal: failed to write commit object*") until I ran: `export GPG_TTY=$(tty)`. 
 > It is recommended to add this to the **top** of your shell profile (ie: `~/.bash_profile`{: .filepath } or `~/.zshrc`{: .filepath })
 {: .prompt-info }
 
