@@ -55,20 +55,25 @@ I recently had the opportunity to work with a large organization to help them ma
   - Maybe you can’t do this throughout the organization, but a single team could use some of the tools to at least make changes in **their x number of repos that they own**
   - Also, who doesn't like pulling up Excel for some pretty tables/charts? 📊
 - Additional **useful apps**
-  - **[kenmuse/probot-codescan-alerts](https://github.com/kenmuse/probot-codescan-alerts)** - A Probot app to ensure that people are not closing security alerts without actually fixing them / require them to have the proper permissions to do so
+  - **[advanced-security/probot-security-alerts](https://github.com/advanced-security/probot-security-alerts)** - A Probot app to ensure that people are not closing security alerts without actually fixing them / require them to have the proper permissions to do so
   - **[advanced-security/ghas-reviewer-app](https://github.com/advanced-security/ghas-reviewer-app)** - Similar to the above
   - **[github/safe-settings](https://github.com/github/safe-settings)** - This can be useful to ensure repositories have a pull request review requirement as well as requiring the [Dependency Review](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement) status check
   - **[NickLiffen/ghas-enablement](https://github.com/NickLiffen/ghas-enablement)** - Useful to push CodeQL workflows as well as enabling Security features to a set of repositories
+  - **[advanced-security/generate-sbom-action](https://github.com/advanced-security/generate-sbom-action)** - A GitHub Action to generate a Software Bill of Materials (SBOM) for your repository
+  - **[KittyChiu/probot-secret-remediation](https://github.com/KittyChiu/probot-secret-remediation/)** - A Probot app to automatically create issues when a secret scanning push protection is bypassed
+  - **[github/ghas-jira-integration](https://github.com/github/ghas-jira-integration)** - A GitHub Action to create Jira issues from GitHub Advanced Security alerts
+  - **[advanced-security/policy-as-code](https://github.com/advanced-security/policy-as-code)** - A GitHub Action to enforce policies on your repository based on risk threshold
 - Integration GitHub Advanced Security with **other SIEM tools** (**resource**)
   - Such as **[Splunk's dashboard](https://github.com/splunk/github_app_for_splunk#code-scanning-alerts)**
 - What to do when you find **Secret Scanning** results
   - Turn on **[push protections](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning)**! This won't block all secrets, but it will block secret types with a high confidence score to minimize disruptive false positives
   - It is easier/more secure to **rotate secrets** than to **clean the repo history** with something like [BFG to remove the commit](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
-  - You still might want to clean the repo history for reasons, but regardless, **you should still rotate the secret**!
+  - You still might want to clean the repo history for reasons, but regardless, **you should still rotate the secret**! And note in the README when the history was re-written for audit purposes.
+  - For additional coverage, create **[custom secret scanning patterns](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/defining-custom-patterns-for-secret-scanning)** based on your use cases. These can also be created with push protections enabled. Here's a [repo](https://github.com/advanced-security/secret-scanning-custom-patterns) for some predefined patterns!
 
 ## Further Reading
 
-- Check out some of [@colindembovsky](https://github.com/colindembovsky/)'s posts, such as [Shift Left - How far is too far?](https://colinsalmcorner.com/shift-left-how-far-is-too-far/), [Fine Tuning CodeQL Scans using Query Filters](https://colinsalmcorner.com/fine-tuning-codeql-scans/), and [GHAS Will Win the AppSec Wars](https://colinsalmcorner.com/ghas-will-win-the-appsec-wars/)
+- Check out some of [@colindembovsky](https://github.com/colindembovsky/)'s posts, such as [Shift Left - How far is too far?](https://colinsalmcorner.com/shift-left-how-far-is-too-far/), [Fine Tuning CodeQL Scans using Query Filters](https://colinsalmcorner.com/fine-tuning-codeql-scans/), [GHAS Will Win the AppSec Wars](https://colinsalmcorner.com/ghas-will-win-the-appsec-wars/), and [Mission Control - and what it means for DevSecOps](https://colinsalmcorner.com/mission-control/)
 - Check out [@kenmuse](https://github.com/kenmuse)'s [Security Theater](https://www.kenmuse.com/blog/security-theater/) post - just because a different vendor says they are cover every compliance rule, doesn't mean they really do
 - Check out [@nickliffen](https://github.com/nickliffen)'s [Why Advanced Security?](https://nickliffen.dev/articles/why-advanced-security.html) post - "there is more to a security tool than the number of results found!"
 - Check out this post from the GitHub Blog, [5 tips for prioritizing Dependabot alerts](https://github.blog/2022-09-19-5-tips-for-prioritizing-dependabot-alerts/), for additional ideas with Dependabot alerts
