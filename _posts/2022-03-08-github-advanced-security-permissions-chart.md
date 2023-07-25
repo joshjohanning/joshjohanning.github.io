@@ -79,7 +79,7 @@ Note that there is currently a maximum of 3 custom roles that can be created in 
 
 | Date        | Note                                 |
 |-------------|--------------------------------------|
-| Apr 26 2023 | Write and Maintain can [view/manage Dependabot alerts now](https://github.blog/changelog/2023-02-07-dependabot-alerts-default-permissions-change/) (not in GHES in 3.8 yet)                         |
+| Apr 26 2023 | Write and Maintain can [view/manage Dependabot alerts now](https://github.blog/changelog/2023-02-07-dependabot-alerts-default-permissions-change/) (GHES 3.9+)                         |
 | Oct 11 2022 | Removing Beta from [Security Overview for the Org](https://github.blog/changelog/2022-04-07-security-overview-for-organizations-is-generally-available/),<br>[Security Overview is available to all GitHub Enterprise customers](https://github.blog/changelog/2022-08-08-security-overview-is-now-available-to-all-github-enterprise-users/),<br>Consolidated Read/Triage and Write/Maintain since they have the same security permissions |
 | Mar 11 2021 | Adding section about security alerts |
 | Mar 08 2021 | Initial post                         |
