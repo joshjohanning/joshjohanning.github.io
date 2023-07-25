@@ -47,7 +47,7 @@ I recently had the opportunity to work with a large organization to help them ma
   - Not all Dependabot Alerts get created as Security Update pull requests **([there’s a limit of 10](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/troubleshooting-dependabot-errors#dependabot-cannot-open-any-more-pull-requests))**, but can be slightly less than that due to various factors
   - Sometimes dependencies have a **vulnerability disclosed with no new version to update to** - in those situations you have to evaluate the risk and decide if you want to continue using that dependency or not
   - Some ecosystems, like Python's `pip`, can show you if you are **[referencing a vulnerable code path in a dependency](https://github.blog/2022-04-14-dependabot-alerts-now-surface-if-code-is-calling-vulnerability/)**
-- Using a co-worker's **[tspascoal/dependabot-alerts-helper](https://github.com/tspascoal/dependabot-alerts-helper) scripts** to export Dependabot alerts to a CSV file
+- Using **[tspascoal/dependabot-alerts-helper](https://github.com/tspascoal/dependabot-alerts-helper) scripts** to export Dependabot alerts to a CSV file
   - This can be used for further **analysis / grouping / management** of alerts, especially if you are responsible for a lot of repositories
   - The **[Security Overview](https://docs.github.com/en/enterprise-cloud@latest/code-security/security-overview/about-the-security-overview)** is great, but if you only care about specific repositories but have access to a lot of repositories, it can be a little noisy 
   - This tool also supports **merging Dependabot Security Update PRs in bulk**. The idea, in theory, is that if you used the same old version of a package throughout your organization, and are able to verify it’s a non-breaking change, then you could mass merge those open Dependabot pull requests to resolve those alerts
@@ -63,8 +63,9 @@ I recently had the opportunity to work with a large organization to help them ma
   - **[KittyChiu/probot-secret-remediation](https://github.com/KittyChiu/probot-secret-remediation/)** - A Probot app to automatically create issues when a secret scanning push protection is bypassed
   - **[github/ghas-jira-integration](https://github.com/github/ghas-jira-integration)** - A GitHub Action to create Jira issues from GitHub Advanced Security alerts
   - **[advanced-security/policy-as-code](https://github.com/advanced-security/policy-as-code)** - A GitHub Action to enforce policies on your repository based on risk threshold
-- Integration GitHub Advanced Security with **other SIEM tools** (**resource**)
-  - Such as **[Splunk's dashboard](https://github.com/splunk/github_app_for_splunk#code-scanning-alerts)**
+- Integrate GHAS with other **[Security Information and Events Management (SIEM) tools](https://github.blog/2022-10-13-introducing-github-advanced-security-siem-integrations-for-security-professionals)**
+  - Such as **[Splunk's dashboard](https://github.com/splunk/github_app_for_splunk#integration-overview-dashboard)**
+  - Or **[Microsoft Sentinel](https://github.blog/2022-10-13-introducing-github-advanced-security-siem-integrations-for-security-professionals/#microsoft-sentinel)**
 - What to do when you find **Secret Scanning** results
   - Turn on **[push protections](https://docs.github.com/en/enterprise-cloud@latest/code-security/secret-scanning/protecting-pushes-with-secret-scanning)**! This won't block all secrets, but it will block secret types with a high confidence score to minimize disruptive false positives
   - It is easier/more secure to **rotate secrets** than to **clean the repo history** with something like [BFG to remove the commit](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
