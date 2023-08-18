@@ -388,10 +388,6 @@ i {
   }
 }
 
-.pageviews .fa-spinner {
-  font-size: 80%;
-}
-
 .post-meta {
   font-size: 0.85rem;
 
@@ -960,8 +956,9 @@ $btn-mb: 0.5rem;
 /* 'Cancel' link */
 #search-cancel {
   color: var(--link-color);
-  margin-left: 1rem;
+  margin-left: 0.75rem;
   display: none;
+  white-space: nowrap;
 
   @extend %cursor-pointer;
 }
@@ -1216,10 +1213,6 @@ $btn-mb: 0.5rem;
   }
 
   #core-wrapper {
-    min-height: calc(
-      100vh - #{$topbar-height} - #{$footer-height-mobile}
-    ) !important;
-
     .post-content {
       > blockquote[class^='prompt-'] {
         @include ml-mr(-1.25rem);
