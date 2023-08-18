@@ -143,4 +143,4 @@ This doesn't really solve the [problem](https://developercommunity.visualstudio.
 
 Now you know the ins and outs of adding Code Coverage to your .NET (Core) projects in Azure DevOps. 
 
-Stay tuned to my next post on what we can do with code coverage in GitHub Actions!
+Stay tuned to my next post on what we can do with [code coverage in GitHub Actions](/posts/github-code-coverage/)!
