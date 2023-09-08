@@ -55,7 +55,7 @@ I decided to store the script in a separate GitHub repo than my [github-misc-scr
    {: .nolineno}
 5. `<source-pat>` must have `read:packages` scope
 6. `<target-pat>` must have `write:packages` scope
-7. This assumes that the target org's repo name is the same as the source.
+7. This assumes that the target org's repo name is the same as the source
 
 We are passing [`gpr`](https://github.com/jcansdale/gpr) in as a parameter explicitly because sometimes [`gpr`](https://github.com/jcansdale/gpr) is aliased to `git pull --rebase` and that's not what we want here.
 
@@ -86,13 +86,6 @@ An example of this in practice:
   ghp_xyz \
   /home/codespace/.dotnet/tools/gpr
 ```
-
-> Use this one-liner to copy all `.nupkg`{: .filepath} files to the current working directory before running the script: 
-> ```bash
-> find / -name "*.nupkg" -exec cp "{}" ./  \;
-> ```
-> {: .nolineno}
-{: .prompt-tip }
 
 ## Notes
 
