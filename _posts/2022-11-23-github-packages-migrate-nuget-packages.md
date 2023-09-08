@@ -53,8 +53,9 @@ I decided to store the script in a separate GitHub repo than my [github-misc-scr
    find / -wholename "*tools/gpr" 2> /dev/null
    ```
    {: .nolineno}
-5. `<target-pat>` must have `write:packages` scope
-6. This assumes that the target org's repo name is the same as the source.
+5. `<source-pat>` must have `read:packages` scope
+6. `<target-pat>` must have `write:packages` scope
+7. This assumes that the target org's repo name is the same as the source.
 
 We are passing [`gpr`](https://github.com/jcansdale/gpr) in as a parameter explicitly because sometimes [`gpr`](https://github.com/jcansdale/gpr) is aliased to `git pull --rebase` and that's not what we want here.
 
@@ -66,6 +67,7 @@ You can call the script via:
 ./migrate-nuget-packages-between-orgs.sh \
   <source-org> 
   <source-host> \
+  <source-pat> \
   <target-org> \
   <target-pat> \
   <path-to-gpr>
@@ -79,6 +81,7 @@ An example of this in practice:
 ./migrate-nuget-packages-between-orgs.sh \
   joshjohanning-org-packages \
   github.com \
+  ghp_abc \
   joshjohanning-org-packages-migrated \
   ghp_xyz \
   /home/codespace/.dotnet/tools/gpr
@@ -135,6 +138,7 @@ An example of this in practice:
 * [ ] Add a source folder input instead of relying on current directory
 * [ ] Map between repositories where the target repo is named differently than the source repo
 * [ ] Dynamically determine out where [`gpr`](https://github.com/jcansdale/gpr) is installed instead of passing in a parameter (right now we are passing the `gpr` path in as a parameter explicitly because sometimes `gpr` is aliased to `git pull --rebase`)
+* [x] Update script because of GitHub Packages GraphQL [deprecation](https://github.blog/changelog/2022-08-18-deprecation-notice-graphql-for-packages/)
 
 ## Summary
 
