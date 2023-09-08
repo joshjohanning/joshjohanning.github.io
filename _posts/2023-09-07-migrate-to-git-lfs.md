@@ -25,7 +25,7 @@ If you've ever tried migrating or pushing a repository that contains a file larg
 This post will show you how to migrate large blobs in Git to Git LFS.
 
 > See my other Git LFS post:
-> - [Migrating Git Repos with LFS Artifacts](/posts/migrate-git-lfs-artifacts)
+> - [Migrating Git Repos with LFS Artifacts](/posts/migrate-git-lfs-artifacts/)
 {: .prompt-info }
 
 ## Prerequisites
@@ -53,7 +53,9 @@ git push --all --force # force push all branches to remote
 
 This will migrate all files with the extensions `.exe` and `.iso` to Git LFS. The `--everything` option will run the migration in all local and remote Git refs (branches, tags). Additionally, this will also create a `.gitattributes` file that will tell Git to store all files with the extensions `.exe` and `.iso` in Git LFS.
 
-Ff you only want to migrate and rewrite a single branch, you can use `--include-ref refs/heads/main` to specify a specific ref. You can add multiple `--include-ref` options to rewrite and migrate multiple refs.
+The nice thing about the `--everything` option is that it also works for files that have been committed to history and subsequently deleted, so you don't have to use any additional tools to rewrite history.
+
+If you only want to migrate and rewrite a single branch, you can use `--include-ref refs/heads/main` to specify a specific ref. You can add multiple `--include-ref` options to rewrite and migrate multiple refs.
 
 Read more on the `git lfs migrate` command in the [docs](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc#options).
 

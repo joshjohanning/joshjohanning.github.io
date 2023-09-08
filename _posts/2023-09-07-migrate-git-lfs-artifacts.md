@@ -18,7 +18,7 @@ image:
 Git Large File Storage (LFS) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub. Git LFS works seamlessly, you hardly know it's there when interacting with Git. However, there are special instructions that you need to follow if you are migrating Git repositories that contain LFS artifacts.
 
 > See my other Git LFS post:
-> - [Migrating Large Files in Git to Git LFS](/posts/migrate-to-git-lfs)
+> - [Migrating Large Files in Git to Git LFS](/posts/migrate-to-git-lfs/)
 {: .prompt-info }
 
 ## Prerequisites
