@@ -51,7 +51,7 @@ git lfs ls-files # list LFS files
 git push --all --force # force push all branches to remote
 ```
 
-This will migrate all files with the extensions `.exe` and `.iso` to Git LFS. The `--everything` option will run the migration in all local and remote Git refs (branches, tags). Additionally, this will also create a `.gitattributes` file that will tell Git to store all files with the extensions `.exe` and `.iso` in Git LFS.
+This will migrate all files with the extensions `.exe`{: .filepath} and `.iso`{: .filepath} to Git LFS. The `--everything` option will run the migration in all local and remote Git refs (branches, tags). Additionally, this will also create a `.gitattributes`{: .filepath} file that will tell Git to store all files with the extensions `.exe`{: .filepath} and `.iso`{: .filepath} in Git LFS.
 
 The nice thing about the `--everything` option is that it also works for files that have been committed to history and subsequently deleted, so you don't have to use any additional tools to rewrite history.
 
@@ -68,6 +68,6 @@ _File stored in Git LFS file in GitHub_
 
 ## Summary
 
-Since [Git LFS 2.2.0](https://github.blog/2017-06-27-git-lfs-2-2-0-released/), the `git lfs migrate` command makes it easy to migrate large files in a repository to Git LFS. Before, you would have had to use `git filter-repo` or [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) to 1) remove the file from the Git history, then 2) add the files to be tracked by LFS by running `git lfs track`, 3) staging the `.gitattributes` file and pushing.
+Since [Git LFS 2.2.0](https://github.blog/2017-06-27-git-lfs-2-2-0-released/), the `git lfs migrate` command makes it easy to migrate large files in a repository to Git LFS. Before, you would have had to use `git filter-repo` or [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) to 1) remove the file from the Git history, then 2) add the files to be tracked by LFS by running `git lfs track`, 3) staging the `.gitattributes`{: .filepath} file and pushing.
 
 Now, with the simple `git lfs migrate` command, this takes care of most of the dirty work for us! 🎉
