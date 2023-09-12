@@ -24,8 +24,9 @@ If you've ever tried migrating or pushing a repository that contains a file larg
 
 This post will show you how to migrate large blobs in Git to Git LFS.
 
-> See my other Git LFS post:
+> See my other Git LFS posts:
 > - [Migrating Git Repos with LFS Artifacts](/posts/migrate-git-lfs-artifacts/)
+> - [Adding Files to Git LFS](/posts/add-files-to-git-lfs/)
 {: .prompt-info }
 
 ## Prerequisites
@@ -59,9 +60,11 @@ If you only want to migrate and rewrite a single branch, you can use `--include-
 
 Read more on the `git lfs migrate` command in the [docs](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc#options).
 
+Here is an example of these commands in action. Note after the `git push --all --force` command, we can see that LFS objects are being uploaded:
 ![Git LFS commands](git-lfs-migrate-commands.png)
 _Running the migration commands to migrate large/binary files to Git LFS_
 
+Afterwards, the GitHub UI shows the file is now stored with Git LFS:
 ![Git LFS file in GitHub](./../2023-09-07-migrate-git-lfs-artifacts/git-lfs-light.png){: .light }
 ![Git LFS file in GitHub](./../2023-09-07-migrate-git-lfs-artifacts/git-lfs-dark.png){: .dark }
 _File stored in Git LFS file in GitHub_

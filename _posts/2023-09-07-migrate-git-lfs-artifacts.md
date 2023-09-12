@@ -17,8 +17,9 @@ image:
 
 Git Large File Storage (LFS) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub. Git LFS works seamlessly, you hardly know it's there when interacting with Git. However, there are special instructions that you need to follow if you are migrating Git repositories that contain LFS artifacts.
 
-> See my other Git LFS post:
+> See my other Git LFS posts:
 > - [Migrating Large Files in Git to Git LFS](/posts/migrate-to-git-lfs/)
+> - [Adding Files to Git LFS](/posts/add-files-to-git-lfs/)
 {: .prompt-info }
 
 ## Prerequisites
@@ -44,9 +45,11 @@ git lfs push <target-url> --all
 
 For Git repos with LFS, the two `git lfs` commands are key. This `git lfs fetch --all` command will download all the LFS artifacts from the source repository and store them in the target repository. The `git lfs push <target-url> --all` command will push all of the LFS artifacts to the target repository. After the push, the text pointers will be updated - including the same commit hash!
 
+Here is an example of migrating a repository that contains LFS artifacts:
 ![Git LFS commands](git-lfs-commands.png)
 _Running the migration commands to migrate a Git repository including Git LFS artifacts_
 
+The repository has been migrated, including the LFS artifacts:
 ![Git LFS file in GitHub](git-lfs-light.png){: .light }
 ![Git LFS file](git-lfs-dark.png){: .dark }
 _File stored in Git LFS file in GitHub_
