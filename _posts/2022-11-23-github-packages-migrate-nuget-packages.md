@@ -33,31 +33,14 @@ I decided to store the script in a separate GitHub repo than my [github-misc-scr
 
 ### Prerequisites
 
-1. [`gh cli`](https://cli.github.com) installed and logged in to be able to access the source GitHub instance:
-   ```bash
-   gh auth login
-   ```
-   {: .nolineno}
-2. Auth to read packages from the source GitHub instance with `gh`:
-   ```bash
-   gh auth refresh -h github.com -s read:packages # update -h with source github host
-   ```
-   {: .nolineno}
-3. [`gpr`](https://github.com/jcansdale/gpr) installed:
-   ```bash
-   dotnet tool install gpr -g
-   ```
-   {: .nolineno}
-4. Can use this one-liner to find the absolute path for [`gpr`](https://github.com/jcansdale/gpr) for the `<path-to-gpr>` parameter: 
-   ```bash
-   find / -wholename "*tools/gpr" 2> /dev/null
-   ```
-   {: .nolineno}
-5. `<source-pat>` must have `read:packages` scope
-6. `<target-pat>` must have `write:packages` scope
-7. This assumes that the target org's repo name is the same as the source
+1. [gh cli](https://cli.github.com) installed
+2. Set the source GitHub PAT env var: `export GH_SOURCE_PAT=ghp_abc` (must have at least `read:packages`, `read:org` scope)
+3. Set the target GitHub PAT env var: `export GH_TARGET_PAT=ghp_xyz` (must have at least `write:packages`, `read:org` scope)
 
-We are passing [`gpr`](https://github.com/jcansdale/gpr) in as a parameter explicitly because sometimes [`gpr`](https://github.com/jcansdale/gpr) is aliased to `git pull --rebase` and that's not what we want here.
+Notes:
+
+- This script installs [gpr](https://github.com/jcansdale/gpr) locally to the `./temp/tools`{: .filepath} directory
+- This script assumes that the target org's repo name is the same as the source (the target repo doesn't _need_ to exist, the package just won't be mapped to a repo)
 
 ### Usage
 
@@ -67,10 +50,7 @@ You can call the script via:
 ./migrate-nuget-packages-between-orgs.sh \
   <source-org> 
   <source-host> \
-  <source-pat> \
-  <target-org> \
-  <target-pat> \
-  <path-to-gpr>
+  <target-org>
 ```
 
 ### Example
@@ -78,18 +58,19 @@ You can call the script via:
 An example of this in practice:
 
 ```bash
+export GH_SOURCE_PAT=ghp_abc
+export GH_TARGET_PAT=ghp_xyz
+
 ./migrate-nuget-packages-between-orgs.sh \
   joshjohanning-org-packages \
   github.com \
-  ghp_abc \
-  joshjohanning-org-packages-migrated \
-  ghp_xyz \
-  /home/codespace/.dotnet/tools/gpr
+  joshjohanning-org-packages-migrated
 ```
 
 ## Notes
 
-- The script uses [`gpr`](https://github.com/jcansdale/gpr) to re-push the packages to the target org. It assumes that the target org's repo has the same name as the source.
+- The script assumes that the target org's repo has the same name as the source - it's not required, but the package won't be mapped to a repo if the target repo doesn't exist
+- The script uses [`gpr`](https://github.com/jcansdale/gpr) to re-push the packages to the target org
   + I initially tried writing this with [`dotnet nuget push`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-push), but that doesn't seem to work since the package's `<RepositoryUrl>` element would still be referencing the original repository. See error:
 
     ```
@@ -107,9 +88,9 @@ An example of this in practice:
     {: file='\'dotnet nuget push\' error'}
 
   + [`gpr`](https://github.com/jcansdale/gpr) works because it rewrites the `<repository url="..." />` element in the `.nuspec`{: .filepath} file in the `.nupkg`{: .filepath} before pushing
-  + There is an item on [GitHub's roadmap](https://github.com/github/roadmap/issues/589) to support pushing packages directly to an organization; this should allow [`dotnet nuget push`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-push) to work instead of [`gpr`](https://github.com/jcansdale/gpr)
+  +  Update Dec 2022: Now that NuGet Packages has supports granular permissions and organization sharing ([GitHub's roadmap item](https://github.com/github/roadmap/issues/589)), [`dotnet nuget push`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-push) should work - but using [`gpr`](https://github.com/jcansdale/gpr) for mapping convenience
     - [`gpr`](https://github.com/jcansdale/gpr) still might be preferred since you would have to tie the NuGet package to the repository manually post-migration
-    - For [`dotnet nuget push`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-push) to work, you will have to add the feed first using this command:
+    - If attempting to use [`dotnet nuget push`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-push), you will have to add the feed first using this command:
       ```bash
       dotnet nuget add source \
         --username my-github-username \
@@ -122,15 +103,15 @@ An example of this in practice:
 - Also, in the script, I had to delete `_rels/.rels`{: .filepath} and `[Content_Types].xml`{: .filepath} because there was somehow two copies of each file in the package and it causes gpr to fail when extracting/zipping the package to re-push
 - To clean up the working directory when done, run this one-liner: 
   ```bash
-  rm *.nupkg *.zip
+  rm -rf ./temp
   ```
   {: .nolineno}
 
 ## Improvement Ideas
 
-* [ ] Add a source folder input instead of relying on current directory
-* [ ] Map between repositories where the target repo is named differently than the source repo
-* [ ] Dynamically determine out where [`gpr`](https://github.com/jcansdale/gpr) is installed instead of passing in a parameter (right now we are passing the `gpr` path in as a parameter explicitly because sometimes `gpr` is aliased to `git pull --rebase`)
+* [x] Add a source folder input instead of relying on current directory (just using `./temp`{: .filepath})
+* [ ] Map between repositories where the target repo is named differently than the source repo (likely this isn't needed since if repo doesn't exist, packages will still be pushed, the package just won't be linked to a repository)
+* [x] Dynamically determine out where [`gpr`](https://github.com/jcansdale/gpr) is installed instead of passing in a parameter (right now we are passing the `gpr` path in as a parameter explicitly because sometimes `gpr` is aliased to `git pull --rebase`) (installing `gpr` locally to the `./temp/tools`{: .filepath} directory)
 * [x] Update script because of GitHub Packages GraphQL [deprecation](https://github.blog/changelog/2022-08-18-deprecation-notice-graphql-for-packages/)
 
 ## Summary
