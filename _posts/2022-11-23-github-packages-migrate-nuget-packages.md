@@ -22,6 +22,12 @@ I recently had a customer ask me how they could migrate their NuGet packages fro
 > - [Migrate NuGet Packages to GitHub Packages](/posts/github-packages-migrate-nuget-packages-to-github-packages/)
 {: .prompt-info }
 
+> See my other GitHub Package --> GitHub Package migration posts:
+> - [Migrate npm Packages Between GitHub Instances](/posts/github-packages-migrate-npm-packages/)
+> - [Migrate Maven Packages Between GitHub Instances](/posts/github-packages-migrate-maven-packages/)
+{: .prompt-info }
+
+
 ## The script
 
 The repo and docs can be found here: 
@@ -33,14 +39,15 @@ I decided to store the script in a separate GitHub repo than my [github-misc-scr
 
 ### Prerequisites
 
-1. [gh cli](https://cli.github.com) installed
+1. [`gh cli`](https://cli.github.com) installed
 2. Set the source GitHub PAT env var: `export GH_SOURCE_PAT=ghp_abc` (must have at least `read:packages`, `read:org` scope)
 3. Set the target GitHub PAT env var: `export GH_TARGET_PAT=ghp_xyz` (must have at least `write:packages`, `read:org` scope)
 
 Notes:
 
 - This script installs [gpr](https://github.com/jcansdale/gpr) locally to the `./temp/tools`{: .filepath} directory
-- This script assumes that the target org's repo name is the same as the source (the target repo doesn't _need_ to exist, the package just won't be mapped to a repo)
+- This script assumes that the target org's repo name is the same as the source
+- If the repo doesn't exist, the package will still import but won't be mapped to a repo
 
 ### Usage
 
