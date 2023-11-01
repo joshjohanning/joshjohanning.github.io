@@ -109,7 +109,7 @@ Note: In GitHub, when you create a release, you must specify a tag. So, creating
     ```
     {: .nolineno}
 
-This is what you can expect tags to look like in [GitHub](https://github.com/joshjohanning/GitSvn-TagsAsBranches) after running the migration (as branches):
+This is what you can expect tags to look like in [GitHub](https://github.com/joshjohanning/GitSvn-TagsAsBranches/branches/all?query=origin%2F) after running the migration (as branches):
 ![Option 2 - Tags as Branches in GitHub](option1-github-tags-as-branches.png){: .shadow }
 _How tags appear in GitHub (as branches) - You can even see that Dependabot created a few branches!_
 
@@ -186,7 +186,7 @@ Note: In GitHub, when you create a release, you must specify a tag. So, creating
     ```
     {: .nolineno}
 
-This is what you can expect tags to look like in [GitHub]() after running the migration (as tags):
+This is what you can expect tags to look like in [GitHub](https://github.com/joshjohanning/GitSvn-Tags/tags) after running the migration (as tags):
 ![Option 2 - Tags as Tags in GitHub](option2-github-tags-as-tags.png){: .shadow }
 _How tags appear in GitHub (as tags)_
 
@@ -202,7 +202,7 @@ This can be useful if you only want/need history from the last X months or last 
 git svn clone -r3000:HEAD http://svn.mysvnserver.com/svn/MyRepo --authors-file=authors-transform.txt --trunk=trunk --branches=branches/* --tags=tags MyRepo
 ```
 
-You can use an SVN client ([TortoiseSVN](https://tortoisesvn.net/downloads.html) on Windows, [SmartSVN](https://www.smartsvn.com/download/) on Mac) or [git svn log](http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.log.html) to help you with finding out what revision to start with. Alternatively, if you want to precisely find the previous N revision, you can use the 3rd party scripts found [here](https://github.com/jonathancone/svn-utils).
+You can use an SVN client ([TortoiseSVN](https://tortoisesvn.net/downloads.html) on Windows, [SmartSVN](https://www.smartsvn.com/download/) on Mac) or [git svn log](https://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.log.html) to help you with finding out what revision to start with. Alternatively, if you want to precisely find the previous N revision, you can use the 3rd party scripts found [here](https://github.com/jonathancone/svn-utils).
 
 ### Metadata
 
