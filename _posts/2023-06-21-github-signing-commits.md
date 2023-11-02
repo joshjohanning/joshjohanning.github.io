@@ -42,16 +42,17 @@ See my co-worker Ken Muse's [post](https://www.kenmuse.com/blog/comparing-github
   - As a best practice, add a **passphrase** to the GPG key when prompted
 2. List the keys: `gpg --list-secret-keys --keyid-format=long`
   - For example, this returns a string like `rsa3072/1BB5F381EEE9CC5A`, `1BB5F381EEE9CC5A` is the value you are looking for (the value after the `<key type>/`) - this is the GPG key ID
-4. Add the GPG key ID to your local git config: `git config --global user.signingkey 1BB5F381EEE9CC5A`
-5. Retrieve the entire public key using the GPG key ID: `gpg --armor --export 1BB5F381EEE9CC5A` (on macOS, add ` | pbcopy` to copy the result to clipboard)
-6. Add the public GPG key to your [GitHub profile under the GPG keys section](https://github.com/settings/keys)
-7. If you have used an alternative method to sign commits (like SSH), run this to set GPG back to the default: 
+3. Add the GPG key ID to your local git config: `git config --global user.signingkey 1BB5F381EEE9CC5A`
+4. Retrieve the entire public key using the GPG key ID: `gpg --armor --export 1BB5F381EEE9CC5A`
+  - On macOS, you can add `| pbcopy` to copy the result to clipboard
+5. Add the public GPG key to your [GitHub profile under the GPG keys section](https://github.com/settings/keys)
+6. . If you have used an alternative method to sign commits (like SSH), run this to set GPG back to the default: 
   - `git config --global --unset gpg.format`
-8. Sign your commits: 
+7. Sign your commits: 
   - Add this to your git config to sign all new commits: `git config --global commit.gpgsign true`
   - Otherwise, sign the commit manually when committing: `git commit -S -m "commit message"`
-9.  When committing, you should be prompted for the key's passphrase (if you added one in step #1 above)
-10. After you push, you should see the verified tag on your commit in GitHub
+8.  When committing, you should be prompted for the key's passphrase (if you added one in step #1 above)
+9.  After you push, you should see the verified tag on your commit in GitHub
   - You can click on the verified tag to see the GPG key that was used to sign the commit (same in step #2 above)
 
 > Note: In macOS, I received an error when committing ("*gpg: signing failed: Inappropriate ioctl for device*") until I ran: `export GPG_TTY=$TTY`. 
