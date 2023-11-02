@@ -46,7 +46,7 @@ _Branch Protection Policy with the CodeQL status check configured_
 
 Another thing the GitHub Docs do not do a good job of spelling out is that only *Errors* or a security severity level of *High or Higher* are going to fail the Pull Request status check. *Warnings*, out of the box, do not block the PR.
 
-Alright, so let's introduce an error...does anyone know of an easy vulnerability we can put in our code? Well neither do I, but we don't have to with the help of our friend, the [Semmle vulnerability database](https://web.archive.org/web/20200929073843/https://help.semmle.com/wiki/label/js/path-problem) (Note: The day before I wrote this, this link started redirecting to GitHub, but I found an archive.org link to use for the purposes of this demo).
+Alright, so let's introduce an error...does anyone know of an easy vulnerability we can put in our code? Well neither do I, but we don't have to with the help of our friend, the [Semmle vulnerability database](https://web.archive.org/web/20200929073843/https://help.semmle.com/wiki/label/js/path-problem) (Note: This is now the [GitHub Advisory Database](https://github.com/advisories)).
 
 I'm going to use an incorrect suffix vulnerability. The easiest way to introduce this is to: 1) make sure `javascript` is in the language matrix in our CodeQL workflow like so: `language: [ 'csharp', 'javascript' ]` and 2) check in a simple `.js`{: .filepath} file somewhere in the repository with the bad code:
 

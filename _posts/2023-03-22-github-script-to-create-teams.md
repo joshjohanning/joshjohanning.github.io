@@ -21,8 +21,8 @@ If you've ever had to create several teams in GitHub, you know how painful it ca
 
 These scripts are in my [github-misc-scripts](https://github.com/joshjohanning/github-misc-scripts) repo:
 
-- [`create-teams-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/create-teams-from-list.sh)
-- [`delete-teams-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/delete-teams-from-list.sh)
+- [`create-teams-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/create-teams-from-list.sh)
+- [`delete-teams-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/delete-teams-from-list.sh)
 
 ## Using the Scripts
 

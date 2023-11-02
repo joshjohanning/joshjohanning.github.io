@@ -41,7 +41,7 @@ Here's an example of some of the scripts I have populated in there so far:
 - [transfer issue](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/transfer-issue.sh) (graphql)
 - [download specific version from github packages](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/download-specific-version-from-github-packages.sh) (graphql) - (and my [blog post](https://josh-ops.com/posts/github-download-from-github-packages/)!)
 - [download latest version from github packages](https://github.com/joshjohanning/github-misc-scripts/blob/main/graphql/download-latest-version-from-github-packages.sh) (graphql) - (and my [blog post](https://josh-ops.com/posts/github-download-from-github-packages/)!)
-- [sso credential authorizations](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/sso-credential-authorizations.sh) (gh-cli)
+- [get sso credential authorizations (PATs, SSH Keys)](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-sso-credential-authorizations.sh) (gh-cli)
 
 ## Overview
 

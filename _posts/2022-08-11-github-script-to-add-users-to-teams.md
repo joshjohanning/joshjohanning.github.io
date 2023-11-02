@@ -21,7 +21,7 @@ If you've ever had to add several users to a team in a GitHub organization, you 
 
 This script is in my [github-misc-scripts](https://github.com/joshjohanning/github-misc-scripts) repo:
 
-- [`add-users-to-team-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/add-users-to-team-from-list.sh)
+- [`add-users-to-team-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/add-users-to-team-from-list.sh)
 
 ## Using the Script
 

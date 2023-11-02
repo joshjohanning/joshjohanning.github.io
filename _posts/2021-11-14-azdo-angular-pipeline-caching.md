@@ -23,7 +23,7 @@ _npm install taking 10 minutes to run_
 
 ## How To - The Explanation
 
-I was finally able to figure out what I was missing, part in thanks to [this post from High Performance Programmer](https://www.highperformanceprogrammer.com/2021/05/30/how-to-cache-node-modules-npm-install-command-in-azure-devops-classic-builds/) (link no longer works 😢) - in particular, their screenshot:
+I was finally able to figure out what I was missing, part in thanks to [this post](https://dev.to/rupeshtiwari/caching-azure-ci-pipeline-artifacts-3085) - in particular, their screenshot:
 
 ![pipeline cache task configuration from High Performance Programmer](/assets/screenshots/2021-11-14-azdo-angular-pipeline-caching/CacheBuildStep.png ){: width="600" }{: .shadow }
 _Cache task configuration in a Classic Build Definition_

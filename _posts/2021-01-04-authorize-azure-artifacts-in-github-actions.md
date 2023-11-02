@@ -136,14 +136,14 @@ Also, we have to remove it because we cannot add a sources entry to the `NuGet.c
   - Using the local `NuGet.config`{: .filepath} will certainly work with GitHub-hosted runners since it's a fresh instance each time, but you may run into conflicts if you're on a shared self-hosted runner
   - This [marketplace action](https://github.com/marketplace/actions/github-nuget-private-source-authorisation) uses a [local `NuGet.config`{: .filepath}](https://github.com/StirlingLabs/GithubNugetAuthAction/blob/main/action.sh#L25:L34) by default
 1. The `Restore NuGet Packages` command might not be needed since the `Autobuild` action performs a restore as well - therefore one may also be able to remove the `solution_file` variable - but I always like to have an explicit task for restoring packages so I know exactly if that failed
-1. If you the `Autobuild` Action does not successfully build your project for code scanning, you will have to build it manually. Using full .NET Framework, there is an additional action that you need to add to add MSBuild to the path ([`microsoft/setup-msbuild@v1.1`](https://github.com/marketplace/actions/setup-msbuild)). Also make sure to add the `/p:UseSharedCompilation=false` argument mentioned from [Troubleshooting the CodeQL workflow: No code found during the build](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/troubleshooting-the-codeql-workflow#no-code-found-during-the-build). Here's an example:
+2. If you the `Autobuild` Action does not successfully build your project for code scanning, you will have to build it manually. Using full .NET Framework, there is an additional action that you need to add to add MSBuild to the path ([`microsoft/setup-msbuild@v1.1`](https://github.com/marketplace/actions/setup-msbuild)). Here's an example:
 
 ```yaml
 - name: Add msbuild to PATH
   uses: microsoft/setup-msbuild@v1.1
 
 - name: MSBuild Solution
-  run: msbuild ${{ env.solution_file }} /p:Configuration=debug /p:UseSharedCompilation=false
+  run: msbuild ${{ env.solution_file }} /p:Configuration=release
 ```
 
 ## Artifactory

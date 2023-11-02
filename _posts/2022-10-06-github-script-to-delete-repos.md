@@ -21,8 +21,8 @@ If you've ever had to delete several repositories in GitHub, you know it can be 
 
 These scripts are in my [github-misc-scripts](https://github.com/joshjohanning/github-misc-scripts) repo:
 
-- [`generate-repos-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/generate-repos-list.sh)
-- [`delete-repos-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/delete-repos-from-list.sh)
+- [`generate-repositories-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/generate-repositories-list.sh)
+- [`delete-repositories-from-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/delete-repositories-from-list.sh)
 
 ## Using the Scripts
 
@@ -38,9 +38,9 @@ Prerequisites:
 Usage:
 
 1. Prepare a list of repositories that you want to delete and place in a CSV file, one per line, with the last line empty.
-    - You can use the [`generate-repos-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/generate-repos-list.sh) script to generate a list of repos in a GitHub org, and then modify accordingly: 
+    - You can use the [`generate-repositories-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/generate-repositories-list.sh) script to generate a list of repos in a GitHub org, and then modify accordingly: 
       ```bash
-      ./generate-repos.sh octohol > repos.csv
+      ./generate-repositories-list.sh joshjohanning-org > repos.csv
       ```
       {: .nolineno}
     - Or, create your own CSV file with the list of repos you want to delete, one per line, and leave a trailing empty line/whitespace at the end of the file. The file should look like: 
@@ -53,7 +53,7 @@ Usage:
 2. From there, it's pretty simple - run the script, passing in the `repos.csv`{: .filepath} file:
 
 ```bash
-./delete-repos-from-list.sh repos.csv
+./delete-repositories-from-list.sh repos.csv
 ```
 {: .nolineno}
 
