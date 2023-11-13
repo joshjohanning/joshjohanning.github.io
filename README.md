@@ -66,18 +66,19 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
 4. Start the `git cherry-pick`:
     - To cherry-pick between a range of release tags (more common): `git cherry-pick "v5.6.0..v5.6.1" -m 1`
     - To cherry-pick a single commit (not as common): `git cherry-pick a887f1d -m 1`
-    - If getting GPG errors, modify the local git config: `git config commit.gpgsign false`, but modify it back to `true` after you are done cherry-picking
+    - If getting GPG errors, modify the local git config: `git config commit.gpgsign false`, but modify it back to `true` after you are done cherry-picking and rebasing (before amending commit)
 5. Review merge conflicts - use a combination of `git cherry-pick --skip` (for when readme/starter posts are updated) and `cherry-pick --continue` (to continue after you resolve real merge conflicts)
-6. Starting in v5.6.0, run: `npm run build && git add assets/js/dist -f && git commit -m "update js assets"` ([docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide#upgrade-the-fork))
+6. Starting in Chirpy v5.6.0, run: `npm run build && git add assets/js/dist -f && git commit -m "update js assets"` ([docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide#upgrade-the-fork))
 7. Rebase the number of commits you just brought in (you should see icon in VS Code): `git rebase -i HEAD~16`
     - Leave the top commit as `pick` but change the rest to `squash`
     - Update the commit message as appropriate
 8. Pay close attention to the terminal output as to which new files are being created and if they should be deleted (new files show up as `create mode 100644 file.ext`)
     - For example, we wouldn't want to commit a GitHub workflow or issue template that wasn't needed here
     - If there are new files that we don't want to track, delete the files, commit, and run another rebase `git rebase -i HEAD~2`
-    - This command can help with tracking new files in the most recent commit: `git diff-tree --compact-summary --diff-filter=A -r $(git rev-parse HEAD)`
-9.  Update author and commit time: `git commit --amend --author "Josh Johanning <joshjohanning@github.com>" --date=now`
-10. [Test changes locally before pushing](#building--testing-locally) 
+    - This command can help with tracking new files in the most recent commit: `git diff-tree --compact-summary -r HEAD --diff-filter=A`
+9. Ensure commit signing is enabled: `git config commit.gpgsign true`
+10. Update author and commit time: `git commit --amend --author "Josh Johanning <joshjohanning@github.com>" --date=now -S`
+11. [Test changes locally before pushing](#building--testing-locally) 
 
 ## Building / Testing Locally
 
