@@ -21,4 +21,4 @@ I admittedly didn't put a ton of polish around the video, but I hope it's useful
 
 Enjoy! 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/iovXhIru5Bs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% include embed/youtube.html id='iovXhIru5Bs' %}
