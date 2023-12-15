@@ -82,25 +82,26 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
 
 ## Building / Testing Locally
 
-On Ubuntu / Intel-based Mac:
-
 ```sh
 bundle install
 npm i && npm run build
 bundle exec jekyll s
 ```
 
-On Apple M1 chip:
+### Additional build notes
 
-```sh
-arch -arch x86_64 bundle install
-arch -arch x86_64 bundle exec jekyll s
+#### On macOS
 
-# if still having issues with ffi, also run:
-arch -x86_64 sudo gem install ffi
-```
+Check ruby version: `ruby -v` (if ruby 2.6.10p210, then you need to upgrade to 3.0.0+):
 
-In Codespaces, resolve `racc 1.6.2` permission error:
+1. Install rvm: `\curl -sSL https://get.rvm.io | bash -s stable --ruby`
+    - Uninstall `openssl@3` temporarily if you receive errors: `brew uninstall --ignore-dependencies openssl@3`
+2. Check ruby version: `ruby -v` (should be 3.0.0+)
+3. Build and serve the site as normal
+
+#### On Codespaces
+
+If seeing a `racc 1.6.2` permission error, run:
 
 ```sh
 sudo chown -R codespace /usr/local/rvm/gems/ruby-3.1.4/extensions/x86_64-linux/3.1.0
