@@ -19,7 +19,7 @@ In GitHub Actions, the [GitHub Token](https://dev.to/github/the-githubtoken-in-g
 
 1. Use someone's Personal Access Token (PAT) - but what happens if that person leaves? Or if you need to write back to an issue, for example, it's going to look like it came from that user
 2. Create a service account - but this is going to consume a license, and you still have to manage with vaulting and storing a long-lived PAT somewhere, and if that PAT gets exposed, you're opening yourselves up to a huge security risk
-3. GitHub Apps!
+3. Creating a **GitHub App** and using it for authentication! 🚀
 
 In this post, I will go through the setup and usage of GitHub Apps in an Actions workflow with two scenarios: [Using a GitHub App to grant access to a single repository](#scenario-1-using-a-github-app-to-grant-access-to-a-single-repository) and [Using a GitHub App as a rich comment bot](#scenario-2-using-a-github-app-as-a-rich-comment-bot).
 
@@ -41,9 +41,11 @@ When authenticating with the `GITHUB_TOKEN` in a GitHub Actions workflows in an 
 
 - Each organization can only own up to [100 GitHub Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#about-github-apps)
 - You'll have to be an [organization owner](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#organization-owners) to create an app that's owned by the organization, and only organization owners can install a GitHub App
-    - Non-organization owners can create a personal app and request it to be installed by the org, but it will be owned by the user and not the organization
+    - Non-organization owners can be designated as [GitHub App managers](https://docs.github.com/en/apps/maintaining-github-apps/about-github-app-managers) to be able to create and update GitHub Apps owned by the organization (this is a better way than being owned by a user account)
+    - Non-organization owners can also create a GitHub App owned by their user account and request it to be installed by the org, but it will be owned by the user and not the organization (not recommended)
 - Each installation access token is only valid for a [maximum of one hour](https://docs.github.com/en/rest/reference/apps#create-an-installation-access-token-for-an-app)
-- GitHub Apps [can't be used to authenticate to GitHub Packages](https://github.com/orgs/community/discussions/26920) (have to use personal access tokens for this)
+  - But the fact that it does expire is a good thing!
+- GitHub Apps [can't be used to authenticate to GitHub Packages](https://github.com/orgs/community/discussions/26920) (have to use a personal access token)
 - If you make a [GitHub App private](https://docs.github.com/en/enterprise-cloud@latest/developers/apps/managing-github-apps/making-a-github-app-public-or-private), other apps can't see it / interact with it
   - Example: You can't use GitHub App A to modify a branch protection policy to let GitHub App B to bypass the policy if GitHub App B is private - GitHub App B would have to be a Public app
 
@@ -51,40 +53,47 @@ When authenticating with the `GITHUB_TOKEN` in a GitHub Actions workflows in an 
 
 Creating a GitHub App is pretty straightforward! I'll defer to [GitHub's documentation for the details](https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app), but here's a quick overview:
 
-1. Navigate to the organization's settings page
+
+> [Organization owner](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#organization-owners) or [GitHub App manager](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#github-app-managers) permissions are required in order to create a GitHub App on behalf of an organization. You *can* create a GitHub App in your user account and request it to be installed to the organization, but long term it's better to have the GitHub App owned by the organization.
+{: .prompt-tip }
+
+1. Navigate to the **organization's settings** page
 2. Expand the "**Developer Settings**" section at the bottom of the page and navigate to **GitHub Apps**
 3. Click "**New GitHub App**" in the upper right-hand corner
 4. Start filling in the details! 
     - The name and Homepage URL doesn't matter much right now (but it does need a valid URL here) 
-    - *(Optional - for use with webhooks)* - If you want the GitHub app to send webhooks based on events, and want an easy way to inspect the payload that is being sent, you can use something like [smee.io](https://smee.io/) to create a channel and use the [URL of the channel](https://smee.io/cm3xXguj5Ds9hs8) as the Webhook URL
-6. Grant it the **repository permissions**, **organization permissions**, **user permissions**, and what events to subscribe to - for the examples in this blog post, we'll grant **read-only** access to `repository / contents`, **read & write** access to `repository / issues`, and **read-only** access to `organization / members` - if you change this after the it's already been installed to an organization, you'll have review and re-approve the permission changes for the GitHub App
-8. After creation, you should see the **App ID** - we will need this later on
-    - *(Optional - for use with webhooks)* - After creation, you should see a "ping" entry in your [smee.io channel](https://smee.io/cm3xXguj5Ds9hs8) - this is a confirmation that the app was created - the **App ID** is available in this payload as well
-9.  On the left-hand menu, you should now have a few options, one of those being "**Install App**" - click it, and install the app to the organization, or alternatively, install the app to selected repositories that you want it to be able to access
-10. After installing the application, pay attention to the URL in the browser (see screenshot below) - the number at the end of the URL is the installation ID, which we'll need later on 
-    - *(Optional - for use with webhooks)* - In your [smee.io channel](https://smee.io/cm3xXguj5Ds9hs8), you should have a new payload from the installation - expand the "installation" property to find your "**installation ID**" - this is the ID that you'll need to use in the next section
-11. Lastly, navigate back to your GitHub App's administration page, scroll down, and **[generate a private key for the app](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#generating-a-private-key)** - download the file and grab the contents of the certificate by opening it in VSCode or if you are on macOS: `cat approveops-bot.2022-02-07.private-key | pbcopy`
+    - *(Optional - for use with webhooks)* - If you want the GitHub App to send webhooks based on events, and want an easy way to inspect the payload that is being sent, you can use something like [smee.io](https://smee.io/) to create a channel and use the [URL of the channel](https://smee.io/cm3xXguj5Ds9hs8) as the Webhook URL
+5. Grant it the **repository permissions**, **organization permissions**, **user permissions**, and what events to subscribe to - for the examples in this blog post, we'll grant **read-only** access to `repository / contents`, **read & write** access to `repository / issues`, and **read-only** access to `organization / members` - if you change this after the it's already been installed to an organization, you'll have review and re-approve the permission changes for the GitHub App
+6. After creation, you should see the **App ID** - we will need this later on
+    - *(Optional - for use with webhooks)* - After creation, you should see a "ping" entry in your [smee.io channel](https://smee.io/cm3xXguj5Ds9hs8) - this is a confirmation that the app was created - the **App ID** is also available in this payload
+7. Scroll down and **[generate a private key for the app](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#generating-a-private-key)** - download the file and grab the contents of the certificate by opening it in VSCode or if you are on macOS, use the command to copy to your clipboard: `cat approveops-bot.2022-02-07.private-key | pbcopy`
+8.  Scroll back up and in the left-hand menu, click on the "**Install App**" link and install the app to the organization
+  -  Determine if you will grant the app access to all repos in an organization, or only to selected repo(s)
+9.  After installing the app, pay attention to the URL in the browser (see screenshot below) - the number at the end of the URL is the **installation ID**, and depending on how you're using the app, you may need this
+    - *(Optional - for use with webhooks)* - In your [smee.io channel](https://smee.io/cm3xXguj5Ds9hs8), you should have a new payload from the installation - expand the "installation" property to find your "**installation ID**"
 
-🎉 With the **App ID**, **Installation ID**, and **Private Key**, we now have everything we need to use the app in Actions! 🥳
+🎉 With the app installed and knowing the **App ID**, **Installation ID**, and **Private Key**, we now have everything we need to generate an installation token use the app in Actions! 🥳
 
 ![Installation ID after installing GitHub App](installation-id-github.png ){: .shadow }
-_An example of an Installation ID in the address bar after installing a GitHub app_
+_An example of an Installation ID in the address bar after installing a GitHub App_
 
 ![Installation and App ID from a payload in smee.io](installation-id.png ){: width="600" }{: .shadow }
 _An example of an Installation ID and App ID from a payload in smee.io_
 
 ## Using the GitHub App in a GitHub Actions workflow
 
-There are a couple different actions to use such as:
+Now that GitHub has a first-party action, I tend to always prefer to use that one:
 
-- [navikt/github-app-token-generator](https://github.com/marketplace/actions/github-app-installation-access-token-generator)
+- [actions/create-github-app-token](https://github.com/marketplace/actions/create-github-app-token)
+
+It's really quite simple to use an app in Actions now that you have the app ID, the org name, and the private key. The only prerequisite is to create a secret on the repository (or [organization](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-organization)) with the private key's contents, taking care not to modify the key's value in any way. I named my secret `PRIVATE_KEY`.
+
+There are other popular actions in the marketplace that I have used in the past, for reference:
+
+- [tibdex/github-app-token](https://github.com/marketplace/actions/github-app-token)
 - [peter-murray/workflow-application-token-action](https://github.com/marketplace/actions/workflow-application-token-action)
-- [jnwng/github-app-installation-token-action](https://github.com/marketplace/actions/create-github-app-installation-token)
-- [tibdex/github-app-token](https://github.com/marketplace/actions/github-app-token) (the one I am using below)
 
-I like **navikt's**, **jnwng's**, and **tibdex's** versions because it doesn't require the GitHub App to be installed on the repository that the action is running from whereas **peter-murray's** does. That's fine, but if the App must be installed on every repository, we're not saving a ton with the app over the PAT (except that the GitHub App's token has a built-in expiration). **navikt's** version is a Docker-based action. I'm typically going to prefer a node-based action if given the preference since typically a Docker action takes a little bit longer to initiate and requires one additional component to be installed if using self-hosted runners. **jnwng's** and **tibdex's** actions are node-based actions, and both certainly work. I slightly prefer **tibdex's** because you can either pass in an `installation_id` or not, depending on if the app is installed on the repository or not.
-
-It's really quite simple now that you have the installation ID, the app ID, and the private key. The only prerequisite is to create a secret on the repository (or [organization](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-organization)) with the private key's contents. I named my secret `PRIVATE_KEY`.
+Different actions ask for different things: sometimes the app ID and installation ID and sometimes the app ID and org name. The installation ID is tied to the org (each org an app is installed to has a unique installation ID). If you need it for another action, the installation ID is available in the URL when you install the app. We are always going to need use the private key though.
 
 ### Scenario 1: Using a GitHub App to grant access to a single repository
 
@@ -97,55 +106,56 @@ Here's the action code to generate and sign an installation access token for aut
 {% raw %}
 ```yml
     steps:
-      - uses: tibdex/github-app-token@v1
-        id: get_installation_token
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with: 
-          app_id: 170544
-          # installation_id not needed IF the app is installed on this current repo
-          installation_id: 29881931
-          private_key: ${{ secrets.PRIVATE_KEY }}
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          # optional: owner not needed IF the app has access to the repo running the workflow
+          #   if you get 'RequestError [HttpError]: Not Found 404', pass in owner
+          owner: ${{ github.repository_owner }}
 
       # example 1a - cloning repo - clone using the `actions/checkout` step
       - name: Checkout
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v4
         with:
-          repository: my-org/my-repo
-          token: ${{ steps.get_installation_token.outputs.token }}
+          repository: my-org/my-repo-2
+          token: ${{ steps.app-token.outputs.token }}
           path: my-repo
 
       # example 1b - cloning repo - using git clone command
       - name: Clone Repository
         run: | 
           mkdir my-repo-2 && cd my-repo-2
-          git clone https://x-access-token:${{ steps.get_installation_token.outputs.token }}@github.com/my-org/my-repo.git
+          git clone https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/my-org/my-repo.git
 
       # example 2a - api - call an api using curl
       - name: Get Repo (curl)
         run: | 
           curl \
-            -H "Authorization: Bearer ${{ steps.get_installation_token.outputs.token }}" \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             https://api.github.com/repos/joshjohanning-org/composite-caller-1
 
       # example 2b - api - call an api using the GitHub CLI
       - name: Get Repo (gh api)
         env:
-          GH_TOKEN: ${{ steps.get_installation_token.outputs.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: | 
           gh api /repos/joshjohanning-org/composite-caller-1
 ```
 {: file='.github/workflows/test-permissions.yml'}
 {% endraw %}
 
-With the GitHub app installed on the `my-org/my-repo-2` repository and passing in the installation ID to the action, we have access to clone the repository even though it's not the repository that the workflow is running from. We can also use the token generated here as a Bearer token for GitHub API requests, assuming it has the access.
+With the GitHub App only having access to the `my-org/my-repo-2` repository and passing in the `owner` to the action, we can clone the other repository even though it's not the repository running the workflow. We can also use the token generated here as a Bearer token for GitHub API requests or set the `GH_TOKEN` environment variable for `gh` CLI commands, assuming the app has the proper access to call the API endpoint(s).
 
-![Successful Git clone using a GitHub App](clone-from-app.png ){: width="500" }{: .shadow }
-_Successful Git clone using a GitHup App_
+![Using a GitHub App's credentials to clone a repo and query the API](clone-from-app.png){: .shadow }
+_Using a GitHub App's credentials to clone a repo and query the API_
 
-🎉 Repo cloned! 🥳
+🎉 We can clone the repo as well as query the API without using a PAT! 🥳
 
 ### Scenario 2: Using a GitHub App as a rich comment bot
 
-I'll often use the [peter-evans/create-or-update-comment](https://github.com/marketplace/actions/create-or-update-comment) action to create a comment on a pull request or issue. Typically, I'll just use the ${{ secrets.GITHUB_TOKEN }} for the `token` which comments as the `github-actions` bot, and it looks great!
+I'll often use the [peter-evans/create-or-update-comment](https://github.com/marketplace/actions/create-or-update-comment) action to create a comment on a pull request or issue. Typically, I'll just use the {% raw %}`${{ secrets.GITHUB_TOKEN }}`{% endraw %} for the `token` which comments as the `github-actions` bot, and it works great!
 
 {% raw %}
 ![GitHub Actions Comment Bot](github-actions-bot.png ){: .shadow }
@@ -169,17 +179,17 @@ Here's the relevant action code:
 {% raw %}
 ```yml
     steps:
-      - uses: tibdex/github-app-token@v1
-        id: get_installation_token
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with: 
-          app_id: 170544
-          private_key: ${{ secrets.PRIVATE_KEY }}
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
           
       - if: ${{ steps.check-approval.outputs.approved == 'false' }}
         name: Create completed comment
         uses: peter-evans/create-or-update-comment@v1
         with:
-          token: ${{ steps.get_installation_token.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
           issue-number: ${{ github.event.issue.number }}
           body: |
             Hey, @${{ github.event.comment.user.login }}!
@@ -189,19 +199,25 @@ Here's the relevant action code:
 {: file='.github/workflows/approveops.yml'}
 {% endraw %}
 
-You'll notice that we didn't have to pass in an installation ID this time to the action. This is because the GitHub App is installed on the repository, and the action can therefore lookup the installation ID dynamically to get the token.
+You'll notice that we didn't have to pass in an `owner` input this time to the action. This is because the GitHub App is installed on the repository running the action, and therefore the action can find the app's installation dynamically to create the token.
 
 🎉 Issue comment with team mentioning success! 🥳
+
+> Check out my next post, [ApproveOps: Approvals in IssueOps](/posts/github-approveops), for more information on the approval action workflow I'm using above.
+{: .prompt-info }
 
 ## Summary
 
 When I first learned about GitHub Apps, I was like, "This is cool, but I'm not going to be writing an app and creating code just for authentication, that's too much work, I'll just use a PAT." However, as you just saw, we created a GitHub App and used it for authentication without tying it to any code. 
 
 {% raw %}
-In both scenarios, we use the [tibdex/github-app-token](https://github.com/marketplace/actions/github-app-token) action and the installation access token that is an output parameter: `${{ steps.get_installation_token.outputs.token }}`. We use this token to make authenticated requests to the API or as the password in Git clones. Alternatively, [GitHub has sample Ruby code](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app) for creating a and signing the JWT and retrieving an installation ID, but the action is so much simpler!
+In both scenarios, we use the [actions/create-github-app-token](https://github.com/marketplace/actions/create-github-app-token) action and the installation access token that is an output parameter: `${{ steps.app-token.outputs.token }}`. We use this token to make authenticated requests to the API or as the password in Git clones. Alternatively, [GitHub has sample Ruby code](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app) for creating a and signing the JWT and retrieving an installation ID, but the action is so much simpler!
 
-Check out my next post, [ApproveOps: Approvals in IssueOps](/posts/github-approveops), for more information on the action workflow I'm using in the second scenario.
+If you wanted to be able to generate a token locally, whether for scripting not being ran in Actions or simply to test out an app's permissions, you can use the [Link-/gh-token](https://github.com/Link-/gh-token?tab=readme-ov-file) `gh` CLI extension.
 
-Happy App-ing!
+![Generating a GitHub App Installation Token with a gh CLI extension](gh-token.png )
+_Generating a GitHub App Installation Token with a [`gh` CLI extension](https://github.com/Link-/gh-token?tab=readme-ov-file)_
+
+Happy GitHub App-ing and no longer having to generate a long-lived PAT! 🚀
 
 {% endraw %}
