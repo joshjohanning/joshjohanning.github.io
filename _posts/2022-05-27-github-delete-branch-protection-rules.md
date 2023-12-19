@@ -3,7 +3,7 @@ title: 'Delete GitHub Branch Protection Rules Programmatically'
 author: Josh Johanning
 date: 2022-05-27 12:00:00 -0500
 description: Delete GitHub Branch Protection Rules from a PowerShell script
-categories: [GitHub]
+categories: [GitHub, Scripts]
 tags: [GitHub, Branch Protection Rules, Scripts]
 ---
 

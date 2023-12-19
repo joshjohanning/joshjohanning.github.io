@@ -2,7 +2,7 @@
 title: 'Quickly Migrate NuGet Packages to a New Feed'
 author: Josh Johanning
 date: 2020-12-23 16:45:00 -0600
-categories: [Azure DevOps]
+categories: [Azure DevOps, Artifacts]
 tags: [Azure DevOps, NuGet, Scripts, Migrations]
 img_path: /assets/screenshots/2020-12-20-nuget-pusher-script
 image:

@@ -3,7 +3,7 @@ title: 'GitHub: Scripts to Mass Create and Delete Teams'
 author: Josh Johanning
 date: 2023-03-22 14:00:00 -0500
 description: Create and delete GitHub teams programmatically from a CSV file
-categories: [GitHub]
+categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, gh cli]
 img_path: /assets/screenshots/2023-03-22-github-script-to-create-teams
 image:

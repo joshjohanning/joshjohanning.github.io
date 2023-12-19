@@ -3,7 +3,7 @@ title: 'GitHub: Script to Mass Delete Repos'
 author: Josh Johanning
 date: 2022-10-06 11:00:00 -0500
 description: Delete GitHub repositories programmatically from a CSV file
-categories: [GitHub]
+categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, gh cli]
 img_path: /assets/screenshots/2022-10-06-github-script-to-delete-repos
 image:
