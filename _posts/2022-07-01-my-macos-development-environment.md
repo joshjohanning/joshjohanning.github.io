@@ -25,30 +25,29 @@ I was going to link them to my [Powerlevel10k Zsh Theme in GitHub Codespaces](/p
 2. Install the [MesloLGS fonts](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k) 
 3. Download my [iTerm profile](https://github.com/joshjohanning/dotfiles/blob/main/iterm2-profile.json) as a json file and import into iTerm
    - In iTerm, go to: Preferences > Profile, you can use the `+` to import the `iterm2-profile.json`{: .filepath} profile
-   - I believe the only other special things that I have in the profile (other than colors) is the ability to use OPTION+arrow keys to to go left / right to the end of strings, [OPTION+SHIFT+arrow keys](https://stackoverflow.com/questions/30055402/how-to-select-text-in-iterm-with-shiftarrow) to highlight entire strings, and OPTION+Backspace to delete an entire strings
+   - I believe the only other special things that I have in the profile (other than colors) is the ability to use `Option ⌥` + `←` or `→` keys to to go left / right to the end of strings, [`Option ⌥` + `Shift ⇧` + arrow keys](https://stackoverflow.com/questions/30055402/how-to-select-text-in-iterm-with-shiftarrow) to highlight entire strings, and `Option ⌥` + `Delete` to delete entire strings
 4. Install [oh-my-zsh](https://ohmyz.sh/#install) (run the `curl` command)
 5. Install plugins like [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh), [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#in-your-zshrc) (basically you clone the repo and then add the plugin to the list of `plugins` in your `~/.zshrc`{: .filepath} file
 6. Install [powerlevel10k zsh theme](https://github.com/romkatv/powerlevel10k#oh-my-zsh) - basically clone the repo and modify the `~/.zshrc`{: .filepath} file to update the `ZSH_THEME`
 7. You will be prompted to configure powerlevel10k - but my configuration for `~/.p10k.zsh`{: .filepath} is [here](https://github.com/joshjohanning/dotfiles/blob/main/.p10k.zsh)
 8. My `~/.zshrc`{: .filepath} config is [here](https://github.com/joshjohanning/dotfiles/blob/main/.zshrc) 
-9. Make iTerm2 the default terminal: Make iTerm default terminal (`^` + `Shift` + `Command` + `\`)
+9. Make iTerm2 the default terminal: Make iTerm default terminal (`^` + `Shift ⇧` + `Command ⌘` + `\`)
 
 That should be all you need to make your terminal look exactly like mine 😀. 
 
 ![iTerm terminal](iterm2.png){: .shadow }
 _My iTerm terminal_
 
-If you're using the powerlevel10k theme, make sure to set up the [font in VS Code's terminal](#terminal) as well!
+If you're using the powerlevel10k theme, make sure to set up the [font in VS Code's terminal](#terminal-fonts) as well!
 
 > You can now back up your `~/.zshrc`{: .filepath} file and `~/.p10k.zsh`{: .filepath} files in a dotfiles repository similar to [mine](https://github.com/joshjohanning/dotfiles) by creating symlinks (documentation on how to do this is in my [repo](https://github.com/joshjohanning/dotfiles) also).
 {: .prompt-info }
 
 ## VS Code
 
-### Terminal 
-To allow VS Code's terminal to look similar to the iTerm terminal, there are a few additional things we need. Add/modify these lines to your VS Code `settings.json`{: .filepath} file by opening the command palette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Preferences: Open Settings (JSON)` : 
+### Terminal Fonts
 
-1. Adding the font configuration, osx shell, and shell to use when using a Linux environment (ie: in Codespaces): 
+To allow VS Code's terminal to look similar to the iTerm terminal, there are a few additional things we need. Add/modify these lines to your VS Code `settings.json`{: .filepath} file by opening the command palette (`Cmd ⌘`/`Ctrl` + `Shift ⇧` + `P`) and typing `> Preferences: Open Settings (JSON)`: 
 
 ```json
 {
@@ -71,19 +70,25 @@ _The terminal looks good in VS Code too!_
 
 I'll just highlight some of my favorite extensions that I use in VS Code:
 
-1. [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) - Because of course
-2. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) - I love this because I can highlight a piece of text and paste in a link and it will automatically format the markdown for me, similar to [this feature in GitHub](https://github.blog/changelog/2022-02-02-paste-links-directly-in-markdown/)
-3. [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) - to help me from misspelling, and as a bonus if you're using [VS Code settings sync](https://code.visualstudio.com/docs/editor/settings-sync), you can keep a custom dictionary synced across VS Code instances / Codespaces by using the "quick fix" on aka `⌘` + `.` on unrecognized words and "add to user settings"
-4. [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) - for YAML syntax highlighting in the editor
-5. Bracket Pair Colorizer - I used to use [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2), but this is now [built-in to VS Code](https://code.visualstudio.com/blogs/2021/09/29/bracket-pair-colorization) by adding this to your settings: `"editor.guides.bracketPairs": true`
-6. [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) - for creating charts/architecture diagrams directly in VS Code
-7. [GitLense](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - it's nice to be able to do things such as opening up a Git Blame view inline [like you can in GitHub](https://github.blog/2017-01-18-navigate-file-history-faster-with-improved-blame-view/)
+1. [GitHub Actions](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions) - native GitHub Actions YAML syntax and Actions workflow visualization in the IDE
+2. [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) - because Copilot! 🤖
+3. [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat&ssr=false) - also Copilot! 🤖 💬
+4. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) - I love this because I can highlight a piece of text and paste in a link and it will automatically format the markdown for me, similar to [this feature in GitHub](https://github.blog/changelog/2022-02-02-paste-links-directly-in-markdown/)
+5. [GitHub Markdown Preview](https://marketplace.visualstudio.com/items?itemName=bierner.github-markdown-preview) - a non-official GitHub extension to make the markdown preview look more like how GitHub renders markdown
+6. [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) - to help me from misspelling, and as a bonus if you're using [VS Code settings sync](https://code.visualstudio.com/docs/editor/settings-sync), you can keep a custom dictionary synced across VS Code instances / Codespaces by using the "quick fix" on aka `Cmd ⌘` + `.` on unrecognized words and "add to user settings"
+7. [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) - for YAML syntax highlighting in the editor
+8. [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) - for creating charts/architecture diagrams directly in VS Code
+9.  [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - among other things, allows the ability to Git Blame view inline [like you can in GitHub](https://github.blog/2017-01-18-navigate-file-history-faster-with-improved-blame-view/)
+10. [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph) - another option for visualizing Git branches in VS Code
+11. [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens) - to tweak how errors and warnings are shown
+12. [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) - highlights those `TODO` comments in your code
+13. [GitHub Theme](https://marketplace.visualstudio.com/items?itemName=GitHub.github-vscode-theme) - make your VS Code look more like GitHub!
 
 ### Key Bindings
 
-Coming from Windows, my brain is wired that `CTRL` + `Z` is undo and `CTRL` + `Y` is redo. In macOS, undo is `⌘` + `Z` and redo is `⌘` + `SHIFT` + `Z`. I added this key binding to allow for both `⌘` + `SHIFT` + `Z` AND `⌘` + `Y` to be used for redo while editing in VS Code.
+Coming from Windows, my brain is wired that `Ctrl` + `Z` is undo and `Ctrl` + `Y` is redo. In macOS, undo is `Cmd ⌘` + `Z` and redo is `⌘` + `Shift ⇧` + `Z`. I added this key binding to allow for both `Cmd ⌘` + `Shift ⇧` + `Z` AND `Cmd ⌘` + `Y` to be used for redo while editing in VS Code.
 
-You can modify VS Code's `keybindings.json`{: .filepath} file by opening the command palette (`CMD`/`CTRL` + `Shift` + `P`) and typing `> Preferences: Open Keyboard Shortcuts (JSON)`:  
+You can modify VS Code's `keybindings.json`{: .filepath} file by opening the command palette (`Cmd ⌘`/`Ctrl` + `Shift ⇧` + `P`) and typing `> Preferences: Open Keyboard Shortcuts (JSON)`:  
 
 ```json
 {
@@ -102,6 +107,29 @@ You can modify VS Code's `keybindings.json`{: .filepath} file by opening the com
 }
 ```
 {: file='keybindings.json'}
+
+### Tabs, Spaces, and Paste Formatting
+
+When editing GitHub Actions workflows, I would get frustrated when it would add 4 spaces for a tab vs. the customary 2 that the UI editor uses by default. Additionally, it would try to format the YAML upon pasting, which would often break the YAML. To fix this, I added the following to my VS Code `settings.json`{: .filepath} file by opening the command palette (`Cmd ⌘`/`Ctrl` + `Shift ⇧` + `P`) and typing `> Preferences: Open Settings (JSON)`:
+
+```json
+"[yaml]": {
+    "editor.tabSize": 2,
+    "editor.autoIndent": "none"
+}
+```
+{: file='settings.json'}
+
+I set this specifically for `YAML`{: .filepath} files, but you can set it for any file type by updating the header (or removing the header so that all file types use the same settings).
+
+### Colorized Bracket Pairs
+
+I used to use [Bracket Pair Colorizer 2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2), but this is now [built-in to VS Code](https://code.visualstudio.com/blogs/2021/09/29/bracket-pair-colorization) by adding this to your VS Code `settings.json`{: .filepath} file by opening the command palette (`Cmd ⌘`/`Ctrl` + `Shift ⇧` + `P`) and typing `> Preferences: Open Settings (JSON)`:
+
+```json
+"editor.guides.bracketPairs": true
+```
+{: file='settings.json'}
 
 ## Brew
 
@@ -125,11 +153,17 @@ brew bundle dump
 
 These are my must have App Store apps:
 
-1. [Magnet](https://apps.apple.com/us/app/magnet/id441258766?mt=12) ($$$) - for pinning windows to certain regions of the screen
+1. [Magnet](https://apps.apple.com/us/app/magnet/id441258766?mt=12) ($) - for pinning windows to certain regions of the screen
 2. [Copyclip](https://apps.apple.com/us/app/copyclip-clipboard-history/id595191960?mt=12) (free) - for clipboard management
    - I like to go into preferences and remember and display 2,000 clippings and start at system startup!
 3. [Get Plain Text](https://apps.apple.com/us/app/get-plain-text/id508368068?mt=12) (free) - paste without formatting
-   - I set my keyboard shortcut to `⌥ ⌘ V` as well as launching at startup
+   - I set my keyboard shortcut to `Option ⌥ Cmd ⌘ V` as well as launching at startup
+4. [MeetingBar](https://apps.apple.com/us/app/meetingbar-for-meet-zoom-co/id1532419400?mt=12) (free) - to show upcoming meetings in the menu bar
+5. [Gifski](https://apps.apple.com/us/app/gifski/id1351639930?mt=12) (free) - for creating GIFs from videos
+6. [Pro Mouse](https://apps.apple.com/us/app/pro-mouse/id1505869474?mt=12) ($) - a better mouse cursor for presentations
+7. [Homie](https://apps.apple.com/us/app/homie-menu-bar-app-for-homekit/id1533590432?mt=12) (free) - for controlling HomeKit devices in the menu bar
+8. [Bitwarden](https://apps.apple.com/us/app/bitwarden/id1352778147?mt=12) (free) - password management
+9. [Netspot: Wifi Analyzer](https://apps.apple.com/us/app/netspot-wifi-analyzer/id514951692?mt=12) (free) - for scanning WiFi networks and seeing signal strength
 
 ## Troubleshooting
 
