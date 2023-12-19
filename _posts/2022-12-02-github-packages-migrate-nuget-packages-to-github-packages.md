@@ -3,7 +3,7 @@ title: 'GitHub Packages: Migrate NuGet Packages to GitHub Packages'
 author: Josh Johanning
 date: 2022-12-02 12:30:00 -0500
 description: Migrating NuGet packages stored in GitHub Packages from one instance to another
-categories: [GitHub, Migrations]
+categories: [GitHub, Packages]
 tags: [GitHub, Scripts, GitHub Packages, gh cli, NuGet, Migrations]
 mermaid: true
 img_path: /assets/screenshots/2022-11-23-github-packages-migrate-nuget-packages
