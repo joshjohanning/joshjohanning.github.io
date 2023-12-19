@@ -21,7 +21,13 @@ What I did instead was borrow some of my scripting knowledge from my [NuGet Push
 
 ```yaml
 - name: Auth NuGet
-  run: dotnet nuget add source ${{ env.nuget_feed_source }} --name ${{ env.nuget_feed_name }} --username az --password ${{ secrets.AZURE_DEVOPS_TOKEN }} --configfile ${{ env.nuget_config }}
+  run: |
+    dotnet nuget add source ${{ env.nuget_feed_source }} \
+      --name ${{ env.nuget_feed_name }} \
+      --username az \
+      --password ${{ secrets.AZURE_DEVOPS_TOKEN }} \
+      --configfile ${{ env.nuget_config }} \ # required if have config file
+      --store-password-in-clear-text # required if using Linux
   
 - name: Restore NuGet Packages
   run: dotnet restore ${{ env.solution_file_path }}
@@ -29,9 +35,11 @@ What I did instead was borrow some of my scripting knowledge from my [NuGet Push
 
 Notes:
 - This should work with either .NET Core as well as full .NET Framework on both Linux and Windows
+- On Linux runners, you need to use `--store-password-in-clear-text`{: .code} - not required on Windows
 - The `--configfile` argument is optional - if not specified, there is a [hierarchy involved](https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior):
     1. It will first try to use the `NuGet.config`{: .filepath} in the current working directory first
     2. Next, it will use the local user `NuGet.config`{: .filepath} in `%appdata%\NuGet\NuGet.Config`{: .filepath} (Windows) or `~/.nuget/NuGet.Config`{: .filepath} (Linux/Mac, depending on distro)
+    3. Note: You cannot add a source to the `NuGet.config`{: .filepath} with a name that already exists - either add the source with a new source name or run [`dotnet nuget remove source`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-remove-source) to remove the source first
 - If the `.sln`{: .filepath} is in the root (or current working directory), you can simply run `dotnet restore` without the solution path as well
 - Reference the [`dotnet nuget add source`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-add-source) and [`dotnet restore`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore) docs for more information
 
@@ -87,20 +95,27 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
 
     # # If exists, remove existing AzDO NuGet source that doesn't have authentication
     # - name: Remove existing entry from NuGet config
-    #   run: dotnet nuget remove source ${{ env.nuget_feed_name }} --configfile ${{ env.nuget_config }}
+    #   run: | 
+    #     dotnet nuget remove source ${{ env.nuget_feed_name }} \
+    #       --configfile ${{ env.nuget_config }}
 
     - name: Auth NuGet
-      run: dotnet nuget add source ${{ env.nuget_feed_source }} --name ${{ env.nuget_feed_name }} --username az --password ${{ secrets.AZURE_DEVOPS_TOKEN }} --configfile ${{ env.nuget_config }}
+      run: | 
+        dotnet nuget add source ${{ env.nuget_feed_source }} \
+          --name ${{ env.nuget_feed_name }} \
+          --username az \
+          --password ${{ secrets.AZURE_DEVOPS_TOKEN }} \
+          --configfile ${{ env.nuget_config }}
      
     - name: Restore NuGet Packages
       run: dotnet restore ${{ env.solution_file_path }}
@@ -108,10 +123,23 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      uses: github/codeql-action/autobuild@v2
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
+```
+{: file='.github/workflows/codeql-analysis.yml'}
+
+If I was running on `ubuntu-latest`, the only change would be to add the `--store-password-in-clear-text`argument:
+
+```yml
+    - name: Auth NuGet
+      run: | 
+        dotnet nuget add source ${{ env.nuget_feed_source }} \
+          --name ${{ env.nuget_feed_name }} \
+          --username az --password ${{ secrets.AZURE_DEVOPS_TOKEN }} \
+          --configfile ${{ env.nuget_config }} \
+          --store-password-in-clear-text
 ```
 {: file='.github/workflows/codeql-analysis.yml'}
 
@@ -122,8 +150,11 @@ You may have noticed a commented-out run command in the above workflow:
 ```yaml
 # If exists, remove existing AzDO NuGet source that doesn't have authentication
 - name: Remove existing entry from NuGet config
-  run: dotnet nuget remove source ${{ env.nuget_feed_name }} --configfile ${{ env.nuget_config }}
+  run: | 
+    dotnet nuget remove source ${{ env.nuget_feed_name }} \
+      --configfile ${{ env.nuget_config }}
 ```
+{: file='.github/workflows/codeql-analysis.yml'}
 
 If your `NuGet.config`{: .filepath} already has an Azure DevOps entry, you will need to remove it with [dotnet nuget remove source](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-remove-source) otherwise you will likely see `401 Unauthorized` errors during the `dotnet restore`. This is because that entry doesn't (or at least shouldn't!) have any credentials associated with it committed into source control, so it essentially tries to access it anonymously and will fail.
 
@@ -136,11 +167,11 @@ Also, we have to remove it because we cannot add a sources entry to the `NuGet.c
   - Using the local `NuGet.config`{: .filepath} will certainly work with GitHub-hosted runners since it's a fresh instance each time, but you may run into conflicts if you're on a shared self-hosted runner
   - This [marketplace action](https://github.com/marketplace/actions/github-nuget-private-source-authorisation) uses a [local `NuGet.config`{: .filepath}](https://github.com/StirlingLabs/GithubNugetAuthAction/blob/main/action.sh#L25:L34) by default
 1. The `Restore NuGet Packages` command might not be needed since the `Autobuild` action performs a restore as well - therefore one may also be able to remove the `solution_file` variable - but I always like to have an explicit task for restoring packages so I know exactly if that failed
-2. If you the `Autobuild` Action does not successfully build your project for code scanning, you will have to build it manually. Using full .NET Framework, there is an additional action that you need to add to add MSBuild to the path ([`microsoft/setup-msbuild@v1.1`](https://github.com/marketplace/actions/setup-msbuild)). Here's an example:
+2. If you the `Autobuild` Action does not successfully build your project for code scanning, you will have to build it manually. Using full .NET Framework, there is an additional action that you need to add to add MSBuild to the path ([`microsoft/setup-msbuild@v1`](https://github.com/marketplace/actions/setup-msbuild)). Here's an example:
 
 ```yaml
 - name: Add msbuild to PATH
-  uses: microsoft/setup-msbuild@v1.1
+  uses: microsoft/setup-msbuild@v1
 
 - name: MSBuild Solution
   run: msbuild ${{ env.solution_file }} /p:Configuration=release
@@ -152,7 +183,7 @@ I've seen a few instances where a team is using an [API key to access Artifactor
 
 ```yaml
 - name: Auth NuGet
-  run: nuget setapikey admin:password -Source Artifactory
+  run: nuget setapikey admin:${{ secrets.API_KEY }} -Source Artifactory
   
 - name: Restore NuGet Packages
   run: dotnet restore ${{ env.solution_file_path }}
