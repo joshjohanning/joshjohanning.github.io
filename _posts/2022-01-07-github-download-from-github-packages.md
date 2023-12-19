@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2022-01-07 14:30:00 -0600
 description: Programmatically download a package binary (such as NuGet, Maven) from GitHub Packages
 categories: [GitHub, Packages]
-tags: [GitHub, GitHub Packages, Maven, NuGet]
+tags: [GitHub, GitHub Packages, Maven, NuGet, npm]
 img_path: /assets/screenshots/2022-01-07-github-download-from-github-packages
 image:
   path: github-packages.png
@@ -15,7 +15,7 @@ image:
 
 ## Overview
 
-We had a team that wanted to push to GitHub packages, which is relatively easily enough to do and is well [documented](https://docs.github.com/en/packages/working-with-a-github-packages-registry). However, they had a subsequent job that was building a Docker image where that dependency (the `.jar` or `.war` file) was needed.
+We had a team that wanted to push to GitHub packages, which is relatively easily enough to do and is well [documented](https://docs.github.com/en/packages/working-with-a-github-packages-registry). However, they had a subsequent job that was building a Docker image where that dependency (the `.jar`{: .filepath} or `.war`{: .filepath} file) was needed.
 
 There are a couple of different ways you could think about this.
 
@@ -35,215 +35,89 @@ Okay, but can't we just go to the package in the UI and copy the download link?
 
 Nope -- check the URL of one of the files in my repo:
 
-> https://github-registry-files.githubusercontent.com/445574648/92585100-6fe8-11ec-8a00-38630c14852f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220107%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220107T193611Z&X-Amz-Expires=300&X-Amz-Signature=96f4809aebb229ea01b80832c12e546810837194203927c39a31f2c875b177fd&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=445574648&response-content-disposition=filename%3Dherokupoc-1.0.0-202201071835.jar&response-content-type=application%2Foctet-stream
+> https://github-registry-files.githubusercontent.com/445574648/92585100-6fe8-11ec-8a00-38630c14852f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220107%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220107T193611Z&X-Amz-Expires=300&X-Amz-Signature=96f4809aebb229ea01b80832c12e546810837194203927c39a31f2c875b177fd&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=445574648&response-content-disposition=**filename%3Dherokupoc-1.0.0-202201071835.jar**&response-content-type=application%2Foctet-stream
 
 Pretty nasty huh? It looks to be a timed download URL.
 
 After spending a few hours on this, there were a few ways I found to do this with various levels of monstrocities committed in finding. I'll start with the best / easiest and work my way down. 
 
-## Mysteriously hidden URL to CURL
+## Mysteriously hidden URLs to CURL
 
-In hindsight, it's so simple (at least for Maven), yet it's not documented anywhere! I was trying to use the `mvn dependency:get/copy` cli and kept getting stuck on a `401 unauthorized` error message. In the logs, I saw the URL to the `.jar` file I was trying to download and decided to paste that into my browser. I received a username/password basic auth prompt, and I simply pasted in my PAT as a password and I was able to download that file.
+In hindsight, it's so simple (at least for Maven), yet it's not documented anywhere! I was trying to use the `mvn dependency:get/copy` cli and kept getting stuck on a `401 unauthorized` error message. In the logs, I saw the URL to the `.jar`{: .filepath} file I was trying to download and decided to paste that into my browser. I received a username/password basic auth prompt, and I simply pasted in my PAT as a password and I was able to download that file.
 
 Extrapulating to `curl`, this was how to replicate this in the command line:
 
 {% raw %}
 ```bash
 curl 'https://maven.pkg.github.com/<org>/<repo>/com/<group>/<artifact>/<version>/<file-name>.jar' \
-  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-  -L \
-  -O
+  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -L -O
 ```
 
 And because my biggest pet peave is when someone has this awesome blog post but then hides/obfuscates all the good stuff, here's my actual CURL command I used to download a file:
 
 ```bash
 curl 'https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package/com/sherlock/herokupoc/1.0.0-202201071559/herokupoc-1.0.0-202201071559.jar' \
-  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-  -L \
-  -O
+  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -L -O
 ```
 
 The `-L` is important here as this tells `curl` to follow redirects. Without it, you'll get a '301 Moved Permanently' because it's trying to use use the expanded URL as mentioned above. If you added the `-v` option to the command, you would see a similar long URL that our `curl` follows the redirect to.
 
 The `-O` downloads the file locally with the same name as in the URL.
 
-## GraphQL Endpoint
+### Maven URL
 
-You can also query against the [GraphQL Endpoint](https://docs.github.com/en/graphql/reference/objects#package). It's not pretty, but here are my examples:
+As noted, the Maven URL
 
-### Getting the latest download url
+Format:
 
-Use this GraphQL to get the latest package version download url:
-
-```graphql
-{
-  repository(owner: "joshjohanning", name: "Wolfringo-github-packages") {
-    packages(first: 10, packageType: NUGET, names: "Wolfringo.Commands") {
-      edges {
-        node {
-          id
-          name
-          packageType
-          versions(first: 100) {
-            nodes {
-              id
-              version
-              files(first: 10) {
-                nodes {
-                  name
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+```
+https://maven.pkg.github.com/<org>/<repo>/com/<group>/<artifact>/<version>/<file-name>.jar
 ```
 
-This is an example output of that query:
+Example:
 
-```json
-{
-    "data": {
-        "repository": {
-            "packages": {
-                "edges": [
-                    {
-                        "node": {
-                            "id": "P_kwDOGo5-nc4AEg_Z",
-                            "name": "Wolfringo.Commands",
-                            "packageType": "NUGET",
-                            "versions": {
-                                "nodes": [
-                                    {
-                                        "id": "PV_lADOGo5-nc4AEg_ZzgDrF3k",
-                                        "version": "1.1.2",
-                                        "files": {
-                                            "nodes": [
-                                                {
-                                                    "name": "package.nupkg",
-                                                    "url": "https://github-registry-files.githubusercontent.com/445546141/cb7fc980-6fc6-11ec-9aa4-02a12c9562b7?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220107%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220107T195615Z&X-Amz-Expires=300&X-Amz-Signature=5a15e3e70dc86e0485eb8b718374f142d6bdc477c5a99a27ddc7517121ca2818&X-Amz-SignedHeaders=host&actor_id=19912012&key_id=0&repo_id=445546141&response-content-disposition=filename%3Dpackage.nupkg&response-content-type=application%2Foctet-stream"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                ]
-            }
-        }
-    }
-}
+```
+curl -H "Authorization: token ghp_xyz" -L -O \
+  https://maven.pkg.github.com/joshjohanning-org/download/com/sherlock/herokupoc/1.0.0-202202122241/herokupoc-1.0.0-202202122241.jar
 ```
 
-To retreive the URL you can `curl`, the `jq` is something like: 
+### NuGet URL
+
+Format:
+
+```
+https://nuget.pkg.github.com/<org>/download/<package-name>/<version>/<package-name>.<version>.nupkg
+```
+
+Example:
+
+```
+curl -H "Authorization: token ghp_xyz" -L -O \
+  https://nuget.pkg.github.com/joshjohanning-org/download/Wolfringo.Hosting/1.1.1/Wolfringo.Hosting.1.1.1.nupkg
+```
+
+### npm URL
+
+`npm` must work a bit differently; the download URL is different:
 
 ```bash
-jq -r '.data.repository.packages.edges[].node.versions.nodes[].files.nodes[].url'
-```
-{: .nolineno}
+# get package versions
+version="0.0.3"
+token="ghp_xyz"
+org="joshjohanning-org"
+package_name="npm-package-example"
 
-This is how you can run this GraphQL command via [`gh cli`](https://cli.github.com/) to output the download url:
-
-```bash
-gh api graphql -f packageType="NUGET" -f owner="joshjohanning-org" -f repo="Wolfringo-github-packages" -f packageName="Wolfringo.Core" -f query='
-query ($packageType: PackageType!, $owner: String!, $repo: String!, $packageName: [String!]) {
-  repository(owner: $owner, name: $repo) {
-    packages(first: 10, packageType: $packageType, names: $packageName) {
-      edges {
-        node {
-          id
-          name
-          packageType
-          versions(first: 100) {
-            nodes {
-              id
-              version
-              files(first: 10) {
-                nodes {
-                  name
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}' -q '.data.repository.packages.edges[].node.versions.nodes[].files.nodes[].url'
+# get url
+url=$(curl -H "Authorization: token $token" -Ls https://npm.pkg.github.com/@$org/$package_name | jq --arg version $version -r '.versions[$version].dist.tarball')
+# download 
+curl -H "Authorization: token $token" -L -o $package_name-$version.tgz $url
 ```
 
-### Getting a specific version download url
+## Other options
 
-Use this GraphQL to get a package's specific version download url:
+In my quest to find out how to download a Maven package from GitHub packages, I stumbled upon a few other options that I'll list here for posterity.
 
-```graphql
-{
-  repository(owner: "joshjohanning", name: "Wolfringo-github-packages") {
-    packages(first: 10, packageType: NUGET, names: "Wolfringo.Commands") {
-      edges {
-        node {
-          id
-          name
-          packageType
-          version(version: "1.1.2") {
-            id
-            version
-            files(first: 10) {
-              nodes {
-                name
-                updatedAt
-                size
-                url
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-Similar example with specific version, using [`gh cli`](https://cli.github.com/) again:
-
-```bash
-gh api graphql -f packageType="NUGET" -f owner="joshjohanning" -f repo="Wolfringo-github-packages" -f packageName="Wolfringo.Commands" -f packageVersion="1.1.2" -f query='
-query ($packageType: PackageType!, $owner: String!, $repo: String!, $packageName: [String!], $packageVersion: String!) {
-  repository(owner: $owner, name: $repo) {
-    packages(first: 100, packageType: $packageType, names: $packageName) {
-      edges {
-        node {
-          id
-          name
-          packageType
-          version(version: $packageVersion) {
-            id
-            version
-            files(first: 10) {
-              nodes {
-                name
-                updatedAt
-                size
-                url
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}' -q '.data.repository.packages.edges[].node.version.files.nodes[].url'
-```
-
-## mvn install and mv
+### mvn install and mv
 
 I was able to get something like this to work - see my GitHub Action job below:
 
@@ -269,9 +143,9 @@ I was able to get something like this to work - see my GitHub Action job below:
       run: find /home/runner/.m2 -name "*herokupoc-1.*.jar" -exec mv {} . \;
 ```
 
-## mvn cli - sort of
+### mvn cli - sort of
 
-This is what we were originally trying to do, so thought I would throw it in here to spur other ideas for other languages. We were trying to use `mvn dependenct:get` to download the `.jar` file, but were ultimately uncessful for one reason or another.
+This is what we were originally trying to do, so thought I would throw it in here to spur other ideas for other languages. We were trying to use `mvn dependenct:get` to download the `.jar`{: .filepath} file, but were ultimately uncessful for one reason or another.
 
 This is the job we ended with:
 
@@ -300,14 +174,18 @@ But gives us an authentication error:
 
 > Error:  Failed to execute goal org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get (default-cli) on project herokupoc: Couldn't download artifact: org.eclipse.aether.resolution.DependencyResolutionException: Could not transfer artifact com.sherlock:herokupoc:jar:sources:1.0.0-202201071835 from/to fix_world (https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package): authentication failed for **https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package/com/sherlock/herokupoc/1.0.0-202201071835/herokupoc-1.0.0-202201071835-sources.jar**, status: 401 Unauthorized -> [Help 1]
 
-But this was still useful though as this what led me to just try to [`curl` that `.jar` file URL](#mysteriously-hidden-url-to-curl) successfully :). 
+But this was still useful though as this what led me to just try to [`curl` that `.jar`{: .filepath} file URL](#mysteriously-hidden-urls-to-curl) successfully 😀.
+
+### GraphQL
+
+This [post used to include](https://github.com/joshjohanning/joshjohanning.github.io/blob/168740292d487f3dc841b54f630f995420f4b924/_posts/2022-01-07-github-download-from-github-packages.md?plain=1#L71-L244) a GraphQL reference for downloading a file from GitHub Packages, but the GraphQL endpoint for GitHub Packages has been [deprecated on GitHub.com](https://github.blog/changelog/2022-08-18-deprecation-notice-graphql-for-packages/) and [GitHub Enterprise Server 3.7.0+](https://docs.github.com/en/enterprise-server@3.7/admin/release-notes#3.7.0-deprecations) and no longer works.
 
 ## Wrap-up
 
-Hopefully this either helped you download a file from GitHub Packages, gives you ideas for other languages, or maybe my struggles convince you to *just use a Release in GitHub*.
+Hopefully this either helped you download a file from GitHub Packages, gives you ideas for other languages, or maybe my struggles convince you to *just use a [Release in GitHub](https://docs.github.com/en/repositories/releasing-projects-on-github)*.
 
-I should mention that for some of these you might need to tweak your [GITHUB_TOKEN settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#setting-the-permissions-of-the-github_token-for-your-repository) to grant it more permissions.
+I should mention that if you're running this in a GitHub Action workflow from a repository other than the repository publishing the package, you may have to [update the package's permissions](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#ensuring-workflow-access-to-your-package) for the repository to have access to the package in (not available in Maven [yet](https://github.com/github/roadmap/issues/578)).
 
-Let me know what I've missed or if you have any other ideas!
+Let me know what I've missed or if you have any other ideas! 📦
 
 {% endraw %}
