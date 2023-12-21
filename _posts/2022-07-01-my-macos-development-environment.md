@@ -25,13 +25,13 @@ I was going to link them to my [Powerlevel10k Zsh Theme in GitHub Codespaces](/p
 2. Install the [MesloLGS fonts](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k) 
 3. Download my [iTerm profile](https://github.com/joshjohanning/dotfiles/blob/main/iterm2-profile.json) as a json file and import into iTerm
    - In iTerm, go to: Preferences > Profile, you can use the `+` to import the `iterm2-profile.json`{: .filepath} profile
-   - I believe the only other special things that I have in the profile (other than colors) is the ability to use `Option ⌥` + `←` or `→` keys to to go left / right to the end of strings, [`Option ⌥` + `Shift ⇧` + arrow keys](https://stackoverflow.com/questions/30055402/how-to-select-text-in-iterm-with-shiftarrow) to highlight entire strings, and `Option ⌥` + `Delete` to delete entire strings
+   - I believe the only other special things that I have in the profile (other than colors) is the ability to use `Option ⌥` + `←` or `→` arrow keys to to go left / right to the end of strings, [`Option ⌥` + `Shift ⇧` + `←` or `→` arrow keys](https://stackoverflow.com/questions/30055402/how-to-select-text-in-iterm-with-shiftarrow) to highlight entire strings, and `Option ⌥` + `Delete` to delete entire strings
 4. Install [oh-my-zsh](https://ohmyz.sh/#install) (run the `curl` command)
 5. Install plugins like [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh), [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#in-your-zshrc) (basically you clone the repo and then add the plugin to the list of `plugins` in your `~/.zshrc`{: .filepath} file
 6. Install [powerlevel10k zsh theme](https://github.com/romkatv/powerlevel10k#oh-my-zsh) - basically clone the repo and modify the `~/.zshrc`{: .filepath} file to update the `ZSH_THEME`
 7. You will be prompted to configure powerlevel10k - but my configuration for `~/.p10k.zsh`{: .filepath} is [here](https://github.com/joshjohanning/dotfiles/blob/main/.p10k.zsh)
 8. My `~/.zshrc`{: .filepath} config is [here](https://github.com/joshjohanning/dotfiles/blob/main/.zshrc) 
-9. Make iTerm2 the default terminal: Make iTerm default terminal (`^` + `Shift ⇧` + `Command ⌘` + `\`)
+9. Make iTerm2 the default terminal: Make iTerm default terminal (`Control ^` + `Shift ⇧` + `Command ⌘` + `\`)
 
 That should be all you need to make your terminal look exactly like mine 😀. 
 
@@ -145,9 +145,12 @@ brew bundle install --file=./Brewfile
 I was able to generate the `Brewfile`{: .filepath} by running:
 
 ```bash
-brew bundle dump
+brew bundle dump --force
 ```
 {: .nolineno}
+
+> `brew bundle dump` also includes installed VS Code extensions!
+{: .prompt-tip }
 
 ## App Store Apps
 
@@ -157,13 +160,89 @@ These are my must have App Store apps:
 2. [Copyclip](https://apps.apple.com/us/app/copyclip-clipboard-history/id595191960?mt=12) (free) - for clipboard management
    - I like to go into preferences and remember and display 2,000 clippings and start at system startup!
 3. [Get Plain Text](https://apps.apple.com/us/app/get-plain-text/id508368068?mt=12) (free) - paste without formatting
-   - I set my keyboard shortcut to `Option ⌥ Cmd ⌘ V` as well as launching at startup
+   - I set my keyboard shortcut to `Option ⌥` + `Cmd ⌘` + `v` as well as launching at startup
 4. [MeetingBar](https://apps.apple.com/us/app/meetingbar-for-meet-zoom-co/id1532419400?mt=12) (free) - to show upcoming meetings in the menu bar
 5. [Gifski](https://apps.apple.com/us/app/gifski/id1351639930?mt=12) (free) - for creating GIFs from videos
 6. [Pro Mouse](https://apps.apple.com/us/app/pro-mouse/id1505869474?mt=12) ($) - a better mouse cursor for presentations
 7. [Homie](https://apps.apple.com/us/app/homie-menu-bar-app-for-homekit/id1533590432?mt=12) (free) - for controlling HomeKit devices in the menu bar
 8. [Bitwarden](https://apps.apple.com/us/app/bitwarden/id1352778147?mt=12) (free) - password management
 9. [Netspot: Wifi Analyzer](https://apps.apple.com/us/app/netspot-wifi-analyzer/id514951692?mt=12) (free) - for scanning WiFi networks and seeing signal strength
+
+## System Settings
+
+- Add the sound icon to the menu bar (easily switch sound outputs)
+  - System Settings > Control Center > Sound - Always Show in Menu Bar
+
+## Keyboard Shortcuts
+
+### General Keyboard Shortcuts
+
+These are helpful, out of the box keyboard shortcuts that I often use:
+
+| Action                                        | Shortcut                                          |
+|-----------------------------------------------|---------------------------------------------------|
+| Hide the windows of the front app             | `Cmd ⌘` + `h`                                     |
+| Minimize the front window to the dock         | `Cmd ⌘` + `m`                                     |
+| Hide all but current app                      | `Option ⌥` + `Cmd ⌘` + `h`                        |
+| Use the app in full screen / exit full screen | `Control ^` + `Cmd ⌘` + `f`                       |
+| Maximize an app (not full screen) / put back  | `Option ⌥` + click maximize button                |
+| Find again (when using Cmd ⌘ f)               | `Cmd ⌘` + `g`                                     |
+| Quit app                                      | `Cmd ⌘` + `q`                                     |
+| Force quit an app                             | `Option ⌥` + `Cmd ⌘` + `esc`                      |
+| Screenshot the entire screen                  | `Cmd ⌘` + `Shift ⇧` + `3`                         |
+| Screenshot a selection using a picker         | `Cmd ⌘` + `Shift ⇧` + `4`                         |
+| Screenshot or record a selection              | `Cmd ⌘` + `Shift ⇧` + `5`                         |
+| Screenshot the touch bar (RIP)                | `Cmd ⌘` + `Shift ⇧` + `6`                         |
+| Screenshot entire window                      | `Space bar` when in screenshot mode               |
+| Switch between open apps                      | `Cmd ⌘` + `tab`                                   |
+| Switch between multiple windows of app        | `Cmd ⌘` + `` ` `` (backtick key)                  |
+| Quit app when switching between apps          | When in the `Cmd ⌘` + `tab` interface, press `q`  |
+| See all apps                                  | `F3` (may need `fn` + `F3`)                       |
+| See desktop                                   | `Cmd ⌘` + `F3` (may need `fn` + `Cmd ⌘` + `F3`)   |
+| Switch between desktops/maximized apps        | `Control ^` + `←` or `→` arrow keys               |
+| Spotlight Search                              | `Cmd ⌘` + `Space bar`                             |
+| Re-order menu bar icons                       | Hold `Cmd ⌘` and drag                             |
+| Refresh page (in browser)                     | `Cmd ⌘` + `r`                                     |
+| View history (in browser)                     | `Cmd ⌘` + `y`                                     |
+
+### Finder Keyboard Shortcuts
+
+| Action                  | Shortcut                                        |
+|-------------------------|-------------------------------------------------|
+| Delete a file           | `Cmd ⌘` + `delete`                              |
+| Rename a file           | `return`                                        |
+| Show/hide hidden files  | `Cmd ⌘` + `Shift ⇧` + `.`                       |
+| Cut (move) file         | Copy normally, then `Option ⌥` + `Cmd ⌘` + `v`  |
+| Open a file / folder    | `Cmd ⌘` + `o` or `Cmd ⌘` + `↓` arrow key        |
+| Enter folder            | `Cmd ⌘` + `↓` arrow key                         |
+| Leave folder            | `Cmd ⌘` + `↑` arrow key                         |
+| Rename file/folder      | `return`                                        |
+
+### Text Editing Keyboard Shortcuts
+
+| Action                            | Shortcut                                          |
+|-----------------------------------|---------------------------------------------------|
+| Delete whole line                 | `Cmd ⌘` + `delete`                                |
+| Delete just the last word         | `Option ⌥` + `delete`                             |
+| Go to the beginning of the line   | `Control ^` + `a`                                 |
+| Go to the end of the line         | `Control ^` + `e`                                 |
+| Highlight just one word           | `Shift ⇧` + `Option ⌥` + `←` or `→` arrow keys    |
+| Highlight the entire line         | `Shift ⇧` + `Cmd ⌘` + `←` or `→` arrow keys       |
+| Jump to bottom of document        | `Cmd ⌘` + `↓` arrow key                           |
+| Jump to top of document           | `Cmd ⌘` + `↑` arrow key                           |
+| Highlight text vertically         | `Shift ⇧` + `Option ⌥` + select with mouse        |
+
+## Other Tips
+
+- Open a new Finder window from the current directory in Terminal: `open .`
+- Update the modified time of a file: `touch -mt202303261924 ./file-to-update.xyz`
+- Terminate all instances of a process: `killall Finder` (case sensitive)
+- Open file in application: drag the file over the app (e.g. VS Code) in the dock to open
+- Output the URL and title of each tab in all open Chrome windows: 
+    ```bash
+    osascript -e{'set o to""','tell app"google chrome"','repeat with t in tabs of windows','set o to o&url of t&" "&title of t&linefeed',end,end}|sed \$d
+    ```
+    {: .nolineno}
 
 ## Troubleshooting
 
