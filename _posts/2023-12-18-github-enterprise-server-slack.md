@@ -46,86 +46,86 @@ Several other people have had similar [questions](https://github.com/integration
 
 1. Navigate to the GitHub Enterprise Server management console, e.g. `https://github.example.com:8443/setup/settings`
 2. Scroll down to the "Chat Integration" section and click "Enable GitHub Chat integration"; it should default to Slack, but if not, select the Slack radio button
-  ![Enable GitHub Chat integration](ghes-slack-integration-step-02.png)
+  ![Enable GitHub Chat integration](ghes-slack-integration-step-02.png){: .shadow }
   _Enable GitHub Chat integration_
 3. Navigate to the [Slack API portal](https://api.slack.com/apps)
 4. Click on the "Generate Token" button - this will generate a token that GitHub will use to *create an app for you* under your account
-  ![Generate Token](ghes-slack-integration-step-04.png)
+  ![Generate Token](ghes-slack-integration-step-04.png){: .shadow }
   _Click the generate token button to allow GitHub to register an app for you_
 5. Confirm the Slack workspace where the app will be created
-  ![Selecting the Slack workspace for the app](ghes-slack-integration-step-05.png)
+  ![Selecting the Slack workspace for the app](ghes-slack-integration-step-05.png){: .shadow }
   _Selecting the Slack workspace for the app_
 6. Click the "Copy" button in the "Access Token" column for the newly created token
-  ![Copy the Access Token](ghes-slack-integration-step-06.png)
+  ![Copy the Access Token](ghes-slack-integration-step-06.png){: .shadow }
   _Copy the newly generated access token_
 7. Paste in the access token, check the box for "Configure to use socket mode", and click "Generate App"
-  ![Pasting in the access token, selecting socket mode, and generating the app](ghes-slack-integration-step-07.png)
+  ![Pasting in the access token, selecting socket mode, and generating the app](ghes-slack-integration-step-07.png){: .shadow }
   _Pasting in the access token, selecting socket mode, and generating the app_
 8. After a few moments, you should a message saying "Slack app generated successfully"
-  ![Slack app generated successfully](ghes-slack-integration-step-08.png)
+  ![Slack app generated successfully](ghes-slack-integration-step-08.png){: .shadow }
   _Slack app generated successfully_
 9. You will see a "Slack App ID" was generated - click the ID to follow the link to the Slack API portal
-  ![Slack App ID](ghes-slack-integration-step-09.png)
+  ![Slack App ID](ghes-slack-integration-step-09.png){: .shadow }
   _A Slack APP ID was generated - follow the link_
 10. Scroll down to "App-Level Tokens" and click "Generate Token and Scopes"
-  ![Generate Token and Scopes](ghes-slack-integration-step-10.png)
+  ![Generate Token and Scopes](ghes-slack-integration-step-10.png){: .shadow }
   _Generate Token and Scopes_
 11. Give the token a name and add the `connections:write` and `authorizations:read` scopes and click "Generate"
-  ![Creating a token with connections and authorizations access](ghes-slack-integration-step-11-1.png)
+  ![Creating a token with connections and authorizations access](ghes-slack-integration-step-11-1.png){: .shadow }
   _Creating a token with `connections:write` and `authorizations:read` access_
 12. Copy the token
-  ![Copy the token](ghes-slack-integration-step-12-1.png)
+  ![Copy the token](ghes-slack-integration-step-12-1.png){: .shadow }
   _Copy the token_
 13. Paste the token in the "Slack app level token" field and click "Save"
-  ![Paste the Slack app level token and save](ghes-slack-integration-step-13.png)
+  ![Paste the Slack app level token and save](ghes-slack-integration-step-13.png){: .shadow }
   _Paste the Slack app level token and click save_
 14. You should see a message indicating the Slack app level token was saved successfully
-  ![Slack app settings have been saved](ghes-slack-integration-step-14.png)
+  ![Slack app settings have been saved](ghes-slack-integration-step-14.png){: .shadow }
   _Slack app settings have been saved_
 15. Click on the server's "Save Settings" button to save the changes - this shouldn't cause any downtime but it will take some time (15-30 minutes) for the changes to take effect
-  ![Save settings](ghes-slack-integration-step-15.png)
+  ![Save settings](ghes-slack-integration-step-15.png){: .shadow }
   _Save settings and wait for the server to finish configuring_
 16. Once the server is finished configuring, navigate back to the management console
 17. Scroll down to the "Chat Integration" section again; you should see "Chat integration is now available to be installed in the workspace" - follow the link!
   - The URL: `https://github.example.com/_slack/`
-  ![From the management console, install the Slack app](ghes-slack-integration-step-17.png)
+  ![From the management console, install the Slack app](ghes-slack-integration-step-17.png){: .shadow }
   _From the management console, install the Slack app to the workspace_
 18. Click on the "Add to Slack" button
-  ![Add the Slack App](ghes-slack-integration-step-18.png)
+  ![Add the Slack App](ghes-slack-integration-step-18.png){: .shadow }
   _Add the Slack app_
 19. Install the app into the Slack workspace
-  ![Install the Slack App](ghes-slack-integration-step-19.png)
+  ![Install the Slack App](ghes-slack-integration-step-19.png){: .shadow }
   _Allow the Slack app to be installed to the Slack workspace_
 20. After it's installed, it will redirect you back to Slack
-  ![Redirected back to Slack](ghes-slack-integration-step-20.png)
+  ![Redirected back to Slack](ghes-slack-integration-step-20.png){: .shadow }
   _After installing the app, you will be redirected back to Slack_
 21. The redirect will take you to the `GHE` bot in Slack and will ask you to link your account to begin using
-  ![Connect your GitHub account to Slack by interacting with the `GHE` bot](ghes-slack-integration-step-21.png)
+  ![Connect your GitHub account to Slack by interacting with the `GHE` bot](ghes-slack-integration-step-21.png){: .shadow }
   _Connect your GitHub account to Slack by interacting with the `GHE` bot_
 22. Click the button to connect your GitHub account to Slack 
-  ![Authorize your GitHub Account with Slack to generate a code and paste it back into Slack](ghes-slack-integration-step-22.png)
+  ![Authorize your GitHub Account with Slack to generate a code and paste it back into Slack](ghes-slack-integration-step-22.png){: .shadow }
   _Authorize your GitHub Account with Slack by generating a code and pasting it back into Slack_
 23. Copy the verification code that you will paste back into Slack
-  ![Code for connecting your GitHub account to Slack](ghes-slack-integration-step-23.png)
+  ![Code for connecting your GitHub account to Slack](ghes-slack-integration-step-23.png){: .shadow }
   _Code for connecting your GitHub account to Slack_
 24. Click the "Enter Token" button and paste in the code
-  ![Pasting in the verification code to complete the authentication](ghes-slack-integration-step-24.png)
+  ![Pasting in the verification code to complete the authentication](ghes-slack-integration-step-24.png){: .shadow }
   _Pasting in the verification code to complete the authentication_
 25. Success! Your GitHub account is now linked to Slack
-  ![GitHub Enterprise user account is now connected to Slack](ghes-slack-integration-step-25.png)
+  ![GitHub Enterprise user account is now connected to Slack](ghes-slack-integration-step-25.png){: .shadow }
   _GitHub Enterprise user account is now connected to Slack_
 26. In a Slack channel, type and send `/ghe subscribe owner/repo` to subscribe to a repo's notifications - you'll notice that we are now prompted to install the Slack GitHub App to the repository now
-  ![Subscribing to a repo to a Slack channel](ghes-slack-integration-step-26.png)
+  ![Subscribing to a repo to a Slack channel](ghes-slack-integration-step-26.png){: .shadow }
   _Subscribing to a repo to a Slack channel_
 27. Select the organization to install the Slack GitHub App to
-  ![Installing the Slack GitHub App to a GitHub organization](ghes-slack-integration-step-27.png)
+  ![Installing the Slack GitHub App to a GitHub organization](ghes-slack-integration-step-27.png){: .shadow }
   _Installing the Slack GitHub App to a GitHub organization_
 28. Determine if you want to grant the Slack GitHub App access to all repositories or only select repositories
-  ![Grant access to all repositories or select repositories for the Slack GitHub App](ghes-slack-integration-step-28.png)
+  ![Grant access to all repositories or select repositories for the Slack GitHub App](ghes-slack-integration-step-28.png){: .shadow }
   _Grant access to all repositories or select repositories for the Slack GitHub App_
 29. Assuming you have permissions (organization owner), the app should now be installed
 30. Head back to the Slack channel and send `/ghe subscribe owner/repo` again - you should now see a message indicating that the channel is now subscribed to the repository
-  ![GitHub notifications in Slack](ghes-slack-integration-step-30.png)
+  ![GitHub notifications in Slack](ghes-slack-integration-step-30.png){: .shadow }
   _GitHub notifications in Slack_
 31. To only receive notifications for a [specific feature](https://github.com/integrations/slack/?tab=readme-ov-file#customize-your-notifications), use `/ghe subscribe owner/repo <feature>`
 32. You can also DM the `GHE` bot to subscribe to repositories directly to your DMs, as well as using commands such as `/ghe open owner/repo` or `/ghe close [issue link]` to open or close issues

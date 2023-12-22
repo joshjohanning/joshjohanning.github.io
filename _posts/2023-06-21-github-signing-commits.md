@@ -81,6 +81,6 @@ See my co-worker Ken Muse's [post](https://www.kenmuse.com/blog/comparing-github
 
 It's relatively easy to sign commits, so there really isn't an excuse to not do so! 🔐 ✅
 
-![Verified commits](verified-commits.png){: .light }
-![Verified commits](verified-commits-dark-mode.png){: .dark }
+![Verified commits](verified-commits.png){: .shadow }{: .light }
+![Verified commits](verified-commits-dark-mode.png){: .shadow }{: .dark }
 _Example of a verified commit in GitHub_

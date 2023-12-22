@@ -46,12 +46,12 @@ git lfs push <target-url> --all
 For Git repos with LFS, the two `git lfs` commands are key. This `git lfs fetch --all` command will download all the LFS artifacts from the source repository and store them in the target repository. The `git lfs push <target-url> --all` command will push all of the LFS artifacts to the target repository. After the push, the text pointers will be updated - including the same commit hash!
 
 Here is an example of migrating a repository that contains LFS artifacts:
-![Git LFS commands](git-lfs-commands.png)
+![Git LFS commands](git-lfs-commands.png){: .shadow }
 _Running the migration commands to migrate a Git repository including Git LFS artifacts_
 
 The repository has been migrated, including the LFS artifacts:
-![Git LFS file in GitHub](git-lfs-light.png){: .light }
-![Git LFS file](git-lfs-dark.png){: .dark }
+![Git LFS file in GitHub](git-lfs-light.png){: .shadow }{: .light }
+![Git LFS file](git-lfs-dark.png){: .shadow }{: .dark }
 _File stored in Git LFS file in GitHub_
 
 ## Summary

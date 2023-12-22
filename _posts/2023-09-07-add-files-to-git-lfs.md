@@ -54,12 +54,12 @@ git lfs track "bin/*" # track a directory
 ```
 
 Here is an example of adding files to Git LFS:
-![Adding files to Git LFS](git-lfs-add.png)
+![Adding files to Git LFS](git-lfs-add.png){: .shadow }
 _Adding files to Git LFS_
 
 After pushing to GitHub, the GitHub UI shows the file is stored with Git LFS:
-![Git LFS file in GitHub](./../2023-09-07-migrate-git-lfs-artifacts/git-lfs-light.png){: .light }
-![Git LFS file in GitHub](./../2023-09-07-migrate-git-lfs-artifacts/git-lfs-dark.png){: .dark }
+![Git LFS file in GitHub](./../2023-09-07-migrate-git-lfs-artifacts/git-lfs-light.png){: .shadow }{: .light }
+![Git LFS file in GitHub](./../2023-09-07-migrate-git-lfs-artifacts/git-lfs-dark.png){: .shadow }{: .dark }
 _File stored in Git LFS file in GitHub_
 
 ## Summary
