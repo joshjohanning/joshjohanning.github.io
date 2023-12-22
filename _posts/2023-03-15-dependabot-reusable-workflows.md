@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2023-03-15 6:30:00 -0500
 description: Configuring Dependabot to keep Reusable Workflows up to date in GitHub
 categories: [GitHub, Dependabot]
-tags: [GitHub, Dependabot, Pull Requests, GitHub Actions]
+tags: [GitHub, Dependabot, Pull Requests, GitHub Actions, Reusable Workflows]
 img_path: /assets/screenshots/2023-03-15-dependabot-reusable-workflows
 image:
   path: dependabot-pr.png
