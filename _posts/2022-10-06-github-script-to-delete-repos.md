@@ -26,7 +26,7 @@ These scripts are in my [github-misc-scripts](https://github.com/joshjohanning/g
 
 ## Using the Scripts
 
-Prerequisites:
+### Prerequisites
 
 - You need to make sure to have the [`gh cli`](https://cli.github.com/) installed and authorized (`gh auth login`).
 - Add the `delete_repo` scope:
@@ -35,7 +35,7 @@ Prerequisites:
   ```
   {: .nolineno}
 
-Usage:
+### Usage
 
 1. Prepare a list of repositories that you want to delete and place in a CSV file, one per line, with the last line empty.
     - You can use the [`generate-repositories-list.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/generate-repositories-list.sh) script to generate a list of repos in a GitHub org, and then modify accordingly: 
@@ -51,11 +51,10 @@ Usage:
       ```
       {: file='repos.csv'}
 2. From there, it's pretty simple - run the script, passing in the `repos.csv`{: .filepath} file:
-
-```bash
-./delete-repositories-from-list.sh repos.csv
-```
-{: .nolineno}
+    ```bash
+    ./delete-repositories-from-list.sh repos.csv
+    ```
+    {: .nolineno}
 
 ## Summary
 
