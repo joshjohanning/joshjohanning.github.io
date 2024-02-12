@@ -28,13 +28,13 @@ The script is in my [github-misc-scripts](https://github.com/joshjohanning/githu
 ### Usage
 
 ```bash
-Usage: ./add-user-to-project.sh <org> <project-number> <user> <role>
+Usage: ./add-user-to-project.sh <org> <repo> <project-number> <user> <role>
 ```
 
 Example:
 
 ```bash
-./add-user-to-project.sh joshjohanning-org 1234 joshjohanning ADMIN
+./add-user-to-project.sh joshjohanning-org my-repo 1234 joshjohanning ADMIN
 ```
 
 Notes:
