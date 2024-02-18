@@ -85,7 +85,7 @@ Note: For the purposes of this article, I am going to abbreviate Azure Front Doo
 ## Random notes
 
 - HTTPS Redirect in .NET Web Apps
-    - It is considered best practice to redirect http to https. This can be done in the code by adding the following to the `startup.cs` file: `app.UseHttpsRedirection();`
+    - It is considered best practice to redirect http to https. This can be done in the code by adding the following to the `startup.cs`{: .filepath} file: `app.UseHttpsRedirection();`
     - The problem with this method when using Azure Front Door with Private Endpoints is that this causes the app to redirect to the host (azurewebsites.net) instead of the incoming host URL (custom domain on Azure Front Door)
     - To work around this, you should remove this line of code altogether from the application and let Front Door redirect traffic to HTTPS (a setting on the Route)
     - If you're working with an Angular app, make sure to remove any HTTPS redirect from the `web.config`{: .filepath}

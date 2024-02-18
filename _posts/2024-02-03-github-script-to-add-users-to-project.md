@@ -48,6 +48,6 @@ Hopefully this speeds up your adding of users to an Organization Project in GitH
 
 > See my other ProjectsV2 scripts:
 >
-> - [`get-projects-in-organization.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-projects-in-organization.sh)
-> - [`get-projects-added-to-repository.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-projects-added-to-repository.sh)
+> - [`get-projects-in-organization.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-projects-in-organization.sh)
+> - [`get-projects-added-to-repository.sh`{: .filepath}](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-projects-added-to-repository.sh)
 {: .prompt-info }

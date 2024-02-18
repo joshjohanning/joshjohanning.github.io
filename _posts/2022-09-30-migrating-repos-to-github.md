@@ -74,7 +74,7 @@ Starting fresh might be best for repositories with very old history, and/or repo
 
 1. Create a new EMPTY repo in GitHub - don't initialize with a README or .gitignore
 2. Get your latest changes in existing SCM; e.g.: `git pull` or `tf get` to get latest changes
-3. Create a new folder and copy in the files from your existing repo - make sure to to NOT copy over the `.git` or `$tf` folder
+3. Create a new folder and copy in the files from your existing repo - make sure to to NOT copy over the `.git`{: .filepath} or `$tf`{: .filepath} folder
 4. Initialize a new Git repo: `git init`
 5. **Important**: Add in a [gitignore](https://git-scm.com/docs/gitignore) file - for .NET developers, you can run `dotnet new gitignore`, alternatively see [github/gitignore](https://github.com/github/gitignore) repo for other templates
 6. Delete any binaries or other files you don't want committed to the new repo, and/or modify gitignore as needed

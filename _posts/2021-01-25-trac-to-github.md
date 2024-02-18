@@ -67,7 +67,7 @@ Instructions:
     1. `-v` : verbose/debug logging
     1. `-s 1` : start at the the first ticket in Trac
     1. `-F` : fast import, import without safety-checking the issue number. The way this tool runs is it expects Trac ticket #1 to be created as Issue #1. If you already have issues in the repository, or you want to do testing, add the -F import. For your real migration, you could probably drop this and trac ticket #1 will map to issue #1. Otherwise, with this `-F` argument, the issues will be created even though the ID's won't make 1:1.
-    1. No example here, but `-a` for attachment-urls is interesting. The tool doesn't migrate attachments, but if you used one of the `download-trac-attachment-*.sh` scripts [in the repo](https://github.com/joshjohanning/trac-hub/tree/master/tools), you could host the files somewhere, presumably with the same file names and it will hyperlink the attachments??
+    1. No example here, but `-a` for attachment-urls is interesting. The tool doesn't migrate attachments, but if you used one of the `download-trac-attachment-*.sh`{: .filepath} scripts [in the repo](https://github.com/joshjohanning/trac-hub/tree/master/tools), you could host the files somewhere, presumably with the same file names and it will hyperlink the attachments??
 
 ### trac-hub Command Line Argument List
 

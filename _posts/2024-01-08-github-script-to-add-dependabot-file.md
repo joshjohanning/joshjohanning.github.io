@@ -50,7 +50,7 @@ These scripts are in my [github-misc-scripts](https://github.com/joshjohanning/g
       ./generate-repositories-list.sh joshjohanning-org > repos.txt
       ```
       {: .nolineno}
-    - Or, create your own input file with the list of repos you want to add the `dependabot.yml`, one per line: 
+    - Or, create your own input file with the list of repos you want to add the `dependabot.yml`{: .filepath}, one per line: 
       ```sh
       org/repo1
       org/repo2

@@ -50,7 +50,7 @@ The easiest way to do this is to run the `dotnet package add` command targeting 
 ![dotnet add package](/assets/screenshots/2021-09-03-azure-devops-code-coverage/dotnet-add-package.png){: .shadow }
 _Adding coverlet.collector with dotnet add package_
 
-For those who can't run the `dotnet` command, add the [following](https://github.com/joshjohanning/PrimeService-unit-testing-using-dotnet-test/commit/43067b4e035eb45899e185e701bd4aaf8575514b) under the `ItemGroup` block in the `.csproj` file:
+For those who can't run the `dotnet` command, add the [following](https://github.com/joshjohanning/PrimeService-unit-testing-using-dotnet-test/commit/43067b4e035eb45899e185e701bd4aaf8575514b) under the `ItemGroup` block in the `.csproj`{: .filepath} file:
 
 ```xml
     <PackageReference Include="coverlet.collector" Version="3.1.0">
@@ -83,9 +83,9 @@ Next, update the pipeline to ensure your `dotnet test` command looks like mine, 
 
 The `--collect:"XPlat Code Coverage"` argument is what tells `dotnet test` to use the `coverlet.collector` package to generate us a cobertura code coverage report. As you can guess by the `XPlat` in the argument, this runs cross platform on both Windows and Ubuntu. 
 
-This argument creates a `$(Agent.TempDirectory)/*/coverage.cobertura.xml` code coverage report file. This folder is default output folder since Azure DevOps adds `--results-directory /home/vsts/work/_temp` to the command.
+This argument creates a `$(Agent.TempDirectory)/*/coverage.cobertura.xml`{: .filepath} code coverage report file. This folder is default output folder since Azure DevOps adds `--results-directory /home/vsts/work/_temp` to the command.
 
-Next, we have to specifically add the `PublishCodeCoverageResults@1` task to publish the code coverage output to the pipeline. It seems like at least with my project, it produces 2 `coverage.cobertura.xml`{: .filepath} files and that throws a warning in the pipeline, so that's I used `$(Agent.TempDirectory)/*/coverage.cobertura.xml` not `$(Agent.TempDirectory)/**/coverage.cobertura.xml`
+Next, we have to specifically add the `PublishCodeCoverageResults@1` task to publish the code coverage output to the pipeline. It seems like at least with my project, it produces 2 `coverage.cobertura.xml`{: .filepath} files and that throws a warning in the pipeline, so that's why I used `$(Agent.TempDirectory)/*/coverage.cobertura.xml`{: .filepath} and NOT `$(Agent.TempDirectory)/**/coverage.cobertura.xml`{: .filepath}.
 
 ![duplicate code coverage reports](/assets/screenshots/2021-09-03-azure-devops-code-coverage/find-code-coverage.png){: .shadow }
 _Duplicate coverage.cobertura.xml code coverage results_

@@ -46,9 +46,9 @@ I remember when this was first announced in a [sprint release note](https://docs
 
 In this demo scenario, my code is stored in GitHub, but this could work just as well with code in Azure Repos as well.
 
-### [`azure-pipelines.yml`](https://github.com/joshjohanning/secrets-scanning-poc/blob/f07a2eae415f38933f506d4ed0c69f75df2ffb91/azure-pipelines.yml)
+### [`azure-pipelines.yml`{: .filepath}](https://github.com/joshjohanning/secrets-scanning-poc/blob/f07a2eae415f38933f506d4ed0c69f75df2ffb91/azure-pipelines.yml){: .filepath}
 
-In the root `azure-pipelines.yml` file, you'll notice that the `extends` keyword is at the same level as `trigger` and `resources`. This was the tricky part - how does one use `extends` AND job templates? The approach is to use a *steps* template for the build where we want the extra steps injected, and for deployment we can use our *job* templates like normal. We will add an Environment check that ensures that the extends template is being used. If the Extends template isn't used, the check fails and the deployment isn't allowed.
+In the root `azure-pipelines.yml`{: .filepath} file, you'll notice that the `extends` keyword is at the same level as `trigger` and `resources`. This was the tricky part - how does one use `extends` AND job templates? The approach is to use a *steps* template for the build where we want the extra steps injected, and for deployment we can use our *job* templates like normal. We will add an Environment check that ensures that the extends template is being used. If the Extends template isn't used, the check fails and the deployment isn't allowed.
 
 The deployment stages and jobs are defined in this file as well - this should look very familiar to regular deployment jobs except that they are being referenced as a parameter.
 
@@ -90,11 +90,11 @@ extends:
           environment: github-secret-scanning-test-gate-prod
 ```
 
-### [`secret-scanning-extends.yml`](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/secret-scanning-extends.yml)
+### [`secret-scanning-extends.yml`{: .filepath}](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/secret-scanning-extends.yml)
 
 The `parameters` passed into the extends template include a `stepList` type for the `buildSteps` and a `stageList` for the `deployStages`.
 
-The `resource` and `- template: secret-scanning-steps.yml` here is the configuration repository I was mentioning before. For your use case, you may not need this, you would just need the steps in `- ${{ parameters.buildSteps }}`.
+The `resource` and `- template: secret-scanning-steps.yml`{: .filepath} here is the configuration repository I was mentioning before. For your use case, you may not need this, you would just need the steps in `- ${{ parameters.buildSteps }}`.
 
 The build stage and job is defined in this file.
 
@@ -128,7 +128,7 @@ stages:
 - ${{ parameters.deployStages }}
 ```
 
-### [`sample-build-steps.yml`](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/sample-build-steps.yml)
+### [`sample-build-steps.yml`{: .filepath}](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/sample-build-steps.yml)
 
 Not much crazy here - this is a *steps* template (as opposed to a *job* template). This is injected into the extends template in the `- ${{ parameters.buildSteps }}` line of code.
 
@@ -142,7 +142,7 @@ steps:
 
 ```
 
-### [`sample-deployment-job.yml`](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/sample-deployment-job.yml)
+### [`sample-deployment-job.yml`{: .filepath}](https://github.com/joshjohanning/pipeline-templates/blob/main/secret-scanning/sample-deployment-job.yml)
 
 This is pretty vanilla as well - this *job* template is injected into the extends template in the `- ${{ parameters.deployStages }}` line of code.
 
