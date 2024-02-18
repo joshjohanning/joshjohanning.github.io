@@ -69,6 +69,14 @@ These scripts are in my [github-misc-scripts](https://github.com/joshjohanning/g
 
 - [ ] Add an option to create a pull request instead of committing directly to the default branch
 
+## Edit: More feature-rich alternative
+
+[@ruzickap pointed out](https://github.com/joshjohanning/joshjohanning.github.io/issues/33#issuecomment-1896339564) that we can also use [`multi-gitter`](https://github.com/lindell/multi-gitter/) to run a script against a set of repositories. This tool already creates pull requests for us, as well as includes a command to track the `status` of the PRs, to `merge` the PRs, and to `close` the PRs ✨.
+
+See my [follow-up comment](https://github.com/joshjohanning/joshjohanning.github.io/issues/33#issuecomment-1951356259) for an example on using [`multi-gitter`](https://github.com/lindell/multi-gitter/) to copy in a `dependabot.yml`{: .filepath} file if it doesn't exist.
+
+There's also a more complex example in my [comment](https://github.com/joshjohanning/joshjohanning.github.io/issues/33#issuecomment-1951356259) that creates a `dependabot.yml`{: .filepath} file if it doesn't exist, but if it does exist, only check to see if there is a `package-ecosystem: github-actions` section and if not, add it.
+
 ## Summary
 
 This will speed up the process of adding the `dependabot.yml`{: .filepath} file to a list of repositories. This can be helpful to make sure teams are keeping up to date on their dependencies. I use this all the time especially to keep up with marketplace and internal GitHub Actions that my repositories are referencing. Feel free to let me know if I'm missing anything and/or submit a PR to enhance this further! 🚀
