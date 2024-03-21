@@ -18,19 +18,21 @@ image:
 I recently had a customer ask me how they could migrate their NuGet packages from one GitHub instance to another (e.g.: from GitHub Enterprise Server to GitHub Enterprise Cloud). I wasn't aware of any tooling that did this, so I decided to write my own.
 
 > See my other NuGet package migration posts:
+>
 > - [Quickly Migrate NuGet Packages to a New Feed](/posts/nuget-pusher-script/)
 > - [Migrate NuGet Packages to GitHub Packages](/posts/github-packages-migrate-nuget-packages-to-github-packages/)
 {: .prompt-info }
-
 > See my other GitHub Package --> GitHub Package migration posts:
+>
 > - [Migrate npm Packages Between GitHub Instances](/posts/github-packages-migrate-npm-packages/)
 > - [Migrate Maven Packages Between GitHub Instances](/posts/github-packages-migrate-maven-packages/)
+> - [Migrate Docker containers Between GitHub Instances](/posts/github-packages-migrate-docker-containers/)
 {: .prompt-info }
-
 
 ## The script
 
-The repo and docs can be found here: 
+The repo and docs can be found here:
+
 - **[https://github.com/joshjohanning/github-packages-migrate-nuget-packages-between-github-instances](https://github.com/joshjohanning/github-packages-migrate-nuget-packages-between-github-instances)**
 
 I decided to store the script in a separate GitHub repo than my [github-misc-scripts](/posts/github-misc-scripts/) repo to better facilitate any feedback/suggestions/improvements I might get - feel free to submit a PR if you can improve things 🚀!

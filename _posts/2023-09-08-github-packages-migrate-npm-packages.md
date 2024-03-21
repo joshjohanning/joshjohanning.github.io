@@ -18,13 +18,16 @@ image:
 I have been working with more customers who are migrating GitHub instances and want to be able to migrate GitHub Packages. There is not an easy lift-and-shift approach to migrate GitHub Packages between instances; each ecosystem is independent. To go along with my [NuGet](/posts/github-packages-migrate-nuget-packages/) solution, I also scripted out the npm package migration. Take a look and let me know what you think!
 
 > See my other GitHub Package --> GitHub Package migration posts:
+>
 > - [Migrate NuGet Packages Between GitHub Instances](/posts/github-packages-migrate-nuget-packages/)
 > - [Migrate Maven Packages Between GitHub Instances](/posts/github-packages-migrate-maven-packages/)
+> - [Migrate Docker containers Between GitHub Instances](/posts/github-packages-migrate-docker-containers/)
 {: .prompt-info }
 
 ## The script
 
-The script can be found in my [github-misc-scripts](/posts/github-misc-scripts/) repo here: 
+The script can be found in my [github-misc-scripts](/posts/github-misc-scripts/) repo here:
+
 - **[https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/migrate-npm-packages-between-github-instances.sh](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/migrate-npm-packages-between-github-instances.sh)**
 
 ## Running the script
