@@ -1,7 +1,7 @@
 ---
 title: 'GitHub Action for adding Twistlock Scan Results to job summary'
 author: Josh Johanning
-date: 2024-03-21 17:30:00 -0500
+date: 2024-03-23 17:30:00 -0500
 description: GitHub Action to convert Twistlock's JSON scan results to markdown to add to the job summary
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Octokit]
