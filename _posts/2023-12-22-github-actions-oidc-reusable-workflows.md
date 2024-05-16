@@ -17,7 +17,7 @@ image:
 
 OpenID Connect (OIDC) is great for accessing resources by exchanging short-lived tokens directly to the thing you are trying to authenticate with (often a cloud provider but doesn't have to be!). GitHub Actions has [several examples for using OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) in workflows to be able to access resources like Azure, AWS, HashiCorp Vault, etc. Passwordless authentication is game-changing!
 
-In GitHub Actions, Reusable workflows are also great for providing consistency to workflows within an organization. Also, they prevent code duplication and simplifies making changes to workflows. 
+In GitHub Actions, Reusable workflows are also great for providing consistency to workflows within an organization. Also, they prevent code duplication and simplifies making changes to workflows.
 
 These two features can be combined to provide a secure and consistent way to access cloud resources.
 
@@ -31,29 +31,46 @@ Following the [GitHub docs](https://docs.github.com/en/actions/deployment/securi
 
 > - Using `job_workflow_ref`:
 >   - To create trust conditions based on reusable workflows, your cloud provider must support custom claims for `job_workflow_ref`. This allows your cloud provider to identify which repository the job originally came from.
->   - For clouds that only support the standard claims (audience (`aud`) and subject (`sub`)), you can use the API to customize the sub claim to include job_workflow_ref. For more information, see "[About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#customizing-the-token-claims)". Support for custom claims is currently available for Google Cloud Platform and HashiCorp Vault.
+>   - For clouds that only support the standard claims (audience (`aud`) and subject (`sub`)), you can use the API to customize the sub claim to include `job_workflow_ref`. For more information, see "[About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#customizing-the-token-claims)". Support for custom claims is currently available for Google Cloud Platform and HashiCorp Vault.
 > - Customizing the token claims:
->   - You can configure more granular trust conditions by customizing the subject (sub) claim that's included with the JWT. For more information, see "[About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#customizing-the-token-claims)".
+>   - You can configure more granular trust conditions by customizing the subject (`sub`) claim that's included with the JWT. For more information, see "[About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#customizing-the-token-claims)".
+
+> - We can also see which claims are supported here: [https://token.actions.githubusercontent.com/.well-known/openid-configuration](https://token.actions.githubusercontent.com/.well-known/openid-configuration)
+{: .prompt-tip }
 
 If you're not an OIDC expert (don't worry, I'm not either), this might not make a ton of sense, but don't worry, let's step through it.
 
-Let's first start by examining the subject (`sub`) claim that GitHub Actions generates by default. We can print out the token by adding this step to an existing GitHub Actions workflow:
+Let's first start by examining the subject (`sub`) claim that GitHub Actions generates by default. We can print out the token by copying a bash script step or using a ready-made action to debug the OIDC token claims. The action is a Docker action, which can make it harder to run on some hosts, so I am including both examples here:
 
 {% raw %}
 ```yml
-# print oidc token claims
-- name: print oidc token claims
-  run: |
-      IDTOKEN=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json"  | jq -r '.value')
-      jwtd() {
-        if [[ -x $(command -v jq) ]]; then
-            jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "${1}" > jwt_claims.json
-            cat jwt_claims.json
-            echo ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL}} 
-        fi
-      }
-      jwtd $IDTOKEN
+  print-oidc-token:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # this is needed for oidc
+      contents: read # this is needed to clone repo
+    steps:
+
+    # debug using the action
+    - name: Debug OIDC Claims
+      uses: github/actions-oidc-debugger@main
+      with:
+        audience: '${{ github.server_url }}/${{ github.repository_owner }}'
+        
+    # print oidc token claims manually
+    - name: print oidc token claims
+      run: |
+          IDTOKEN=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json"  | jq -r '.value')
+          jwtd() {
+            if [[ -x $(command -v jq) ]]; then
+                jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "${1}" > jwt_claims.json
+                cat jwt_claims.json
+                echo ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL}} 
+            fi
+          }
+          jwtd $IDTOKEN
 ```
+{: file='.github/workflows/debug-oidc-demo.yml'}
 {% endraw %}
 
 By default, the `sub` of the OIDC token that GitHub Actions generates just looks something like this:
@@ -66,6 +83,9 @@ By default, the `sub` of the OIDC token that GitHub Actions generates just looks
 Notice that there isn't anything special in there; just the repository that is running the workflow and the ref (or if you were doing a deployment, the deployment environment would show here).
 
 We want to customize this where that our cloud provider (Azure in my example) can authenticate with our approved reusable workflow.
+
+> For AWS, the [docs](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services) say: "Note: Support for custom claims for OIDC is unavailable in AWS." This is saying you can't create any custom claims ([discussed here](https://github.com/aws-actions/configure-aws-credentials/issues/306)), but you can still customize the subject (`sub`) claim as I show later in this post. AWS's [docs](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html#idp_oidc_Create_GitHub) and [section in the `aws/configure-aws-credentials` action](https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#claims-and-scoping-permissions) has more information on this.
+{: .prompt-info }
 
 ## Customizing the Subject Claim in GitHub
 
@@ -170,7 +190,7 @@ jobs:
 ```
 {: file='.github/workflows/azure-oidc-demo.yml'}
 
-> For [security purposes](https://github.blog/changelog/2023-06-15-github-actions-securing-openid-connect-oidc-token-permissions-in-reusable-workflows/), if you need to fetch an OIDC token generated within a reusable (called) workflow that is outside your enterprise/organization, the `it-token: write` needs to be explicitly set at the caller workflow level or in the specific job that calls the reusable workflow.
+> For [security purposes](https://github.blog/changelog/2023-06-15-github-actions-securing-openid-connect-oidc-token-permissions-in-reusable-workflows/), if you need to fetch an OIDC token generated within a reusable (called) workflow that is outside your enterprise/organization, the `id-token: write` needs to be explicitly set at the caller workflow level or in the specific job that calls the reusable workflow.
 {: .prompt-tip }
 
 And here's the called workflow (i.e.: the workflow in my "reusable workflows" repo):
@@ -203,7 +223,7 @@ jobs:
         tenant-id: e9846558-c4f0-4312-a89e-ebebe80779a1
         subscription-id: 2e9bfb26-ca29-44f5-8920-72c1b0b37188
         
-    - name: just show some sub stuff
+    - name: print azure subscription info
       run: |
         az account show
         az account show | jq ".id"
