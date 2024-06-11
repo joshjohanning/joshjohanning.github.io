@@ -68,7 +68,7 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
     - To cherry-pick a single commit (not as common): `git cherry-pick a887f1d -m 1`
     - If getting GPG errors, modify the local git config: `git config commit.gpgsign false`, but modify it back to `true` after you are done cherry-picking and rebasing (before amending commit)
 5. Review merge conflicts - use a combination of `git cherry-pick --skip` (for when readme/starter posts are updated) and `cherry-pick --continue` (to continue after you resolve real merge conflicts)
-6. Starting in Chirpy v5.6.0, run: `npm run build && git add assets/js/dist -f && git commit -m "update js assets"` ([docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide#upgrade-the-fork))
+6. Starting in Chirpy v5.6.0, run: `npm run build && git add assets/js/dist _sass/dist -f && git commit -m "update js assets"` ([docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide#upgrade-the-fork))
 7. Rebase the number of commits you just brought in (you should see icon in VS Code): `git rebase -i HEAD~16`
     - Leave the top commit as `pick` but change the rest to `squash`
     - Update the commit message as appropriate
@@ -94,10 +94,10 @@ bundle exec jekyll s
 
 Check ruby version: `ruby -v` (if ruby 2.6.10p210, then you need to upgrade to 3.0.0+):
 
-1. Install rvm: `\curl -sSL https://get.rvm.io | bash -s stable --ruby`
-    - Uninstall `openssl@3` temporarily if you receive errors: `brew uninstall --ignore-dependencies openssl@3`
-2. Check ruby version: `ruby -v` (should be 3.0.0+)
-3. Build and serve the site as normal
+1. Install Ruby via Homebrew: `brew install ruby` (can also use [`rvm`](https://rvm.io/rvm/install))
+2. Make sure the new Ruby is in your path: `export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc`
+3. Check ruby version: `ruby -v` (should be 3.0.0+)
+4. Build and serve the site as normal
 
 #### On Codespaces
 
