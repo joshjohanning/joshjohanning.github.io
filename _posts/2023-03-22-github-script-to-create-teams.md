@@ -5,7 +5,7 @@ date: 2023-03-22 14:00:00 -0500
 description: Create and delete GitHub teams programmatically from a CSV file
 categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, gh cli]
-img_path: /assets/screenshots/2023-03-22-github-script-to-create-teams
+media_subpath: /assets/screenshots/2023-03-22-github-script-to-create-teams
 image:
   path: create-team.png
   width: 100%

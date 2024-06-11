@@ -5,7 +5,7 @@ date: 2023-06-22 16:30:00 -0500
 description: Replacing environment-specific configuration at deployment time
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions]
-img_path: /assets/screenshots/2023-06-22-github-actions-tokenization
+media_subpath: /assets/screenshots/2023-06-22-github-actions-tokenization
 image:
   path: tokenization.png
   width: 100%

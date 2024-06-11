@@ -5,7 +5,7 @@ date: 2024-03-21 13:30:00 -0500
 description: Migrating Docker containers stored in GitHub Packages / GitHub Container Registry between GitHub instances
 categories: [GitHub, Packages]
 tags: [GitHub, Scripts, GitHub Packages, gh cli, Docker, Containers, Migrations]
-img_path: /assets/screenshots/2024-03-13-github-packages-migrate-docker-containers
+media_subpath: /assets/screenshots/2024-03-13-github-packages-migrate-docker-containers
 image:
   path: docker-container-github-packages-light.png
   width: 100%

@@ -5,7 +5,7 @@ date: 2024-03-26 16:00:00 -0500
 description: Building matrices dynamically in GitHub Actions
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Matrix]
-img_path: /assets/screenshots/2024-03-26-github-actions-dynamic-matrix
+media_subpath: /assets/screenshots/2024-03-26-github-actions-dynamic-matrix
 image:
   path: dynamic-matrix-light.png
   width: 100%

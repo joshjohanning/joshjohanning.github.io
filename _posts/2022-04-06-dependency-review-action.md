@@ -5,7 +5,7 @@ date: 2022-04-06 15:00:00 -0500
 description: Block Pull Requests in GitHub if you add a vulnerable dependency/package version
 categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, GitHub Actions, Pull Requests, Policy Enforcement, Branch Protection Rules]
-img_path: /assets/screenshots/2022-04-06-dependency-review-action
+media_subpath: /assets/screenshots/2022-04-06-dependency-review-action
 image:
   path: dependency-review-action.png
   width: 100%

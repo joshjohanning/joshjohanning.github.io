@@ -5,7 +5,7 @@ date: 2022-06-28 16:00:00 -0500
 description: Configure actions-runner-controller without cert-manager so that you can use self-signed or self-managed certificates to scale your GitHub runners
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, actions-runner-controller]
-img_path: /assets/screenshots/2022-06-28-actions-runner-controller-without-cert-manager
+media_subpath: /assets/screenshots/2022-06-28-actions-runner-controller-without-cert-manager
 image:
   path: pods.png
   width: 100%

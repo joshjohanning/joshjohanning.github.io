@@ -5,7 +5,7 @@ date: 2024-05-20 20:30:00 -0500
 description: Create a Docker container action that is hosted in a private image registry
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Docker]
-img_path: /assets/screenshots/2024-05-20-github-actions-docker-actions-private-registry
+media_subpath: /assets/screenshots/2024-05-20-github-actions-docker-actions-private-registry
 image:
   path: docker-action-composite-action.png
   width: 100%

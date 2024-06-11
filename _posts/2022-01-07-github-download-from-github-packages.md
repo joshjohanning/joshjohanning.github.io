@@ -5,7 +5,7 @@ date: 2022-01-07 14:30:00 -0600
 description: Programmatically download a package binary (such as NuGet, Maven) from GitHub Packages
 categories: [GitHub, Packages]
 tags: [GitHub, GitHub Packages, Maven, NuGet, npm]
-img_path: /assets/screenshots/2022-01-07-github-download-from-github-packages
+media_subpath: /assets/screenshots/2022-01-07-github-download-from-github-packages
 image:
   path: github-packages.png
   width: 100%

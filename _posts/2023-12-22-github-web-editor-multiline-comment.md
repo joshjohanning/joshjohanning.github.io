@@ -5,7 +5,7 @@ date: 2023-12-22 11:40:00 -0600
 description: Adding a multiline comment in the GitHub Web Editor; for example when editing a GitHub Actions workflow file
 categories: [GitHub, Commits]
 tags: [GitHub, Commits]
-img_path: /assets/screenshots/2023-12-22-github-web-editor-multiline-comment
+media_subpath: /assets/screenshots/2023-12-22-github-web-editor-multiline-comment
 image:
   path: multiline-comment.gif
   width: 100%

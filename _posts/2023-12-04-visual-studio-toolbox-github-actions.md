@@ -5,7 +5,7 @@ date: 2023-12-04 15:00:00 -0600
 description: Watch the Visual Studio Toolbox Live recording as I show you how you can automate your builds, tests, and deployments with GitHub Actions
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions]
-img_path: /assets/screenshots/2023-12-04-visual-studio-toolbox-github-actions
+media_subpath: /assets/screenshots/2023-12-04-visual-studio-toolbox-github-actions
 image:
   path: visual-studio-toolbox-github-actions.jpg
   width: 100%

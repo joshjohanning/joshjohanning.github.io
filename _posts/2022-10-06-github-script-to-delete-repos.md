@@ -5,7 +5,7 @@ date: 2022-10-06 11:00:00 -0500
 description: Delete GitHub repositories programmatically from a CSV file
 categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, gh cli]
-img_path: /assets/screenshots/2022-10-06-github-script-to-delete-repos
+media_subpath: /assets/screenshots/2022-10-06-github-script-to-delete-repos
 image:
   path: delete-repo.png
   width: 100%

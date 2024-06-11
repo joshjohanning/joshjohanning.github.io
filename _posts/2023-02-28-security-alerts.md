@@ -5,7 +5,7 @@ date: 2023-02-28 15:30:00 -0600
 description: My musings on handling security alerts in GitHub
 categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, Dependabot, CodeQL, Secret Scanning]
-img_path: /assets/screenshots/2023-02-28-security-alerts
+media_subpath: /assets/screenshots/2023-02-28-security-alerts
 image:
   path: security-overview-light.png
   width: 100%

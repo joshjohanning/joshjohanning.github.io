@@ -5,7 +5,7 @@ date: 2023-12-05 15:00:00 -0600
 description: Watch the Visual Studio Toolbox recording as I show you how you can automate your builds, tests, and deployments with Azure Pipelines
 categories: [Azure DevOps, Pipelines]
 tags: [Azure DevOps, Azure Pipelines]
-img_path: /assets/screenshots/2023-12-05-visual-studio-toolbox-azure-pipelines
+media_subpath: /assets/screenshots/2023-12-05-visual-studio-toolbox-azure-pipelines
 image:
   path: visual-studio-toolbox-azure-pipelines.jpg
   width: 100%
