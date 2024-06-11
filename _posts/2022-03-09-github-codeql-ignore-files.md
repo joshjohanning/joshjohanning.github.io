@@ -5,7 +5,7 @@ date: 2022-03-08 12:00:00 -0600
 description: Exclude file(s) from the results of GitHub's CodeQL Analysis tool (part of GitHub Advanced Security)
 categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, CodeQL]
-img_path: /assets/screenshots/2022-03-09-github-codeql-ignore-files
+media_subpath: /assets/screenshots/2022-03-09-github-codeql-ignore-files
 ---
 
 ## Overview

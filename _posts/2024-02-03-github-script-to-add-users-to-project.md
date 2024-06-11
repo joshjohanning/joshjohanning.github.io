@@ -5,7 +5,7 @@ date: 2024-02-03 7:00:00 -0600
 description: Add users to a GitHub ProjectV2 programmatically
 categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, Projects]
-img_path: /assets/screenshots/2024-02-03-github-script-to-add-users-to-project
+media_subpath: /assets/screenshots/2024-02-03-github-script-to-add-users-to-project
 image:
   path: github-project.png
   width: 100%

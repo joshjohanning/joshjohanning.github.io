@@ -5,7 +5,7 @@ date: 2021-11-23 16:00:00 -0600
 description: How to use the Powerlevel10k Zsh theme in GitHub Codespaces
 categories: [GitHub, Codespaces]
 tags: [GitHub, GitHub Codespaces, VS Code, Development Environment]
-img_path: /assets/screenshots/2021-11-23-github-codespaces-powerlevel10k
+media_subpath: /assets/screenshots/2021-11-23-github-codespaces-powerlevel10k
 image:
   path: codespace.png
   width: 1123   # in pixels

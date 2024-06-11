@@ -5,7 +5,7 @@ date: 2022-03-10 8:00:00 -0600
 description: Using Dependabot to update your dependencies that are hosted in Azure Artifacts
 categories: [GitHub, Dependabot]
 tags: [GitHub, Dependabot, Azure Artifacts, Azure DevOps, Pull Requests]
-img_path: /assets/screenshots/2022-03-10-github-dependabot-with-azure-artifacts
+media_subpath: /assets/screenshots/2022-03-10-github-dependabot-with-azure-artifacts
 image:
   path: dependabot-pr.png
   width: 100%

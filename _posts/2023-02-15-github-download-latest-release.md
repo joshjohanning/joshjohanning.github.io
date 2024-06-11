@@ -5,7 +5,7 @@ date: 2023-02-15 11:30:00 -0600
 description: Programmatically download the latest release from a GitHub Repo without having to hardcode the version or use separate API calls
 categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, Releases]
-img_path: /assets/screenshots/2023-02-15-github-download-latest-release
+media_subpath: /assets/screenshots/2023-02-15-github-download-latest-release
 image:
   path: release.png
   width: 100%

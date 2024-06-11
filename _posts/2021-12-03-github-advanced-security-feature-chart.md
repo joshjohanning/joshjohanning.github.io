@@ -5,7 +5,7 @@ date: 2021-12-03 16:30:00 -0600
 description: A feature comparison between GitHub Enterprise, GitHub Enterprise with GitHub Advanced Security (GHAS), and Public Repos on github.com
 categories: [GitHub, Advanced Security]
 tags: [GitHub, GitHub Advanced Security, Dependabot]
-img_path: /assets/screenshots/2022-03-08-github-advanced-security-permissions-chart
+media_subpath: /assets/screenshots/2022-03-08-github-advanced-security-permissions-chart
 image:
   path: ../2023-02-28-security-alerts/security-overview-light.png
   width: 100%

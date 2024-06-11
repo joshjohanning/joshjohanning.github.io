@@ -5,7 +5,7 @@ date: 2022-08-03 21:00:00 -0500
 description: A video describing the features of GitHub Advanced Security (GHAS), features, and some tips and tricks for configuring and interpreting the results along the way.
 categories: [GitHub, Advanced Security]
 tags: [GitHub, Dependabot, GitHub Actions, GitHub Advanced Security, Branch Protection Rules, CodeQL, Policy Enforcement, Pull Requests]
-img_path: /assets/screenshots/2022-08-03-lap-around-github-advanced-security
+media_subpath: /assets/screenshots/2022-08-03-lap-around-github-advanced-security
 image:
   path: video-preview.png
   width: 66%

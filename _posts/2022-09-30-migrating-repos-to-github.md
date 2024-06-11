@@ -5,7 +5,7 @@ date: 2022-09-30 12:00:00 -0500
 description: The different options available for migrating repos to GitHub or any other Git provider
 categories: [GitHub, Migrations]
 tags: [Azure DevOps, GitHub, TFVC, SVN, Git, Migrations]
-img_path: /assets/screenshots/2022-09-30-migrating-repos-to-github
+media_subpath: /assets/screenshots/2022-09-30-migrating-repos-to-github
 image:
   path: import-repo-github.gif
   width: 66%

@@ -5,7 +5,7 @@ date: 2023-09-07 16:00:00 -0500
 description: Tracking new files in Git LFS
 categories: [GitHub, Commits]
 tags: [GitHub, Git, Git LFS, Commits]
-img_path: /assets/screenshots/2023-09-07-add-files-to-git-lfs
+media_subpath: /assets/screenshots/2023-09-07-add-files-to-git-lfs
 image:
   path: ./../2023-09-07-migrate-to-git-lfs/git-lfs-light.png
   width: 100%

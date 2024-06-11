@@ -5,7 +5,7 @@ date: 2023-06-21 16:00:00 -0500
 description: Storing a certificate/private key as a GitHub Actions secret
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions]
-img_path: /assets/screenshots/2023-06-21-storing-certificates-as-github-secrets
+media_subpath: /assets/screenshots/2023-06-21-storing-certificates-as-github-secrets
 image:
   path: secrets.png
   width: 100%

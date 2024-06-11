@@ -6,7 +6,7 @@ description: Migrating NuGet packages stored in GitHub Packages from one instanc
 categories: [GitHub, Packages]
 tags: [GitHub, Scripts, GitHub Packages, gh cli, NuGet, Migrations]
 mermaid: true
-img_path: /assets/screenshots/2022-11-23-github-packages-migrate-nuget-packages
+media_subpath: /assets/screenshots/2022-11-23-github-packages-migrate-nuget-packages
 image:
   path: github-packages.png
   width: 100%

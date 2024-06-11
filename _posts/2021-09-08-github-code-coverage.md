@@ -5,7 +5,7 @@ date: 2021-09-08 22:00:00 -0500
 description: Using GitHub Actions to add a code coverage summary report comment to a pull request and job summary
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Pull Requests, Code Coverage]
-img_path: /assets/screenshots/2021-09-08-github-code-coverage
+media_subpath: /assets/screenshots/2021-09-08-github-code-coverage
 image:
   path: github-action-pr-post-image.png
   width: 100%

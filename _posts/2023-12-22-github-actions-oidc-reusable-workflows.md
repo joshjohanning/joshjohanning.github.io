@@ -5,7 +5,7 @@ date: 2023-12-22 11:30:00 -0600
 description: Using Reusable Workflows in GitHub Actions to standardize and security harden your deployment steps
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, OIDC, Azure, Reusable Workflows]
-img_path: /assets/screenshots/2023-12-22-github-actions-oidc-reusable-workflows
+media_subpath: /assets/screenshots/2023-12-22-github-actions-oidc-reusable-workflows
 image:
   path: github-oidc-success-light.png
   width: 100%

@@ -5,7 +5,7 @@ date: 2022-07-02 08:00:00 -0500
 description: Using Dependabot to keep Actions in GitHub Actions Workflows up to date, including how this works for custom private/internal actions within an organization
 categories: [GitHub, Dependabot]
 tags: [GitHub, Dependabot, Pull Requests, GitHub Actions]
-img_path: /assets/screenshots/2022-07-02-github-dependabot-for-actions
+media_subpath: /assets/screenshots/2022-07-02-github-dependabot-for-actions
 image:
   path: dependabot-pr-post-image.png
   width: 100%

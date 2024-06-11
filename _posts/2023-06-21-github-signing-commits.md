@@ -5,7 +5,7 @@ date: 2023-06-21 15:00:00 -0500
 description: Signing commits locally to show up as verified commits in GitHub
 categories: [GitHub, Commits]
 tags: [GitHub, Git, Commits]
-img_path: /assets/screenshots/2023-06-21-github-signing-commits
+media_subpath: /assets/screenshots/2023-06-21-github-signing-commits
 image:
   path: verified-commits.png
   width: 100%

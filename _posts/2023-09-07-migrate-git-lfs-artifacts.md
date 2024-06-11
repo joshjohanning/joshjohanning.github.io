@@ -5,7 +5,7 @@ date: 2023-09-07 14:30:00 -0500
 description: How to migrate Git LFS artifacts from one repository to another
 categories: [GitHub, Migrations]
 tags: [GitHub, Migrations, Git, Git LFS]
-img_path: /assets/screenshots/2023-09-07-migrate-git-lfs-artifacts
+media_subpath: /assets/screenshots/2023-09-07-migrate-git-lfs-artifacts
 image:
   path: git-lfs-pointer-light.png
   width: 100%

@@ -6,7 +6,7 @@ description: Using the GitHub Checks API to report back the status of another Gi
 categories: [GitHub, Actions]
 tags: [GitHub, Scripts, gh cli]
 mermaid: true
-img_path: /assets/screenshots/2022-10-12-using-github-checks-api
+media_subpath: /assets/screenshots/2022-10-12-using-github-checks-api
 image:
   path: status-check.gif
   width: 100%

@@ -5,7 +5,7 @@ date: 2024-01-08 12:30:00 -0600
 description: Add the dependabot.yml file programmatically to a list of GitHub repositories
 categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, Octokit, Dependabot]
-img_path: /assets/screenshots/2024-01-08-github-script-to-add-dependabot-file
+media_subpath: /assets/screenshots/2024-01-08-github-script-to-add-dependabot-file
 image:
   path: dependabot-enable.png
   width: 100%

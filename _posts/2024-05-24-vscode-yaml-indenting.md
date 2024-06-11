@@ -5,7 +5,7 @@ date: 2024-05-24 16:00:00 -0500
 description: Stop VS Code from messing up your YAML indentation on paste
 categories: [macOS, Development Environment]
 tags: [VS Code, Development Environment]
-img_path: /assets/screenshots/2024-05-24-vscode-yaml-indenting
+media_subpath: /assets/screenshots/2024-05-24-vscode-yaml-indenting
 image:
   path: yaml-pasting-indenting-broken.gif
   width: 100%

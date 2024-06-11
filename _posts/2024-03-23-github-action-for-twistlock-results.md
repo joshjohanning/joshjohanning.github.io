@@ -5,7 +5,7 @@ date: 2024-03-23 17:30:00 -0500
 description: GitHub Action to convert Twistlock's JSON scan results to markdown to add to the job summary
 categories: [GitHub, Actions]
 tags: [GitHub, GitHub Actions, Octokit]
-img_path: /assets/screenshots/2024-03-23-github-action-for-twistlock-results
+media_subpath: /assets/screenshots/2024-03-23-github-action-for-twistlock-results
 image:
   path: twistlock-job-summary-light.png
   width: 100%

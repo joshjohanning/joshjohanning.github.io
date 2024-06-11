@@ -5,7 +5,7 @@ date: 2022-08-11 16:00:00 -0500
 description: Add users to a GitHub org team programmatically from a CSV file
 categories: [GitHub, Scripts]
 tags: [GitHub, Scripts, gh cli]
-img_path: /assets/screenshots/2022-08-11-github-script-to-add-users-to-teams
+media_subpath: /assets/screenshots/2022-08-11-github-script-to-add-users-to-teams
 image:
   path: github-team.png
   width: 100%
