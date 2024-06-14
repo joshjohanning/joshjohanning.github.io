@@ -206,18 +206,31 @@ You'll notice that we didn't have to pass in an `owner` input this time to the a
 > Check out my next post, [ApproveOps: Approvals in IssueOps](/posts/github-approveops), for more information on the approval action workflow I'm using above.
 {: .prompt-info }
 
-## Summary
-
-When I first learned about GitHub Apps, I was like, "This is cool, but I'm not going to be writing an app and creating code just for authentication, that's too much work, I'll just use a PAT." However, as you just saw, we created a GitHub App and used it for authentication without tying it to any code. 
-
-{% raw %}
-In both scenarios, we use the [actions/create-github-app-token](https://github.com/marketplace/actions/create-github-app-token) action and the installation access token that is an output parameter: `${{ steps.app-token.outputs.token }}`. We use this token to make authenticated requests to the API or as the password in Git clones. Alternatively, [GitHub has sample Ruby code](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app) for creating a and signing the JWT and retrieving an installation ID, but the action is so much simpler!
+## Generating the GitHub App Installation Token Locally
 
 If you wanted to be able to generate a token locally, whether for scripting not being ran in Actions or simply to test out an app's permissions, you can use the [Link-/gh-token](https://github.com/Link-/gh-token?tab=readme-ov-file) `gh` CLI extension.
 
 ![Generating a GitHub App Installation Token with a gh CLI extension](gh-token.png )
 _Generating a GitHub App Installation Token with a [`gh` CLI extension](https://github.com/Link-/gh-token?tab=readme-ov-file)_
 
-Happy GitHub App-ing and no longer having to generate a long-lived PAT! 🚀
+You can tweak this such that it returns an installation token for a particular installation ID with:
+
+```sh
+gh token generate \
+  --app-id 1122334 \
+  --installation-id 12345678 \
+  --key /path/to/private-key.pem \
+  --token-only
+```
+{: .nolineno}
+
+## Summary
+
+When I first learned about GitHub Apps, I was like, "This is cool, but I'm not going to be writing an app and creating code just for authentication, that's too much work, I'll just use a PAT." However, as you just saw, we created a GitHub App and used it for authentication without tying it to any code.
+
+{% raw %}
+In both scenarios, we use the [actions/create-github-app-token](https://github.com/marketplace/actions/create-github-app-token) action and the installation access token that is an output parameter: `${{ steps.app-token.outputs.token }}`. We use this token to make authenticated requests to the API or as the password in Git clones. Alternatively, [GitHub has sample Ruby code](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app) for creating a and signing the JWT and retrieving an installation ID, but the action is so much simpler!
+
+Hurrah to GitHub Apps and never having to generate a long-lived PAT again! 🔐 🚀
 
 {% endraw %}
