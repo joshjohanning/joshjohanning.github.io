@@ -17,7 +17,7 @@ There is a [`gh auth login --with-token`](https://cli.github.com/manual/gh_auth_
 
 ## Example 1 - gh auth login
 
-Here's an example GitHub Action sample for logging into the `gh cli` and using [`gh api`](https://cli.github.com/manual/gh_api) to retrieve a repositories topics: 
+Here's an example GitHub Action sample for logging into the `gh cli` and using [`gh api`](https://cli.github.com/manual/gh_api) to retrieve a repositories topics:
 
 ```yml
     steps:
@@ -26,9 +26,11 @@ Here's an example GitHub Action sample for logging into the `gh cli` and using [
         gh api -X GET /repos/${{ GITHUB.REPOSITORY }}/topics --jq='.names'
 ```
 
+This works, but there's a better way that doesn't require running a `gh auth login` command at all.
+
 ## Example 2 - env variable
 
-However, there is a better way. If you try to run a `gh` command without authenticating, you will see the following error message:
+✨ If you try to run a `gh` command without authenticating, you will see the following error message:
 
 > gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable. Example:
 > ```yml
@@ -41,6 +43,7 @@ With this, you will notice you don't have to run `gh auth login` at all. You can
 This is an example of the least privilege approach, setting the `env` variable at the [step](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv) level, and allowing different steps to use different tokens if needed:
 
 ```yml
+    steps:
       - run: gh issue create --title "My new issue" --body "Here are more details."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,23 +74,24 @@ jobs:
 
 This example combines concepts learned in this post with the [*Demystifying GitHub Apps: Using GitHub Apps to Replace Service Accounts*](/posts/github-apps/) post. 
 
-You may want to use a GitHub app to authenticate and use the `gh cli` in a GitHub Action workflow to do something. You can manage permissions more with the GitHub App, and installing it on the org / granting access to multiple repositories whereas `${{ secrets.GITHUB_TOKEN }}` only has access to resources inside of the repository running the action. In addition, you can give the actor a more meaningful name (e.g.: PR-Enforcer-Bot) vs. the default `github-actions[bot]` name.
+You may want to use a GitHub app to authenticate and use the `gh cli` in a GitHub Action workflow to do something. You can manage permissions more with the GitHub App, and installing it on the org / granting access to multiple repositories whereas `${{ secrets.GITHUB_TOKEN }}` only has access to resources inside of the repository running the action. In addition, you can give the actor a more meaningful name (e.g.: `PR-Enforcer-Bot`) vs. the default `github-actions[bot]` user.
 
-Here's an example that uses an app to create an issue in a *different* repository: 
+Here's an example that uses an app to create an issue in a *different* repository:
 
 ```yml
     steps:
-      - uses: tibdex/github-app-token@v1
-        id: get_installation_token
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with: 
-          app_id: 170544
-          # installation_id not needed IF the app is installed on this current repo
-          installation_id: 29881931
-          private_key: ${{ secrets.PRIVATE_KEY }}
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          # optional: owner not needed IF the app has access to the repo running the workflow
+          #   if you get 'RequestError [HttpError]: Not Found 404', pass in owner
+          owner: ${{ github.repository_owner }}
 
       - name: Create Issue
         env:
-          GH_TOKEN: ${{ steps.get_installation_token.outputs.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: | 
           gh issue create --title "My new issue" --body "Here are more details." \
             -R my-org/my-repo
