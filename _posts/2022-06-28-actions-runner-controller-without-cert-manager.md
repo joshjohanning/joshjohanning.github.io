@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2022-06-28 16:00:00 -0500
 description: Configure actions-runner-controller without cert-manager so that you can use self-signed or self-managed certificates to scale your GitHub runners
 categories: [GitHub, Actions]
-tags: [GitHub, GitHub Actions, actions-runner-controller]
+tags: [GitHub, GitHub Actions, Actions Runner Controller]
 media_subpath: /assets/screenshots/2022-06-28-actions-runner-controller-without-cert-manager
 image:
   path: pods.png
@@ -15,7 +15,10 @@ image:
 
 ## Overview
 
-[actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller) is a great way to set up self-scaling GitHub runners in a Kubernetes cluster. This allows teams to scale up their self-hosted runners as more jobs are queued throughout the day and scale down at night when there are fewer jobs running. There is a lot of documentation to digest in the repository, but for the most part, it's relatively easy to get started with some basic scaling. The only prerequisite (other than having access to the Kubernetes cluster and administrative access to GitHub repo or organization) is [cert-manager](https://cert-manager.io/docs/). 
+> This legacy version of Actions Runner Controller is [no longer supported by GitHub](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller/about-support-for-actions-runner-controller#about-support-for-actions-runner-controller-versions). You should switch to the Autoscaling Runner Sets version of ARC. This post is left here for historical purposes only.
+{: .prompt-danger }
+
+[Actions Runner Controller](https://github.com/actions-runner-controller/actions-runner-controller) is a great way to set up self-scaling GitHub runners in a Kubernetes cluster. This allows teams to scale up their self-hosted runners as more jobs are queued throughout the day and scale down at night when there are fewer jobs running. There is a lot of documentation to digest in the repository, but for the most part, it's relatively easy to get started with some basic scaling. The only prerequisite (other than having access to the Kubernetes cluster and administrative access to GitHub repo or organization) is [cert-manager](https://cert-manager.io/docs/). 
 
 However, sometimes organizations have their own certificate requirements, and prefer to manage their own certificates vs. letting a tool like cert-manager manage them. This is where the [current documentation is lacking and unclear](https://github.com/actions-runner-controller/actions-runner-controller#using-without-cert-manager). Other people have asked the [same question](https://github.com/actions-runner-controller/actions-runner-controller/issues?q=is%3Aissue+in%3Atitle+without+cert-manager+), as well as my most recent customer, and we were able to figure it out so I'll document it here!
 
