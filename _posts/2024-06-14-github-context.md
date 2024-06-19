@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2024-06-14 10:30:00 -0500
 description: Take your Actions knowledge to the next level by mastering the GitHub context
 categories: [GitHub, Actions]
-tags: [GitHub, Actions, IssueOps]
+tags: [GitHub, GitHub Actions, IssueOps]
 media_subpath: /assets/screenshots/2024-06-14-github-context
 image:
   path: github-context-dark.png
