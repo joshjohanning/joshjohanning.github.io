@@ -37,11 +37,11 @@ wget https://github.com/aquasecurity/tfsec/releases/latest/download/tfsec-linux-
 ### curl
 
 ```sh
-curl -O https://github.com/aquasecurity/tfsec/releases/latest/download/tfsec-linux-amd64
+curl -LO https://github.com/aquasecurity/tfsec/releases/latest/download/tfsec-linux-amd64
 ```
 {: .nolineno}
 
-> The `-O` (case sensitive) saves the file as the same name specified in the URL
+> The `-O` (case sensitive) saves the file as the same name specified in the URL, and `-L` follows redirects.
 {: .prompt-tip }
 
 ## Download a Specific Version
