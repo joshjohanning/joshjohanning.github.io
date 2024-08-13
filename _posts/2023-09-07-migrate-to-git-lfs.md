@@ -40,10 +40,13 @@ This post will show you how to migrate large blobs in Git to Git LFS.
 
 If you have a file in the Git history is larger than 100mb, you can migrate it to Git LFS. This will allow you to store the file in Git LFS and keep the file in your Git repository.
 
-> Following these instructions will rewrite Git history (new commit hashes)! Make sure to have a backup of the repository before proceeding.
+> Following these instructions will **rewrite Git history** (new commit hashes)! Make sure to have a COMPLETE backup of the repository before proceeding (`git clone --mirror <url>`)
 {: .prompt-danger }
 
-Instructions:
+> For those using **commit signing**: I have noticed that since the `git lfs migrate import` rewrites history, the commits that it recreates aren't signed.
+{: .prompt-warning }
+
+An example script to migrate  `.exe`{: .filepath} and `.iso`{: .filepath} files to Git LFS:
 
 ```bash
 cd ~/Repos/my-git-repo-with-large-files
@@ -52,7 +55,7 @@ git lfs ls-files # list LFS files
 git push --all --force # force push all branches to remote
 ```
 
-This will migrate all files with the extensions `.exe`{: .filepath} and `.iso`{: .filepath} to Git LFS. The `--everything` option will run the migration in all local and remote Git refs (branches, tags). Additionally, this will also create a `.gitattributes`{: .filepath} file that will tell Git to store all files with the extensions `.exe`{: .filepath} and `.iso`{: .filepath} in Git LFS.
+This will migrate all files with the extensions `.exe`{: .filepath} and `.iso`{: .filepath} to Git LFS. The `--everything` option will run the migration in all local and remote Git refs (branches, tags). Additionally, this will also create and commit a `.gitattributes`{: .filepath} file that will tell Git to store all files with the extensions `.exe`{: .filepath} and `.iso`{: .filepath} in Git LFS.
 
 The nice thing about the `--everything` option is that it also works for files that have been committed to history and subsequently deleted, so you don't have to use any additional tools to rewrite history.
 

@@ -54,6 +54,23 @@ The repository has been migrated, including the LFS artifacts:
 ![Git LFS file](git-lfs-dark.png){: .shadow }{: .dark }
 _File stored in Git LFS file in GitHub_
 
+## Alternative Method
+
+The method above worked well for me in my tests, even in tests with 1,000 LFS artifacts each 1mb in size. However, I have seen issues running these commands for some customers with larger repositories. Sometimes the `git lfs fetch` or `git lfs push` will hang or not appear to migrate all of the LFS artifacts. If you run into issues, you can run this script to more thoroughly (but slower) way to migrate the LFS artifacts. It works by looping through each LFS object and pushing it individually pushing it.
+
+The alternative script to migrate the LFS artifacts to another repository:
+
+```bash
+git clone --mirror <source-url> temp
+cd temp
+for object_id in $(git lfs ls-files --all --long | awk '{print $1}'); do
+    git lfs push --object-id remote "$object_id"
+done
+```
+
+> Source for the [script](https://github.com/git-lfs/git-lfs/issues/4899#issuecomment-1688588756).
+{: .prompt-info }
+
 ## Summary
 
 Migrating Git repositories is simple. However, if the repository contains LFS artifacts, you need to make sure to run the `git lfs fetch` and `git lfs push` commands to migrate them along with the repository. If you don't, your Git LFS files will be missing.
