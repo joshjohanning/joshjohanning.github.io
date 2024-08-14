@@ -51,6 +51,7 @@ runs:
       run: | 
         python3 ${{ github.action_path }}/main.py ${{ inputs.directory }} ${{ inputs.token }}
 ```
+{: file='action.yml'}
 
 The magic 🪄 is that we are calling the Python script from the shell using the `${{ github.action_path }}` [environment variable](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables). This variable maps to the local directory the action is cloned to so that we can reference files from the repo.
 
@@ -153,6 +154,7 @@ runs:
             creds = sys.argv[2]
             main(${{ inputs.directory }}, ${{ inputs.token }})
 ```
+{: file='action.yml'}
 
 This certainly works, but you can see that it's not as flexible/portable as the [preferred method above](#preferred-python-composite-action). For one, if you wanted to run this locally, you would have to copy/paste and then swap the hardcoded GitHub Actions-isms, like in this example: `${{ inputs.directory }}` and `${{ inputs.token }}`. It's also harder to read and maintain. 😬
 
