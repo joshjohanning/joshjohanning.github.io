@@ -56,7 +56,7 @@ Chirpy:
 
 ## Upgrading the Theme
 
-Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way: 
+Since we aren't using the theme gem (so we can do customizations), we have to do it the old-fashioned way:
 
 1. Ensure chirpy is set as a remote: `git remote add chirpy https://github.com/cotes2020/jekyll-theme-chirpy.git`
 2. Ensure you have the latest upstream commit: `git fetch chirpy`
@@ -69,6 +69,7 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
     - If getting GPG errors, modify the local git config: `git config commit.gpgsign false`, but modify it back to `true` after you are done cherry-picking and rebasing (before amending commit)
 5. Review merge conflicts - use a combination of `git cherry-pick --skip` (for when readme/starter posts are updated) and `cherry-pick --continue` (to continue after you resolve real merge conflicts)
 6. Starting in Chirpy v5.6.0, run: `npm run build && git add assets/js/dist _sass/dist -f && git commit -m "update js assets"` ([docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide#upgrade-the-fork))
+   - You can also run a command that's referenced in the `init.sh` to remove this from `.gitignore`: `sed -i '' "/.*\/dist$/d" .gitignore`
 7. Rebase the number of commits you just brought in (you should see icon in VS Code): `git rebase -i HEAD~16`
     - Leave the top commit as `pick` but change the rest to `squash`
     - Update the commit message as appropriate
@@ -76,9 +77,9 @@ Since we aren't using the theme gem (so we can do customizations), we have to do
     - For example, we wouldn't want to commit a GitHub workflow or issue template that wasn't needed here
     - If there are new files that we don't want to track, delete the files, commit, and run another rebase `git rebase -i HEAD~2`
     - This command can help with tracking new files in the most recent commit: `git diff-tree --compact-summary -r HEAD --diff-filter=A`
-9. Ensure commit signing is enabled: `git config commit.gpgsign true`
+9.  Ensure commit signing is enabled: `git config commit.gpgsign true`
 10. Update author and commit time: `git commit --amend --author "Josh Johanning <joshjohanning@github.com>" --date=now -S`
-11. [Test changes locally before pushing](#building--testing-locally) 
+11. [Test changes locally before pushing](#building--testing-locally)
 
 ## Building / Testing Locally
 
