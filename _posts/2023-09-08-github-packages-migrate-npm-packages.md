@@ -52,8 +52,12 @@ You can call the script via:
   <source-org> \
   <source-host> \
   <target-org> \
-  <target-host>
+  <target-host> \
+  | tee output.log
 ```
+
+> The `| tee output.log` will print the output to the console and also save it to a file. You can refer back to the log file later and search for errors.
+{: .prompt-tip }
 
 ### Example
 
@@ -67,7 +71,8 @@ export GH_TARGET_PAT=ghp_xyz
   joshjohanning-org \
   github.com \
   joshjohanning-org-packages \
-  github.com
+  github.com \
+  | tee output.log
 ```
 
 ## Notes
