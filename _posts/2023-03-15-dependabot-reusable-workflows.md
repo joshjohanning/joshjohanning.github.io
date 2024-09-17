@@ -10,12 +10,12 @@ image:
   path: dependabot-pr.png
   width: 100%
   height: 100%
-  alt: A Dependabot-created pull request for a reusable workflow update version update
+  alt: A Dependabot-created pull request for a reusable workflow version update
 ---
 
 ## Overview
 
-We already can use [Dependabot Version Updates](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) for keeping marketplace actions (in addition to custom internal/private actions) up to date (see my [post](/posts/github-dependabot-for-actions/)) for more details). However, as of [March 2023](https://github.blog/changelog/2023-03-13-dependabot-updates-support-reusable-workflows-for-github-actions/), we can use Dependabot for keeping Reusable Workflows up to date as well. 
+We already can use [Dependabot Version Updates](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) for keeping marketplace actions (in addition to custom internal/private actions) up to date (see my [post](/posts/github-dependabot-for-actions/)) for more details). However, as of [March 2023](https://github.blog/changelog/2023-03-13-dependabot-updates-support-reusable-workflows-for-github-actions/), we can use Dependabot for keeping Reusable Workflows up to date as well.
 
 ## Configuration
 
@@ -26,12 +26,12 @@ My previous [post](https://github.blog/changelog/2023-03-13-dependabot-updates-s
 1. When Dependabot can't access a private repository, the logs allow you to [grant authorization to Dependabot to access your repository](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies)
   - Alternatively, add it in the organization settings --> Code security and analysis --> [Grant Dependabot access to private repositories](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies)
   - This setting requires organization admin permissions to access
-  - Unfortunately, there isn't an API to automate this process
-2. If you plan to create a large number repositories that you want to be a source for Dependabot, creating a [Dependabot Secret](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use) (preferably as an org-level Dependabot secret) with the value of a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) (preferably a [fine-grained token](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/)) that has read-access to the required repositories would be preferred
+  - Unfortunately, there isn't an API to automate this process, it has to  be done within the UI
+2. If you plan to create a large number repositories that you want to be a source for Dependabot, creating a [Dependabot secret](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-access-to-private-registries-for-dependabot#storing-credentials-for-dependabot-to-use) (preferably as an org-level Dependabot secret) with the value of a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) (preferably a [fine-grained token](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/)) that has read-access to the required repositories would be preferred
   - I don't find it as detrimental to use a personal access token as a Dependabot secret since Dependabot secrets can *only be access by Dependabot*; you can't use a GitHub Actions workflow to expose the secret accidentally/intentionally
-  - The only concern would be updating the token if it expires or is revoked
+  - The only concern would be updating the token if it expires, is revoked, or the original author doesn't have access to the repo(s) anymore
 
-If you only have a few, and rarely increasing set of repositories for custom actions / reusable workflows, I recommend the first approach. If you have a large number of repositories and/or are creating many new repositories for actions / reusable workflows, the second option scales better.
+If you only have a few, and rarely increasing set of repositories for custom actions / reusable workflows, I recommend the first approach. If you have a large number of repositories and/or are creating many new repositories for actions / reusable workflows, the **second option scales better**.
 
 ### YML
 
@@ -99,4 +99,4 @@ _Example of a pull request for reusable workflow created by Dependabot_
 
 ## Summary
 
-Now we can create and properly version reusable workflows AND have our downstream consumers be automatically notified of version updates. 🎉
+Now we can create and properly version reusable workflows AND have our downstream users automatically be notified of version updates. This helps a ton in making it front and center for developers that there's an update they need to look at! 🎉
