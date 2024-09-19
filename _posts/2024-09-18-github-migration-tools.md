@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2024-09-18 10:30:00 -0500
 description: A collection of additional tools to assist with your GitHub migration experience
 categories: [GitHub, Migrations]
-tags: [GitHub, Migrations, Azure DevOps, git, gh cli, Scripts, Bitbucket]
+tags: [GitHub, Migrations, Azure DevOps, Git, gh cli, Scripts, Bitbucket]
 ---
 
 ## Overview
@@ -21,29 +21,31 @@ Based on my migration experience, here are additional tools I've found useful, o
 |------|---------|-------|
 | **Organization** | | |
 | - Metadata | N/a | Name of org, description, settings, OAuth app policy, scheduled reminders, org owners, etc. |
-| - Custom repo roles | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-custom-repository-roles-count.sh) | |
-| - Org level webhooks | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-webhooks.sh) | |
+| - Custom repo roles | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-custom-repository-roles-count.sh) | Any custom org roles will need to be migrated as well |
+| - Org level webhooks | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-webhooks.sh),<br>[gh-organization-webhooks](https://github.com/katiem0/gh-organization-webhooks) | Need to know what webhook secrets are, can't retrieve in UI/API |
 | - IP allow list | [Get org IP allow list](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organization-ip-allow-list.sh),<br>[Get enterprise IP allow list](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-enterprise-ip-allow-list.sh),<br>[Set IP allow list rules for](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/set-ip-allow-list-rules.sh) | The get scripts save rules to CSV and the set script sets them in target |
 | **Discussions** | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-discussions-count.sh) | Discussions exist in repos, but may have to configure which repo will be used for org discussions |
 | **Projects** | N/a | |
-| - Projects v2 | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-projects-count.sh), [Migrator](https://github.com/timrogers/gh-migrate-project?tab=readme-ov-file) | |
+| - Projects v2 | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-projects-count.sh),<br>[gh-migrate-project](https://github.com/timrogers/gh-migrate-project?tab=readme-ov-file) | CLI utility can help migrate org-level projects |
 | - Org Projects (classic) | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-projects-count-classic.sh) | Deprecated |
 | - Repo Projects (classic) | N/a | Deprecated |
-| **GitHub apps** | [Analysis script for org apps](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps.sh),<br>[Analysis script by org app count](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps-count.sh) | |
-| **Teams / membership** | [gh-migrate-teams](https://github.com/mona-actions/gh-migrate-teams),<br>[gh-migrate-team-permission](https://github.com/mona-actions/gh-migrate-team-permission),<br>[Recreate security in repos & teams](https://github.com/joshjohanning/github-misc-scripts/tree/main/scripts/recreate-security-in-repositories-and-teams),<br>[Create teams from list](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/create-teams-from-list.sh) | There are different ways to migrate teams/membership |
+| **GitHub apps** | [Analysis script for org apps](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps.sh),<br>[Analysis script by org app count](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps-count.sh) | The [manifest flow](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest) help when recreating apps manually |
+| **Teams / membership** | [gh-migrate-teams](https://github.com/mona-actions/gh-migrate-teams),<br>[gh-migrate-team-permission](https://github.com/mona-actions/gh-migrate-team-permission),<br>[Recreate security in repos & teams](https://github.com/joshjohanning/github-misc-scripts/tree/main/scripts/recreate-security-in-repositories-and-teams),<br>[Create teams from list](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/create-teams-from-list.sh),[gh-collaborators](https://github.com/katiem0/gh-collaborators) | Use the [recreation script](https://github.com/joshjohanning/github-misc-scripts/tree/main/scripts/recreate-security-in-repositories-and-teams) if wanting to mirror teams/membership |
 | **User settings** | N/a | PATs, SSH keys, notification settings |
 | **Webhook secrets** | [Script to analyze webhooks](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-repositories-webhooks-csv.sh),<br>[gh-migrate-webhook-secrets CLI](https://github.com/mona-actions/gh-migrate-webhook-secrets) | Repo-level webhooks migrate, but webhook secrets need to be recreated |
-| **Actions** | N/a | Action runs don't migrate, workflows will migrate with code |
-| - Repo/org secrets | [gh-secrets-migrator](https://github.com/dylan-smith/gh-secrets-migrator),[gh-seva](https://github.com/katiem0/gh-seva?tab=readme-ov-file) | Actions secrets values can only be retrieved during Actions runtime |
-| - Environments | [Migrator CLI](https://github.com/katiem0/gh-environments) | |
-| - Variables | [gh-seva](https://github.com/katiem0/gh-seva?tab=readme-ov-file) | |
+| **Actions** | N/a | Action runs don't migrate, workflows will migrate with code, and everything below will need to be recreated |
+| - Repo/org secrets | [gh-secrets-migrator](https://github.com/dylan-smith/gh-secrets-migrator),<br>[gh-seva](https://github.com/katiem0/gh-seva?tab=readme-ov-file) | Actions secrets values can only be retrieved during Actions runtime |
+| - Environments | [gh-environments](https://github.com/katiem0/gh-environments) | Environments need to be recreated |
+| - Variables | [gh-seva](https://github.com/katiem0/gh-seva?tab=readme-ov-file) | Variables need to be recreated |
 | - Self-hosted runners | N/a | Runners need to be re-created |
 | - Larger runners | N/a | Larger GitHub-hosted runners need to be re-created |
-| **Rulesets** | [gh-migrate-rulesets](https://github.com/katiem0/gh-migrate-rulesets) | |
-| **Packages** | [See package migration posts](/categories/packages/) | |
+| **Rulesets** | [gh-migrate-rulesets](https://github.com/katiem0/gh-migrate-rulesets) | Rulesets are not migrated |
+| **Packages** | [See package migration posts](/categories/packages/) | Packages are not migrated |
 | **Code owners** | [Code owners mapping helper](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/update-codeowners-mappings.js) | Updating org/team names |
-| **LFS** | [Migrate LFS artifacts](/posts/migrate-git-lfs-artifacts/) | |
+| **LFS** | [Migrate LFS artifacts](/posts/migrate-git-lfs-artifacts/) | LFS is not migrated |
 | **Username mapping** | [SAML at enterprise](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-saml-identities-in-enterprise.sh),<br>[SAML at org](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-saml-identities-in-organization.sh) | Getting SAML identities can help map personal github.com accounts by tying their email to their identity provider credential |
+| **Repository visibility** | [gh-repo-visibility](https://github.com/mona-actions/gh-repo-visibility) | Repos migrate as private by [default](https://docs.github.com/en/migrations/using-github-enterprise-importer/migrating-between-github-products/overview-of-a-migration-between-github-products#setting-repository-visibility) |
+| **Deploy keys** | [gh-migrate-deploy-keys](https://github.com/mona-actions/gh-migrate-deploy-keys) | Deploy keys are not migrated |
 
 ## Migration Planning Tooling
 
@@ -51,10 +53,13 @@ These tools are more for helping you plan / track a migration. For example, you 
 
 | Tool | Description |
 | --- | --- |
-| **[gh-repo-stats](https://github.com/mona-actions/gh-repo-stats)** | GH CLI extension to pull statistics on repository metadata used in GitHub migrations |
+| **[gh-repo-stats](https://github.com/mona-actions/gh-repo-stats)** | GitHub CLI extension to pull statistics on repository metadata used in GitHub migrations |
 | **[gh-migration-audit](https://github.com/timrogers/gh-migration-audit)** | Audits GitHub repositories to highlight data that cannot be automatically migrated using GitHub's migration tools |
 | **[gh ado2gh inventory-report](https://docs.github.com/en/enterprise-cloud@latest/migrations/overview/planning-your-migration-to-github#building-a-basic-inventory-of-the-repositories-you-want-to-migrate)** | Azure DevOps to GitHub inventory report using the GEI commands |
-| **[git-sizer](https://github.com/github/git-sizer)** | Compute various size metrics for a Git repository, flagging those that might cause problems |
+| **[git-sizer](https://github.com/github/git-sizer)** & **[gh-sizer](https://github.com/timrogers/gh-sizer)** | Compute various size metrics for a Git repository, flagging those that might cause problems |
+| **[gh-bbs-analyzer](https://github.com/mona-actions/gh-bbs-analyzer)** | GitHub CLI extension for analyzing BitBucket Server to get migration statistics |
+| **[gh-gitlab-stats](https://github.com/mona-actions/gh-gitlab-stats)** | GitHub CLI extension to pull statistics on GitLab repository and server metadata |
+| **[gh-pma](https://github.com/mona-actions/gh-pma)** | Post-Migration Audit (PMA) Extension For GitHub CLI |
 | **[github-migration-monitor](https://github.com/timrogers/github-migration-monitor)** | Monitors GitHub Enterprise Importer (GEI) migrations for an organization through a simple command line tool |
 
 ## Non-technical Migration Planning Tips
@@ -89,6 +94,7 @@ Special thanks to everyone who has contributed to these OSS tools!
 - [antgrutta](https://github.com/antgrutta)
 - [bryantson](https://github.com/bryantson)
 - [pmartindev](https://github.com/pmartindev)
+- [samueljmello](https://github.com/samueljmello)
 - And many more I am SURE I am missing
 
 ## Summary
