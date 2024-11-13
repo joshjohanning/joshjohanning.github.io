@@ -2,7 +2,7 @@
 title: 'Using the GitHub Checks API to Link Workflow Statuses in a PR'
 author: Josh Johanning
 date: 2022-10-12 20:30:00 -0500
-description: Using the GitHub Checks API to report back the status of another GitHub Action workflow triggered via the workflow_dispatch event in a pull request
+description: Using the GitHub Checks API to report the status of another workflow back to the pull request for gating purposes
 categories: [GitHub, Actions]
 tags: [GitHub, Scripts, gh cli]
 mermaid: true
@@ -27,7 +27,7 @@ To summarize, this is the flow and challenge statement:
 5. The label update workflow calls the [deployment workflow](https://github.com/colindembovsky/mindaro/blob/main/.github/workflows/deploy-component.yml#L5) via the `workflow_dispatch` event
 6. The label job shows up as a status check in the PR
 7. The deployment job runs
-8. We want to post back to the PR the status of the deployment jo, but because the job wasn't created by the PR, it doesn't show up as a status check on the PR
+8. We want to post back to the PR the status of the deployment job, but because the job wasn't created by the PR, it doesn't show up as a status check on the PR
 
 The status checks are shown on the image below. Notice how the job to label the PR shows up here, but not the job the subsequent job queued programmatically via the `workflow_dispatch` event:
 
