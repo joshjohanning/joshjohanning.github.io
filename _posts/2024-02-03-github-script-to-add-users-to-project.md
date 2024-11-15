@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2024-02-03 7:00:00 -0600
 description: Add users to a GitHub ProjectV2 programmatically
 categories: [GitHub, Scripts]
-tags: [GitHub, Scripts, Projects]
+tags: [GitHub, Scripts, GitHub Projects]
 media_subpath: /assets/screenshots/2024-02-03-github-script-to-add-users-to-project
 image:
   path: github-project.png
