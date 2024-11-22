@@ -3,7 +3,7 @@ title: 'Demystifying GitHub Apps: Using GitHub Apps to Replace Service Accounts'
 author: Josh Johanning
 date: 2022-02-07 20:00:00 -0600
 description: Creating no-code GitHub Apps to install to an organization to replace having to create service accounts or a user PAT for authorization in GitHub Actions
-categories: [GitHub, Actions]
+categories: [GitHub, Apps]
 tags: [GitHub, GitHub Actions, GitHub Apps, GitHub Issues]
 media_subpath: /assets/screenshots/2022-02-07-github-apps
 image:
