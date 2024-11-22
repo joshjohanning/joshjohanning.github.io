@@ -46,6 +46,7 @@ Based on my migration experience, here are additional tools I've found useful, o
 | **Username mapping** | [Getting SAML entities at enterprise](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-saml-identities-in-enterprise.sh),<br>[Getting SAML entities at org](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-saml-identities-in-organization.sh) | Getting SAML identities can help map personal github.com accounts by tying their email to their identity provider credential |
 | **Repository visibility** | [gh-repo-visibility](https://github.com/mona-actions/gh-repo-visibility) | Repos migrate as private by [default](https://docs.github.com/en/migrations/using-github-enterprise-importer/migrating-between-github-products/overview-of-a-migration-between-github-products#setting-repository-visibility) |
 | **Deploy keys** | [gh-migrate-deploy-keys](https://github.com/mona-actions/gh-migrate-deploy-keys) | Deploy keys are not migrated |
+| **Submodules** | N/a | URLs (org/repo name) may need to be updated |
 
 ## Migration Planning Tooling
 
