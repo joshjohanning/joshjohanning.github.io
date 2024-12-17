@@ -47,6 +47,8 @@ _Printing the GitHub context_
 You can even use the contexts in expressions. For example, we can conditionally run a job based on the labels of an issue that triggered the workflow:
 
 ```yml
+name: Printing issue if 'new-repo' label is present
+
 on:
   issues:
     types: [opened]
@@ -85,6 +87,12 @@ This can be super helpful for IssueOps and LabelOps scenarios!
 You can do the same thing to print out the other contexts as well. Here's a full workflow example:
 
 ```yml
+name: Write Contexts to Log
+
+on:
+  push:
+  workflow_dispatch:
+
 jobs:
   write_contexts_to_log:
     runs-on: ubuntu-latest
