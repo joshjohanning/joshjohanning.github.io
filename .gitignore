@@ -23,7 +23,8 @@ package-lock.json
 !.vscode/tasks.json
 
 # Misc
-_app
+_sass/vendors
+assets/js/dist
 
 # Link Checker
 link-checker.json
