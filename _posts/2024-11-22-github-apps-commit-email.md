@@ -55,7 +55,12 @@ We can retrieve this in one of two ways:
     gh api '/users/josh-issueops-bot[bot]' --jq .id
     ```
 
-Once you have that, you can plug in the email address and you're good to go! 🚀
+This returns the ID of the user, which is `149130343`. Once you have that, you can plug it into the email address format and you're good to go! 🚀
+
+> Email address format:
+>
+> - `USERID`+`APP-NAME`[bot]@users.noreply.github.com
+{: .prompt-tip }
 
 ## Committing via Git Command Line in Actions
 
@@ -137,6 +142,18 @@ jobs:
 ```
 {: file='.github/workflows/commit-with-github-app.yml'}
 
+## Signing Commits from GitHub App
+
+If you use the examples above using the `Git` command line, your commits will not be signed. If you want the commits from the GitHub App to be signed, we have to commit via the API by [creating a tree](https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#create-a-tree), [creating a commit](https://docs.github.com/en/rest/git/commits?apiVersion=2022-11-28#create-a-commit), and [updating a reference](https://docs.github.com/en/rest/git/refs?apiVersion=2022-11-28#update-a-reference) to tie the tree to the commit.
+
+For a detailed example, see this helpful Community Discussions post from [@loujr](https://github.com/loujr/):
+
+- [How to Use Commit Signing with GitHub Apps](https://github.com/orgs/community/discussions/50055)
+
+I also have an end-to-end example of using a GitHub App to sign a commit in GitHub Actions for reference:
+
+- [commit-sign.yml - GitHub App commit signing example in Actions](https://github.com/joshjohanning-org/commit-sign-app/blob/main/.github/workflows/commit-sign.yml#L80-L153)
+
 ## Summary
 
-In summary, if you are using a GitHub App to commit changes back to the repository, you will need to use the email address format of `<userID>+<app-name>[bot]@users.noreply.github.com`. This will allow the commit to be attributed to the GitHub App, and the author's icon to be the App's icon. 🤖
+In summary, if you are using a GitHub App to commit changes back to the repository, you will need to use the email address format of `USERID`+`APP-NAME`[bot]@users.noreply.github.com. This will allow the commit to be attributed to the GitHub App, and the author's icon to be the App's icon (or the org's icon if there is no app icon!). 🤖
