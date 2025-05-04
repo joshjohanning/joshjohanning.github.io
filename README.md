@@ -106,6 +106,4 @@ Check ruby version: `ruby -v` (if ruby 2.6.10p210, then you need to upgrade to 3
 If seeing a `racc 1.6.2` permission error, run:
 
 ```sh
-sudo chown -R codespace /usr/local/rvm/gems/ruby-3.1.4/extensions/x86_64-linux/3.1.0
-bundle install
-```
+sudo chown -R codespace /usr/local/rvm/gems/ruby-3.1.4/extensions/x86_64-linux/3.1.
