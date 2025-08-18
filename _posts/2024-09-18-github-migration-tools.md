@@ -5,6 +5,12 @@ date: 2024-09-18 10:30:00 -0500
 description: A collection of additional tools to assist with your GitHub migration experience
 categories: [GitHub, Migrations]
 tags: [GitHub, Migrations, Azure DevOps, Git, gh cli, Scripts, Bitbucket]
+media_subpath: /assets/screenshots/2024-09-18-github-migration-tools
+image:
+  path: migrations-to-github.png
+  width: 100%
+  height: 100%
+  alt: Migrating your code to GitHub is easy, but what about "other stuff"?
 ---
 
 ## Overview
