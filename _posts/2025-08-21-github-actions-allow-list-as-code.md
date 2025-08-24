@@ -22,18 +22,21 @@ This post explores how to implement a GitHub Actions allow list using configurat
 
 I'm going to be using my [actions-allow-list-as-code](https://github.com/joshjohanning-org/actions-allow-list-as-code) repository as the example implementation. This is the same repository I use to manage my own GitHub Actions allow list, so you can see it in action! 🚀
 
-> If you're already sold on this idea and just want to get started, skip to the [TLDR / Getting Started](#tldr--getting-started) section below for the quick and dirty implementation details!
-{: .prompt-tip }
+> **Before implementing an allow list, you'll want to know what Actions your organization are using today!** Check out my follow-up post on [Three Ways to Export GitHub Actions Usage Reports](/posts/github-actions-export-actions-usage/).
+{: .prompt-info }
 
 ## Why Configuration as Code?
 
+> If you're already sold on this idea and just want to get started, skip to the [TLDR / Getting Started](#tldr--getting-started) section below for the quick and dirty implementation details!
+{: .prompt-tip }
+
 Before we talk about the benefits of this method, let's quickly review the GitHub Actions permission options (these can be defined at the enterprise, organization, or repository level):
 
-> - Allow all actions and reusable workflows
+> - **"Allow all actions and reusable workflows"**
 >   - *Increasingly less common for security-conscious organizations*
-> - Allow enterprise actions and reusable workflows
+> - **"Allow enterprise actions and reusable workflows"**
 >   - *Not as common; don't allow any marketplace actions including GitHub's own actions*
-> - ⭐️ **Allow enterprise, and select non-enterprise, actions and reusable workflows**
+> - ⭐️ **"Allow enterprise, and select non-enterprise, actions and reusable workflows"**
 >   - *This is becoming increasingly more common since organizations want to maintain better control over their third-party actions usage*
 
 > As of [August 2025](https://github.blog/changelog/2025-08-15-github-actions-policy-now-supports-blocking-and-sha-pinning-actions/), there's a new setting below these to "Require actions to be pinned to a full-length commit SHA" which is the best practice to prevent against supply chain attacks.
