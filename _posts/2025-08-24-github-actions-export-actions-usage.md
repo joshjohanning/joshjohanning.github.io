@@ -1,5 +1,5 @@
 ---
-title: 'Three Ways to Export GitHub Actions Usage Reports for an Organization'
+title: 'Exporting GitHub Actions Dependency Data for Your Organization'
 author: Josh Johanning
 date: 2025-08-24 09:30:00 -0500
 description: 'Compare three methods for getting GitHub Actions usage data for organization governance: The Dependency Insights view in GitHub, @stoe/action-reporting-cli, and my custom SBOM script'
@@ -65,9 +65,9 @@ The [`@stoe/action-reporting-cli`](https://github.com/stoe/action-reporting-cli)
 **Key features:**
 
 - **Multiple export formats**: CSV, JSON, and Markdown outputs
-- **Comprehensive data collection**: workflows, permissions, secrets, variables, runner environments
-- **Flexible scope options**: enterprise, organization, or repository-level analysis
-- **Advanced filtering**: exclude GitHub-created actions, unique actions reporting
+- **Comprehensive data collection**: in addition to what actions are used, [can also report](https://github.com/stoe/action-reporting-cli?tab=readme-ov-file#report-content-options) on secrets, variables, permissions, listeners (workflow triggers), and/or runners
+- **Flexible scope options**: run for an entire enterprise (can't use GitHub App though), organization, or a single repository
+- **Advanced filtering**: exclude GitHub-created actions, unique actions reporting, and ability to exclude archived and forked repositories
 
 **Sample output**:
 
@@ -112,7 +112,7 @@ The approach I've developed focuses on SBOM-style reporting with automated GitHu
 
 What makes this script useful:
 
-- **Usage frequency counts**: Shows how many times each Action is used across the organization
+- **Usage frequency counts**: Shows how many times each Action is used across the organization in an SBOM-like report
 - **Version distribution**: Identifies which versions of Actions are most commonly used
 - **SHA resolution**: Automatically resolves commit SHAs to readable tag versions when possible
 
@@ -178,8 +178,8 @@ What makes this script useful:
 ## Choosing the Right Method
 
 - [**Use GitHub Dependency Insights**](#method-1-githubs-dependency-insights-view-only) first to get familiar with your organization's usage patterns
-- [**Use @stoe/action-reporting-cli**](#method-2-stoeaction-reporting-cli-full-featured-solution) for comprehensive analysis with flexible export options, and especially if you want to report on other things like secrets, variables, or permissions (see: [Using the Pre-Built Workflows](#using-the-pre-built-workflows) section)
-- [**Use my custom SBOM script**](#method-3-custom-sbom-script-my-lightweight-solution) if you want usage statistics and the ability to resolve SHAs to tag versions (see: [Using the Pre-Built Workflows](#using-the-pre-built-workflows) section)
+- [**Use @stoe/action-reporting-cli**](#method-2-stoeaction-reporting-cli-full-featured-solution) for comprehensive analysis with flexible export options, and especially if you want to [report on other things](https://github.com/stoe/action-reporting-cli?tab=readme-ov-file#report-content-options) like secrets, variables, permissions, listeners (workflow triggers), and/or runners (For implementing, see: [Using the Pre-Built Workflows](#using-the-pre-built-workflows) section)
+- [**Use my custom SBOM script**](#method-3-custom-sbom-script-my-lightweight-solution) if you want usage statistics and the ability to resolve SHAs to tag versions (For implementing, see: [Using the Pre-Built Workflows](#using-the-pre-built-workflows) section)
 
 ## Using the Pre-Built Workflows
 
@@ -188,10 +188,14 @@ To implement these solutions in your organization:
 1. **Fork or copy** the [export-actions-usage-report](https://github.com/joshjohanning-org/export-actions-usage-report) repository
    - If you fork it, make sure to enable Actions for the forked repository to allow the scheduled job to run
 2. **Set up GitHub App authentication**:
-   - Create a GitHub App with Organization Administration permissions (Read & Write)
+   - Create a GitHub App with the following permissions:
+     - **Repository permissions:** "Actions" (Read) - to read workflows and their usage (for [`@stoe/action-reporting-cli`](https://github.com/stoe/action-reporting-cli))
+     - **Repository permissions:** "Contents" (Read) - to access SBOM data via dependency graph (for my [custom SBOM script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-actions-usage-in-organization.sh))
+   - Install the app on your organization granting it access to all repositories
    - Add the App ID as a repository variable (`APP_ID`)  
    - Add the private key as a repository secret (`PRIVATE_KEY`)
-   - See my [post on GitHub Apps](/posts/github-apps/) for detailed instructions on creating and configuring a GitHub App
+   - You can use a personal access token, but a GitHub app has a higher rate limit
+     - See [my post on GitHub Apps](/posts/github-apps/) for detailed instructions on creating and configuring a GitHub App
 3. **Customize the workflows** if needed (different schedule, additional output formats, etc.)
 
 The workflows will automatically:
