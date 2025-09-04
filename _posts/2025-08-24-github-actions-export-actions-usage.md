@@ -5,7 +5,7 @@ date: 2025-08-24 09:30:00 -0500
 description: 'Compare three methods for getting GitHub Actions usage data for organization governance: The Dependency Insights view in GitHub, @stoe/action-reporting-cli, and my custom SBOM script'
 categories: [GitHub, Actions]
 tags: [GitHub Actions, SBOM, gh cli]
-media_subpath: /assets/screenshots/2025-08-22-github-actions-export-actions-usage
+media_subpath: /assets/screenshots/2025-08-24-github-actions-export-actions-usage
 image:
   path: actions-usage-sbom-by-version-light.png
   width: 100%
