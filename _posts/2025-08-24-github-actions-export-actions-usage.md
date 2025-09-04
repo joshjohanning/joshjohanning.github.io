@@ -90,6 +90,7 @@ The [`@stoe/action-reporting-cli`](https://github.com/stoe/action-reporting-cli)
 >   }
 > ]
 > ```
+> {: .nolineno}
 > {: file='actions-output.json'}
 
 > *Full example output - `@stoe/action-reporting-cli`: [`json`](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/actions-output.json), [`md`](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/actions-output.md), [`csv`](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/actions-output.csv)*
@@ -108,6 +109,7 @@ npx @stoe/action-reporting-cli
   --json ./reports/actions.json 
   --md ./reports/actions.md
 ```
+{: .nolineno}
 
 ### Method 3: Custom SBOM Script (My Lightweight Solution)
 
@@ -134,6 +136,7 @@ What makes this script useful:
 > | 10 | github/codeql-action/upload-sarif |
 > | 4 | joshjohanning/approveops |
 > ```
+> {: .nolineno}
 > {: file='count-by-action-sbom.md'}
 
 > [*Full example output - SBOM Count by Action*](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/count-by-action-sbom.md)
@@ -150,6 +153,7 @@ What makes this script useful:
 > | 3 | github/codeql-action/upload-sarif@17573ee1cc1b9d061760f3a006fc4aac4f944fd5 # sha not associated to tag |
 > | 2 | joshjohanning/approveops@caad905b2ba78301a0db7f484ef6fe3c770e6985 # v2.0.3 |
 > ```
+> {: .nolineno}
 > {: file='count-by-version-sbom.md'}
 
 > [*Full example output - SBOM Count by Version*](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/count-by-version-sbom.md)
@@ -164,6 +168,7 @@ What makes this script useful:
 ./get-actions-usage-in-organization.sh joshjohanning-org count-by-version md --resolve-shas > output.md
 ./get-actions-usage-in-organization.sh joshjohanning-org count-by-action md --dedupe-by-repo > output.md
 ```
+{: .nolineno}
 
 > **Need single repository analysis?** I also have a [repository-level version of this script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-actions-usage-in-repository.sh) that works the same way but analyzes just one repository instead of an entire organization.
 {: .prompt-tip }
