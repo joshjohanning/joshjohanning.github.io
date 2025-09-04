@@ -3,7 +3,7 @@ title: 'Preventing Auto-Indentation on Paste in VS Code for YAML Files'
 author: Josh Johanning
 date: 2024-05-24 16:00:00 -0500
 description: Stop VS Code from messing up your YAML indentation on paste
-categories: [macOS, Development Environment]
+categories: [Hobbies, Development Environment]
 tags: [VS Code, Development Environment]
 media_subpath: /assets/screenshots/2024-05-24-vscode-yaml-indenting
 image:
