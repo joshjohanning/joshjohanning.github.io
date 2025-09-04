@@ -71,18 +71,26 @@ The [`@stoe/action-reporting-cli`](https://github.com/stoe/action-reporting-cli)
 
 **Sample output**:
 
-> owner | repo | name | workflow | state | created_at | updated_at | last_run_at | uses
-> --- | --- | --- | --- | --- | --- | --- | --- | ---
-> joshjohanning-org | .github |  | [.github/workflows/update-organization-readme-badges.yml](https://github.com/joshjohanning-org/.github/blob/HEAD/.github/workflows/update-organization-readme-badges.yml) | active | 2024-05-23T16:58:49.000Z | 2024-05-23T16:58:49.000Z | 2025-08-17T07:07:40.000Z | <ul><li>[actions/checkout](https://github.com/actions/checkout) <code>v4</code></li><li>[actions/create-github-app-token](https://github.com/actions/create-github-app-token) <code>v2</code></li><li>[joshjohanning/organization-readme-badge-generator](https://github.com/joshjohanning/organization-readme-badge-generator) <code>v1</code></li></ul>
-> joshjohanning-org | issueops-samples |  | [.github/workflows/delete-repos-delete.yml](https://github.com/joshjohanning-org/issueops-samples/blob/HEAD/.github/workflows/delete-repos-delete.yml) | active | 2023-11-08T16:05:40.000Z | 2025-04-02T15:48:27.000Z | 2025-08-13T14:57:36.000Z | <ul><li>[actions/checkout](https://github.com/actions/checkout) <code>v5</code></li><li>[issue-ops/parser](https://github.com/issue-ops/parser) <code>76d5aa095754de1493cbe41934484c4287e16350</code></li><li>[actions/create-github-app-token](https://github.com/actions/create-github-app-token) <code>v2</code></li><li>[actions/github-script](https://github.com/actions/github-script) <code>v7</code></li><li>[joshjohanning/approveops](https://github.com/joshjohanning/approveops) <code>caad905b2ba78301a0db7f484ef6fe3c770e6985</code></li></ul>
->
-> ```md
-> owner | repo | name | workflow | state | created_at | updated_at | last_run_at | uses
-> --- | --- | --- | --- | --- | --- | --- | --- | ---
-> joshjohanning-org | .github |  | [.github/workflows/update-organization-readme-badges.yml](https://github.com/joshjohanning-org/.github/blob/HEAD/.github/workflows/update-organization-readme-badges.yml) | active | 2024-05-23T16:58:49.000Z | 2024-05-23T16:58:49.000Z | 2025-08-17T07:07:40.000Z | <ul><li>[actions/checkout](https://github.com/actions/checkout) <code>v4</code></li><li>[actions/create-github-app-token](https://github.com/actions/create-github-app-token) <code>v2</code></li><li>[joshjohanning/organization-readme-badge-generator](https://github.com/joshjohanning/organization-readme-badge-generator) <code>v1</code></li></ul>
-> joshjohanning-org | issueops-samples |  | [.github/workflows/delete-repos-delete.yml](https://github.com/joshjohanning-org/issueops-samples/blob/HEAD/.github/workflows/delete-repos-delete.yml) | active | 2023-11-08T16:05:40.000Z | 2025-04-02T15:48:27.000Z | 2025-08-13T14:57:36.000Z | <ul><li>[actions/checkout](https://github.com/actions/checkout) <code>v5</code></li><li>[issue-ops/parser](https://github.com/issue-ops/parser) <code>76d5aa095754de1493cbe41934484c4287e16350</code></li><li>[actions/create-github-app-token](https://github.com/actions/create-github-app-token) <code>v2</code></li><li>[actions/github-script](https://github.com/actions/github-script) <code>v7</code></li><li>[joshjohanning/approveops](https://github.com/joshjohanning/approveops) <code>caad905b2ba78301a0db7f484ef6fe3c770e6985</code></li></ul>
+> ```json
+> [
+>   {
+>     "id": "W_kwDOGiGcjc4F7U1I",
+>     "owner": "joshjohanning-org",
+>     "repo": ".github",
+>     "workflow": ".github/workflows/update-organization-readme-badges.yml",
+>     "state": "active",
+>     "created_at": "2024-05-23T16:58:49.000Z",
+>     "updated_at": "2024-05-23T16:58:49.000Z",
+>     "last_run_at": "2025-08-31T07:06:42.000Z",
+>     "uses": [
+>       "actions/checkout@v4",
+>       "actions/create-github-app-token@v2",
+>       "joshjohanning/organization-readme-badge-generator@v1"
+>     ]
+>   }
+> ]
 > ```
-> {: file='actions-output.md'}
+> {: file='actions-output.json'}
 
 > *Full example output - `@stoe/action-reporting-cli`: [`json`](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/actions-output.json), [`md`](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/actions-output.md), [`csv`](https://github.com/joshjohanning-org/export-actions-usage-report/blob/main/actions-output.csv)*
 {: .prompt-info }
@@ -118,13 +126,6 @@ What makes this script useful:
 
 **Sample Output - Count by Action:**
 
-> | Count | Action |
-> | --- | --- |
-> | 121 | actions/checkout |
-> | 28 | actions/upload-artifact |
-> | 10 | github/codeql-action/upload-sarif |
-> | 4 | joshjohanning/approveops |
-> 
 > ```markdown
 > | Count | Action |
 > | --- | --- |
@@ -140,14 +141,6 @@ What makes this script useful:
 
 **Sample Output - Count by Version:**
 
-> | Count | Action |
-> | --- | --- |
-> | 57 | actions/checkout@v3 |
-> | 54 | actions/checkout@v4 |
-> | 11 | actions/upload-artifact@v4 |
-> | 3 | github/codeql-action/upload-sarif@17573ee1cc1b9d061760f3a006fc4aac4f944fd5 # sha not associated to tag |
-> | 2 | joshjohanning/approveops@caad905b2ba78301a0db7f484ef6fe3c770e6985 # v2.0.3 |
-> 
 > ```markdown
 > | Count | Action |
 > | --- | --- |
