@@ -7,7 +7,7 @@ categories: [Hobbies, Tools]
 tags: [Node.js, Personal Finance]
 media_subpath: /assets/screenshots/2025-09-04-hsa-expense-analyzer
 image:
-  path: hsa-expense-analyzer.png
+  path: hsa-expense-analyzer-v0.2.0.png
   width: 100%
   height: 100%
   alt: HSA Expense Analyzer sample output showing yearly expense breakdown and charts
@@ -76,7 +76,7 @@ I built this with Node.js because I wanted something I could run locally without
 
 - **[`chartscii`](https://github.com/tool3/chartscii)** - Creates those ASCII bar charts you see in the output
 - **`yargs`** - Handles command-line arguments (`--dirPath`, `--help`, etc.)
-- **`prettyjson`** - Formats the summary tables nicely
+- **`prettyjson`** - Formats the year by year tables nicely
 
 The core logic is surprisingly simple - it's mostly string manipulation and basic math.
 
@@ -85,9 +85,8 @@ The core logic is surprisingly simple - it's mostly string manipulation and basi
 1. **Reads filenames** - Splits on " - " and validates the date/amount format
 2. **Groups by year** - Extracts the year from each date
 3. **Tracks reimbursements** - Looks for `.reimbursed.` in the filename
-4. **Warns about mismatched files** - Lists files that don't match the expected pattern
-5. **Generates reports** - Summary tables plus three different ASCII charts
-6. **Does the math** - Calculates the yearly totals for expenses and reimbursements
+4. **Warns about mismatched files** - Identifies files that don't follow the naming convention and explains what's wrong (missing date, invalid amount format, etc.)
+5. **Generates reports** - Creates visual ASCII charts (expenses by year, reimbursements by year, and side-by-side comparison) plus detailed summary statistics
 
 ## Usage
 
@@ -96,9 +95,14 @@ The easiest way is to install as a global package from [npm](https://www.npmjs.c
 ```bash
 npm install -g @joshjohanning/hsa-expense-analyzer-cli
 hsa-expense-analyzer-cli --dirPath="/path/to/your/receipts"
+
+# Show only summary statistics (no tables or charts)
+hsa-expense-analyzer-cli --dirPath="/path/to/your/receipts" --summary-only
+
+# Disable colored output for plain text
+hsa-expense-analyzer-cli --dirPath="/path/to/your/receipts" --no-color
 ```
 {: .nolineno}
-
 
 Or if you want to clone locally and hack on the code:
 
@@ -169,18 +173,45 @@ Expenses vs Reimbursements by year
 2025 Expenses       ╢██████████░░░░░░░░░░ $125.00
 2025 Reimbursements ╢░░░░░░░░░░░░░░░░░░░░ $0.00
                     ╚════════════════════
+
+📊 Summary Statistics
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total Receipts Processed: 9
+Years Covered: 5 (2021 - 2025)
+Total Expenses: $600.00
+Total Reimbursements: $185.00 (30.8%)
+Total Reimburseable: $415.00 (69.2%)
+Average Expenses/Year: $120.00
+Average Receipts/Year: 2
+Most Expensive Year: 2022 ($250.00 [41.7%], 3 receipts [33.3%])
 ```
 {: .nolineno}
 
-If you have files that don't match the expected naming pattern, you'll see a warning at the top of the output:
+If you have files that don't match the expected naming pattern, you'll see a warning at the top of the output (and an "Invalid Receipts" count in the summary statistics):
 
 ```text
 ⚠️  WARNING: The following files do not match the expected pattern:
 Expected pattern: <yyyy-mm-dd> - <description> - $<amount>.<ext>
-Files with issues:
-  - 2021-01-15- doctor - 50.00.pdf
-  - 2021-01-15-wrong-format-missing-dashes.pdf
-  - wrong-format.pdf
+
+Filename                                                     Error
+--------                                                     -----
+2021-01-10 - doctor-incorrect-amount - $50,00.pdf            Amount "$50,00.pdf" should be a valid format like $50.00
+2021-01-10 - doctor-incorrect-amount - $50.pdf               Amount "$50.pdf" should be a valid format like $50.00
+2021-01-15 - doctor-missing-dollar-sign - 50.00.pdf          Amount "50.00.pdf" should start with $
+2021-01-25 - doctor-no-extension - $50.00                    File is missing extension (should end with .pdf, .jpg, etc.)
+2021-01-30 - doctor-missing-amount.pdf                       File name should have format "yyyy-mm-dd - description - $amount.ext"
+2021-01-30- doctor-missing-space-before-dash - $50.00.pdf    File name should have format "yyyy-mm-dd - description - $amount.ext"
+2021-1-25 - doctor-wrong-date-format - $50.00.pdf            Date "2021-1-25" should be yyyy-mm-dd format
+2021-25-01 - doctor-wrong-date-format - $50.00.pdf           Date "2021-25-01" should be yyyy-mm-dd format
+doctor-missing-date - $120.00.pdf                            File name should have format "yyyy-mm-dd - description - $amount.ext"
+
+...
+
+📊 Summary Statistics
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total Receipts Processed: 25
+Invalid Receipts: 16 (64.0%)
+...
 ```
 {: .nolineno}
 
