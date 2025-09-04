@@ -6,7 +6,9 @@ A DevOps Blog - Blogging about GitHub and Azure DevOps practices, tips, scripts,
 
 [**josh-ops.com →**](https://josh-ops.com)
 
-[![Build and Deploy](https://github.com/joshjohanning/joshjohanning.github.io/actions/workflows/pages-deploy.yml/badge.svg?branch=main)](https://github.com/joshjohanning/joshjohanning.github.io/actions/workflows/pages-deploy.yml)
+[![publish workflow](https://img.shields.io/github/actions/workflow/status/joshjohanning/joshjohanning.github.io/pages-deploy.yml?logo=github&label=publish%20workflow&color=28a745&labelColor=333)][publish]
+[![./blog posts](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/joshjohanning/badges/main/blog/post-count.json)][blog-posts]
+[![./most recent post date](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/joshjohanning/badges/main/blog/most-recent-post-date.json)][most-recent-post]
 
 ## Theme Source
 
@@ -109,3 +111,7 @@ If seeing a `racc 1.6.2` permission error, run:
 sudo chown -R codespace /usr/local/rvm/gems/ruby-3.1.4/extensions/x86_64-linux/3.1.0
 bundle install
 ```
+
+[publish]: https://github.com/joshjohanning/joshjohanning.github.io/actions/workflows/pages-deploy.yml
+[blog-posts]: https://josh-ops.com/
+[most-recent-post]: https://josh-ops.com/archives/
