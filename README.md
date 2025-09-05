@@ -6,7 +6,7 @@ A DevOps Blog - Blogging about GitHub and Azure DevOps practices, tips, scripts,
 
 [**josh-ops.com →**](https://josh-ops.com)
 
-[![publish workflow](https://img.shields.io/github/actions/workflow/status/joshjohanning/joshjohanning.github.io/pages-deploy.yml?logo=github&label=publish%20workflow&color=28a745&labelColor=333)][publish]
+[![publish workflow](https://img.shields.io/github/actions/workflow/status/joshjohanning/joshjohanning.github.io/pages-deploy.yml?logo=github&label=publish%20workflow&labelColor=333)][publish]
 [![./blog posts](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/joshjohanning/badges/main/blog/post-count.json)][blog-posts]
 [![./most recent post date](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/joshjohanning/badges/main/blog/most-recent-post-date.json)][most-recent-post]
 
