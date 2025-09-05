@@ -4,7 +4,7 @@ author: Josh Johanning
 date: 2023-12-18 19:30:00 -0600
 description: Integrate GitHub Enterprise Server to receive notifications in Slack without opening up the firewall
 categories: [GitHub, Integrations]
-tags: [GitHub, Enterprise Server, Slack]
+tags: [GitHub, GitHub Enterprise Server, Slack]
 media_subpath: /assets/screenshots/2023-12-18-github-enterprise-server-slack
 image:
   path: ghes-slack-integration.png
