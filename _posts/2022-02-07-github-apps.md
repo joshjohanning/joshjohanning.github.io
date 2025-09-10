@@ -25,6 +25,9 @@ In this post, I will go through the setup and usage of GitHub Apps in an Actions
 
 And don't worry - you don't need any programming experience to create a GitHub App!
 
+> For programmatic installation and management of GitHub Apps across multiple organizations in an Enterprise, see my guide on [Enterprise GitHub Apps](/posts/github-enterprise-apps/).
+{: .prompt-info }
+
 ## GitHub Apps
 
 GitHub Apps are certainly preferred and recommended from GitHub. From [GitHub's documentation](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps), this fits our exact use case: 
