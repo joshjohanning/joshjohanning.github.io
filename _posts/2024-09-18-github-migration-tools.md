@@ -35,24 +35,25 @@ Based on my migration experience, here are additional tools I've found useful, o
 | - Projects v2 | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-projects-count.sh),<br>[gh-migrate-project](https://github.com/timrogers/gh-migrate-project?tab=readme-ov-file) | CLI utility can help migrate org-level projects |
 | - Org Projects (classic) | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-projects-count-classic.sh) | Deprecated |
 | - Repo Projects (classic) | N/a | Deprecated |
-| **GitHub apps** | [Analysis script for org apps](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps.sh),<br>[Analysis script by org app count](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps-count.sh) | The [manifest flow](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest) help when recreating apps manually |
+| **GitHub apps** | [Analysis script for org apps](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps.sh),<br>[Analysis script by org app count](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-apps-count.sh) | The [manifest flow](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest) help when recreating apps manually<br>Check out my [post on Enterprise Apps](/posts/github-enterprise-apps/) to programmatically install apps in orgs |
 | **Teams / membership** | [gh-migrate-teams](https://github.com/mona-actions/gh-migrate-teams),<br>[gh-migrate-team-permission](https://github.com/mona-actions/gh-migrate-team-permission),<br>[Recreate security in repos & teams](https://github.com/joshjohanning/github-misc-scripts/tree/main/scripts/recreate-security-in-repositories-and-teams),<br>[Create teams from list](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/create-teams-from-list.sh),<br>[gh-collaborators](https://github.com/katiem0/gh-collaborators) | Use the [recreation script](https://github.com/joshjohanning/github-misc-scripts/tree/main/scripts/recreate-security-in-repositories-and-teams) if wanting to mirror teams/membership |
 | **User settings** | N/a | PATs, SSH keys, notification settings |
-| **Webhook secrets** | [Script to analyze webhooks](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-repositories-webhooks-csv.sh),<br>[gh-migrate-webhook-secrets CLI](https://github.com/mona-actions/gh-migrate-webhook-secrets) | Repo-level webhooks migrate, but webhook secrets need to be recreated |
+| **Webhook secrets** | [Script to analyze webhooks](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-repositories-webhooks-csv.sh),<br>[gh-migrate-webhook-secrets](https://github.com/mona-actions/gh-migrate-webhook-secrets) | Repo-level webhooks migrate, but webhook secrets need to be recreated |
 | **Actions** | | Action runs don't migrate, workflows will migrate with code, and everything below will need to be recreated |
 | - Repo/org secrets | [gh-secrets-migrator](https://github.com/dylan-smith/gh-secrets-migrator),<br>[gh-seva](https://github.com/katiem0/gh-seva?tab=readme-ov-file) | Actions secrets values can only be retrieved during Actions runtime |
 | - Environments | [gh-environments](https://github.com/katiem0/gh-environments) | Environments need to be recreated |
 | - Variables | [gh-seva](https://github.com/katiem0/gh-seva?tab=readme-ov-file) | Variables need to be recreated |
 | - Self-hosted runners | [Analysis script for all org runners](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organization-self-hosted-runners-organization-runners.sh),<br>[Analysis script for all repo runners in org](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organization-self-hosted-runners-repository-runners.sh),<br> [Analysis script for repo+org runners in org](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organization-self-hosted-runners-all-runners.sh),<br>[Analysis script for enterprise runners](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-enterprise-self-hosted-runners.sh) | Runners need to be re-created |
 | - Larger runners | N/a | Larger GitHub-hosted runners need to be re-created; no API for large runners |
-| **Rulesets** | [gh-migrate-rulesets](https://github.com/katiem0/gh-migrate-rulesets) | Rulesets are not migrated |
-| **Packages** | [See package migration posts](/categories/packages/) | Packages are not migrated |
+| **Rulesets** | [gh-migrate-rulesets](https://github.com/katiem0/gh-migrate-rulesets) | Rulesets are not migrated - command line tools can download and re-push packages though |
+| **Packages** | See my [posts](/categories/packages/) [npm](/posts/github-packages-migrate-npm-packages/), [NuGet](/posts/github-packages-migrate-nuget-packages/), [Maven](/posts/github-packages-migrate-maven-packages/), and [Docker](/posts/github-packages-migrate-docker-containers/)<br>[gh-migrate-packages](https://github.com/mona-actions/gh-migrate-packages) | Packages are not migrated |
 | **Code owners** | [Analysis script](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-organizations-repositories-codeowner-usage.sh),<br>[Code owners mapping helper](https://github.com/joshjohanning/github-misc-scripts/blob/main/scripts/update-codeowners-mappings.js) | Updating org/team names |
 | **LFS** | [Migrate LFS artifacts](/posts/migrate-git-lfs-artifacts/) | LFS is not migrated |
 | **Username mapping** | [Getting SAML entities at enterprise](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-saml-identities-in-enterprise.sh),<br>[Getting SAML entities at org](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-saml-identities-in-organization.sh) | Getting SAML identities can help map personal github.com accounts by tying their email to their identity provider credential |
 | **Repository visibility** | [gh-repo-visibility](https://github.com/mona-actions/gh-repo-visibility) | Repos migrate as private by [default](https://docs.github.com/en/migrations/using-github-enterprise-importer/migrating-between-github-products/overview-of-a-migration-between-github-products#setting-repository-visibility) |
 | **Deploy keys** | [gh-migrate-deploy-keys](https://github.com/mona-actions/gh-migrate-deploy-keys) | Deploy keys are not migrated |
 | **Submodules** | N/a | URLs (org/repo name) may need to be updated |
+| **Stars** | N/a | Repo stars cannot be migrated |
 
 ## Migration Planning Tooling
 
@@ -60,14 +61,15 @@ These tools are more for helping you plan / track a migration. For example, you 
 
 | Tool | Description |
 | --- | --- |
-| **[gh-repo-stats](https://github.com/mona-actions/gh-repo-stats)** | GitHub CLI extension to pull statistics on repository metadata used in GitHub migrations |
+| **[gh-repo-stats](https://github.com/mona-actions/gh-repo-stats)** & **[gh-repo-stats-plus](https://github.com/mona-actions/gh-repo-stats-plus)** | GitHub CLI extension to pull statistics on repository metadata used in GitHub migrations |
+| **[git-sizer](https://github.com/github/git-sizer)** & **[gh-sizer](https://github.com/timrogers/gh-sizer)** | Compute various size metrics for a Git repository, flagging those that might cause problems |
 | **[gh-migration-audit](https://github.com/timrogers/gh-migration-audit)** | Audits GitHub repositories to highlight data that cannot be automatically migrated using GitHub's migration tools |
 | **[gh ado2gh inventory-report](https://docs.github.com/en/enterprise-cloud@latest/migrations/overview/planning-your-migration-to-github#building-a-basic-inventory-of-the-repositories-you-want-to-migrate)** | Azure DevOps to GitHub inventory report using the GEI commands |
-| **[git-sizer](https://github.com/github/git-sizer)** & **[gh-sizer](https://github.com/timrogers/gh-sizer)** | Compute various size metrics for a Git repository, flagging those that might cause problems |
-| **[gh-bbs-analyzer](https://github.com/mona-actions/gh-bbs-analyzer)** | GitHub CLI extension for analyzing BitBucket Server to get migration statistics |
 | **[gh-gitlab-stats](https://github.com/mona-actions/gh-gitlab-stats)** | GitHub CLI extension to pull statistics on GitLab repository and server metadata |
+| **[gh-bbs-analyzer](https://github.com/mona-actions/gh-bbs-analyzer)** | GitHub CLI extension for analyzing BitBucket Server to get migration statistics |
+| **[gh-bbc-exporter](https://github.com/katiem0/gh-bbc-exporter)** | GitHub CLI extension to create a Bitbucket Cloud archive for import to GitHub Cloud |
 | **[gh-pma](https://github.com/mona-actions/gh-pma)** | Post-Migration Audit (PMA) Extension For GitHub CLI |
-| **[github-migration-monitor](https://github.com/timrogers/github-migration-monitor)** | Monitors GitHub Enterprise Importer (GEI) migrations for an organization through a simple command line tool |
+| **[github-migration-monitor](https://github.com/timrogers/github-migration-monitor)** & **[gh-migration-monitor](https://github.com/mona-actions/gh-migration-monitor)** | Monitor GitHub Enterprise Importer (GEI) migrations with command line tools and real-time terminal UI dashboards |
 
 ## Non-technical Migration Planning Tips
 
