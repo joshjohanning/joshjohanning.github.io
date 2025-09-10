@@ -1,5 +1,5 @@
 ---
-title: 'Enterprise GitHub Apps: Programmatic Installation and Management Across Organizations'
+title: 'Using GitHub Enterprise Apps for Programmatic App Management Across Orgs'
 author: Josh Johanning
 date: 2025-09-05 14:00:00 -0500
 description: A comprehensive guide to using Enterprise GitHub Apps to programmatically install and manage applications across all organizations in your GitHub Enterprise
