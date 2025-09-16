@@ -18,7 +18,7 @@ image:
 Git LFS can be very helpful to store large files along with your code in Git repositories. Git LFS artifacts are treated like any other file in Git, but the contents of the file are stored in a separate location. This allows you to store large files in Git without bloating the size of your Git repository. Tracking new files in Git LFS is easy, but there are a few steps you need to follow when using LFS for the first time.
 
 > See my other Git LFS posts:
-> - [Migrating Git Repos with LFS Artifacts](/posts/migrate-git-lfs-artifacts/)
+> - [Migrating GitHub Repositories: Tackling Files in Git LFS](/posts/migrate-git-lfs-artifacts/)
 > - [Migrating Large Files in Git to Git LFS](/posts/migrate-to-git-lfs/)
 {: .prompt-info }
 

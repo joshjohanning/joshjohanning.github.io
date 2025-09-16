@@ -25,7 +25,7 @@ If you've ever tried migrating or pushing a repository that contains a file larg
 This post will show you how to migrate large blobs in Git to Git LFS.
 
 > See my other Git LFS posts:
-> - [Migrating Git Repos with LFS Artifacts](/posts/migrate-git-lfs-artifacts/)
+> - [Migrating GitHub Repositories: Tackling Files in Git LFS](/posts/migrate-git-lfs-artifacts/)
 > - [Adding Files to Git LFS](/posts/add-files-to-git-lfs/)
 {: .prompt-info }
 
