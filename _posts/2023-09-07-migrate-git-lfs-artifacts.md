@@ -21,7 +21,7 @@ You can migrate repositories to GitHub using [GitHub Enterprise Importer (GEI)](
 
 This post highlights two methods to migrate Git LFS objects from one repository to another:
 
-- [Method 1: Using `git lfs push --all` to migrate all LFS objects](#method-1-git-lfs-push---all)
+- [Method 1: Using `git lfs push --all` to migrate all LFS objects](#method-1-git-lfs-push-all)
 - [Method 2: Methodically pushing each LFS object](#method-2-methodically-pushing-each-object) (slower but more reliable for large repos and instances with higher network latency)
 
 > See my other Git LFS posts:
