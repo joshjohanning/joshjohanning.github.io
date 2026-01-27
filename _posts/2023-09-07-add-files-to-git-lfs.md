@@ -38,6 +38,7 @@ git lfs install # if git config is not currently configured for LFS
 git lfs track "*.jpg" "*.png" # track all jpg and png files (recursively)
 git add .gitattributes **/*.jpg **/*.png # add .gitattributes and LFS artifacts (recursively)
 git lfs ls-files # optional: ensure your LFS files are tracked before committing
+git lfs ls-files --all # optional: list all LFS files in all branches
 git commit -m "Tracking and adding LFS artifacts"
 git push
 ```

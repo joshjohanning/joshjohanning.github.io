@@ -51,7 +51,7 @@ An example script to migrate  `.exe`{: .filepath} and `.iso`{: .filepath} files 
 ```bash
 cd ~/Repos/my-git-repo-with-large-files
 git lfs migrate import --include="*.exe, *.iso" --everything
-git lfs ls-files # list LFS files
+git lfs ls-files --all # list LFS files
 git push --all --force # force push all branches to remote
 ```
 
