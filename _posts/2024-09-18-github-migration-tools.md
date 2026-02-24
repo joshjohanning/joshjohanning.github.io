@@ -54,6 +54,7 @@ Based on my migration experience, here are additional tools I've found useful, o
 | **Deploy keys** | [gh-migrate-deploy-keys](https://github.com/mona-actions/gh-migrate-deploy-keys) | Deploy keys are not migrated |
 | **Submodules** | N/a | URLs (org/repo name) may need to be updated |
 | **Stars** | N/a | Repo stars cannot be migrated |
+| **Migration validation** | [gh-migration-validator](https://github.com/mona-actions/gh-migration-validator) | Validates GitHub-to-GitHub migrations by comparing key metrics (issues, PRs, tags, releases, commits, branch protection rules, webhooks, LFS objects) between source and target repositories |
 
 ## Migration Planning Tooling
 
@@ -104,6 +105,7 @@ Special thanks to everyone who has contributed to these OSS tools!
 - [bryantson](https://github.com/bryantson)
 - [pmartindev](https://github.com/pmartindev)
 - [samueljmello](https://github.com/samueljmello)
+- [robandpdx](https://github.com/robandpdx)
 - And many more I am SURE I am missing
 
 ## Summary
