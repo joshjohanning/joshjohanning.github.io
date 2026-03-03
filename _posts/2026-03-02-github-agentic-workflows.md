@@ -18,9 +18,9 @@ image:
 
 GitHub recently launched [Agentic Workflows](https://github.blog/ai-and-ml/automate-repository-tasks-with-github-agentic-workflows/) - a new way to automate repository tasks using AI coding agents, written entirely in **Markdown**. Instead of writing complex YAML logic with dozens of conditional steps, you describe what you want in natural language, and a coding agent (like GitHub Copilot) interprets and executes those instructions at runtime.
 
-I spent some time building a [demo repository](https://github.com/joshjohanning-org/agents-and-agentic-workflows) with 11 agentic workflows to explore the feature space, and I wanted to share what I learned - including the gotchas I hit along the way. If you're thinking about trying agentic workflows, give this post a read to shorten your learning curve and avoid some common pitfalls.
+GitHub calls this broader vision [Continuous AI](https://githubnext.com/projects/continuous-ai/) - integrating AI into the software development lifecycle (SDLC) the same way CI/CD integrated automated builds and deployments. Agentic workflows are how that works in practice.
 
-GitHub calls this broader vision [Continuous AI](https://githubnext.com/projects/continuous-ai/) - integrating AI into the software development lifecycle the same way CI/CD integrated automated builds and deployments. Agentic workflows are the practical mechanism that makes it happen.
+I spent some time building a [demo repository](https://github.com/joshjohanning-org/agents-and-agentic-workflows) with 11 agentic workflows to kick the tires, and I wanted to share what I learned. including the gotchas I hit along the way. If you're thinking about trying agentic workflows, give this post a read to shorten your learning curve and avoid some common pitfalls.
 
 > As of writing, GitHub Agentic Workflows is in **technical preview**. Features, syntax, and behavior may change.
 {: .prompt-warning }
@@ -98,7 +98,7 @@ This was one of the parts I found most interesting. The security model is pretty
 
 ## My Demo Repository
 
-I built [11 agentic workflows](https://github.com/joshjohanning-org/agents-and-agentic-workflows) to explore different patterns. Here's what I ended up with:
+I built [11 agentic workflows](https://github.com/joshjohanning-org/agents-and-agentic-workflows) to get some hands-on experience. Here's what I ended up with:
 
 ### Core Workflows
 
@@ -115,7 +115,7 @@ I built [11 agentic workflows](https://github.com/joshjohanning-org/agents-and-a
 
 ### Workflows with Custom Tools (Safe Inputs + MCP Servers)
 
-These are where things get really interesting - instead of relying solely on the built-in GitHub tools, these workflows use **safe inputs** to define custom MCP tools inline and connect to **external MCP servers**, giving the agent capabilities that go far beyond what's possible with standard Actions:
+These are where things get really interesting - instead of relying solely on the built-in GitHub tools, these workflows use **safe inputs** to define custom MCP tools inline and connect to **external MCP servers**, giving the agent capabilities beyond what standard Actions can do:
 
 | Workflow | Dynamic Features | What It Does |
 |---|---|---|
@@ -188,7 +188,7 @@ network:
 
 The agent gathers security alerts using safe-input tools, then uses DeepWiki to research remediation steps for critical vulnerabilities. You'd never be able to do this with regular `if/then` YAML.
 
-> The possibilities are endless - you could integrate with Jira, Azure Boards, ServiceNow, or any service that exposes an MCP endpoint, as long as you have the appropriate authentication token configured as a repository secret.
+> The possibilities are truly endless - you could integrate with Jira, Azure Boards, ServiceNow, or any service that exposes an MCP endpoint, as long as you have the appropriate authentication token configured as a repository secret.
 {: .prompt-tip }
 
 ## Assigning Issues to the Copilot Coding Agent
@@ -475,7 +475,7 @@ After getting past the setup hurdles, a few things stood out:
 - **Check the lock file diff** after compiling. It's generated code, but scanning it for expected handler configs and job steps can catch issues early.
 - **Use the `gh aw` CLI** liberally. `gh aw compile` validates your frontmatter and catches errors before you push.
 - **Set up the `COPILOT_GITHUB_TOKEN` secret first.** Everything else depends on it.
-- **Be aware of costs.** Each workflow run typically incurs two [Copilot premium requests](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-premium-requests) - one for the agentic work and one for the guardrail check through safe outputs - plus GitHub Actions runner minutes. Monitor your usage in the billing settings to avoid surprises.
+- **Be aware of costs.** Each workflow run typically incurs two [Copilot premium requests](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-premium-requests) - one for the agentic work and one for the guardrail check through safe outputs - plus GitHub Actions runner minutes. Monitor your usage to avoid surprises.
 - **Outputs are traceable.** Issues and PRs created by agentic workflows include hidden HTML metadata with the workflow ID and run URL. You can search for the workflow ID in your repo to find all issues, PRs, and code references tied to a specific workflow.
 
 ## Resources
@@ -494,6 +494,6 @@ After getting past the setup hurdles, a few things stood out:
 
 ## Summary
 
-GitHub Agentic Workflows are a really interesting take on repository automation. Writing natural language instructions that an AI agent executes - with real tools, real security constraints, and real GitHub operations - opens up patterns that just aren't possible with deterministic YAML.
+GitHub Agentic Workflows are a really interesting take on repository automation. Writing natural language instructions that an AI agent executes - with real tools, real security constraints, and real GitHub operations - lets you do things that just aren't possible with deterministic YAML.
 
 The tooling is still in technical preview and has some rough edges (as my troubleshooting list shows), but I'm excited about where this is heading. If you want to try it out, I'd start with a simple triage or reporting workflow and build from there. Check out my [demo repository](https://github.com/joshjohanning-org/agents-and-agentic-workflows) for working examples of all the patterns I covered here. Happy automating! 🚀
