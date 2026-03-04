@@ -62,7 +62,7 @@ Enterprise App Installation
 {: .nolineno}
 
 {: .prompt-tip }
-> You can use an Enterprise-owned GitHub App to install another Enterprise-owned GitHub App into an organization OR an organization-owned GitHub App into an organization. The key difference is that the Enterprise-owned App has enterprise-level permissions and can be managed centrally by enterprise owners.
+> You can use an Enterprise-owned GitHub App to install another Enterprise-owned GitHub App into an organization, an organization-owned GitHub App, or even a third-party Marketplace app into an organization. The key difference is that the Enterprise-owned App has enterprise-level permissions and can be managed centrally by enterprise owners. See my post on [installing Marketplace apps with Enterprise Apps](/posts/github-enterprise-apps-install-marketplace-apps/) for a walkthrough.
 
 ## Installation Automation API Examples
 
@@ -111,7 +111,7 @@ GH_TOKEN=$token gh api --method DELETE /enterprises/avocado-corp/apps/organizati
 
 # You need to retrieve the client_id of the app being installed in order to install it
 # The easiest way is to grab the app's client_id from the app's settings page
-# Programmatically: 
+# Programmatically:
 # - If the app is public, you can query the client_id with any authentication (including Enterprise GitHub App)
 # - If the app is private, you can query the client_id using the API with your user token with the scopes:
 #     $ gh auth login -s read:enterprise or gh auth login -s read:org
@@ -132,7 +132,7 @@ As of September 2025, there are some limitations to be aware of:
 
 - **Limited permission scope**: Not every permission is available at the Enterprise level yet (like managing Enterprise settings)
 - **Enterprise webhooks**: Enterprise installations cannot subscribe to webhooks yet
-- **Third-party apps**: Enterprises can only install apps owned by the enterprise or organizations within the enterprise
+- ~~**Third-party apps**: Enterprises can only install apps owned by the enterprise or organizations within the enterprise~~ -- This works! You just need the app's `client_id`. See my post on [installing Marketplace apps programmatically with Enterprise Apps](/posts/github-enterprise-apps-install-marketplace-apps/) for details.
 - **Rate limits**: Enterprise installations have their own 15,000 requests/hour budget - but note each installation still has its own rate limit
 - **Creating apps**: You cannot currently create Apps through the API; I recommend using the [manifest flow](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest) for codifying the app permissions and creation process through the UI
 
