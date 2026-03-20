@@ -27,7 +27,7 @@ This post will show you how to customize your subject claims on the GitHub repos
 
 ## The OIDC Subject Claim
 
-Following the [GitHub docs](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/using-openid-connect-with-reusable-workflows): 
+Following the [GitHub docs](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/using-openid-connect-with-reusable-workflows):
 
 > - Using `job_workflow_ref`:
 >   - To create trust conditions based on reusable workflows, your cloud provider must support custom claims for `job_workflow_ref`. This allows your cloud provider to identify which repository the job originally came from.
@@ -36,7 +36,7 @@ Following the [GitHub docs](https://docs.github.com/en/actions/deployment/securi
 >   - You can configure more granular trust conditions by customizing the subject (`sub`) claim that's included with the JWT. For more information, see "[About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#customizing-the-token-claims)".
 
 > - We can also see which claims are supported here: [https://token.actions.githubusercontent.com/.well-known/openid-configuration](https://token.actions.githubusercontent.com/.well-known/openid-configuration)
-{: .prompt-tip }
+{: .prompt-info }
 
 If you're not an OIDC expert (don't worry, I'm not either), this might not make a ton of sense, but don't worry, let's step through it.
 
@@ -56,7 +56,7 @@ Let's first start by examining the subject (`sub`) claim that GitHub Actions gen
       uses: github/actions-oidc-debugger@main
       with:
         audience: '${{ github.server_url }}/${{ github.repository_owner }}'
-        
+
     # print oidc token claims manually
     - name: print oidc token claims
       run: |
@@ -65,7 +65,7 @@ Let's first start by examining the subject (`sub`) claim that GitHub Actions gen
             if [[ -x $(command -v jq) ]]; then
                 jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "${1}" > jwt_claims.json
                 cat jwt_claims.json
-                echo ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL}} 
+                echo ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL}}
             fi
           }
           jwtd $IDTOKEN
@@ -91,6 +91,9 @@ We want to customize this where that our cloud provider (Azure in my example) ca
 
 We can [customize the subject claim using the API](https://docs.github.com/en/rest/actions/oidc?apiVersion=2022-11-28#set-the-customization-template-for-an-oidc-subject-claim-for-a-repository), but more easily, we can use [@tspascoal](https://github.com/tspascoal)'s [gh-oidc-sub](https://github.com/tspascoal/gh-oidc-sub) `gh` CLI extension:
 
+> 2026 edit: There's now a UI for this! You can customize the subject claim template (and configure custom property claims) from your organization's actions settings. See my [custom properties OIDC post](/posts/github-actions-oidc-custom-properties/#using-the-settings-ui) for details.
+{: .prompt-tip }
+
 1. Install the `gh` CLI extension:
     ```bash
     gh extensions install tspascoal/gh-oidc-sub
@@ -109,7 +112,7 @@ We can [customize the subject claim using the API](https://docs.github.com/en/re
     ```
     {: .nolineno}
     > Note that if it isn't using the default, you can set it back to the default by running:
-    > 
+    >
     > ```bash
     > gh oidc-sub usedefault --repo joshjohanning-org/oidc-claims-demo
     > ```
@@ -155,16 +158,21 @@ Now that we have the subject claim customized on the GitHub repository, we can u
     job_workflow_ref:joshjohanning-org/reusable-workflows/.github/workflows/azure-oidc-sample.yml@refs/tags/v1
     ```
     {: .nolineno}
-    > You will have to decide if you want to use a tag or a branch for the ref, and in Azure, you can't use wildcards (in AWS you can!). I prefer tags for consistency, but you can use a branch if you simply want your users to refer to `@main` to always have the latest. If referencing a branch, use: `refs/heads/main`
+    > You will have to decide if you want to use a tag or a branch for the ref. ~~In Azure, you can't use wildcards (in AWS you can!).~~ **Azure now supports wildcards with the new [claims matching expression](/posts/azure-federated-credential-claims-matching-expressions/) feature!** I prefer referencing a tag (either semver or rolling major version), but you can use a branch if you want your users to always get the latest with `@main`. If referencing a branch, the subject would use `refs/heads/main` instead of `refs/tags/v1`.
     {: .prompt-info }
 6. It should look something like this:
     ![Federated credential in Azure using job_workflow_ref](azure-oidc-light.png){: .shadow }{: .light }
     ![Federated credential in Azure using job_workflow_ref](azure-oidc-dark.png){: .shadow }{: .dark }
     _Federated credential in Azure using job_workflow_ref_
 
-> Note the maximum number of federated credentials per app registration from the [Azure docs](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp#important-considerations-and-restrictions):
+ > Note the maximum number of federated credentials per app registration from the [Azure docs](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity?pivots=identity-wif-mi-methods-azp#important-considerations-and-restrictions):
 > > A maximum of 20 federated identity credentials can be added to an application or user-assigned managed identity.
-{: .prompt-info }
+>
+> This is less of a limitation now that [claims matching expressions](/posts/azure-federated-credential-claims-matching-expressions/) support wildcards - a single credential can cover multiple repos, branches, or tags.
+{: .prompt-warning }
+
+> GitHub Actions OIDC tokens now also support [repository custom properties as claims](/posts/github-actions-oidc-custom-properties/). This means you can include custom properties in your OIDC token (prefixed with `repo_property_`) and use them in your cloud provider's trust policies for attribute-based access control (ABAC) - no per-repo workflow changes required.
+{: .prompt-tip }
 
 ## Configuring the Reusable Workflow
 
@@ -197,14 +205,14 @@ And here's the called workflow (i.e.: the workflow in my "reusable workflows" re
 
 {% raw %}
 ```yml
-name: azure-oidc-sample 
+name: azure-oidc-sample
 
 on:
   workflow_call:
       keyvault:
         description: name of the keyvault
         type: string
-        default: josh-key-vault-test 
+        default: josh-key-vault-test
 
 jobs:
   login:
@@ -222,12 +230,12 @@ jobs:
         client-id: d951ac80-75f2-446a-aca6-cd53a68611f0
         tenant-id: e9846558-c4f0-4312-a89e-ebebe80779a1
         subscription-id: 2e9bfb26-ca29-44f5-8920-72c1b0b37188
-        
+
     - name: print azure subscription info
       run: |
         az account show
         az account show | jq ".id"
-        
+
     - name: get all az keyvault secrets
       run: |
         for secret_name in $(az keyvault secret list --vault-name ${{ inputs.keyvault }} --query "[].{name:name}" --output tsv); do
@@ -235,7 +243,7 @@ jobs:
           echo "::add-mask::$secret_value"
           echo "$secret_name=$secret_value" >> $GITHUB_ENV
         done
-        
+
     - name: testing secrets
       run: |
         echo "echoing as secret: ${{ secrets.my-secret }}" # doesn't work
@@ -250,7 +258,7 @@ When running the workflow, we can see that it successfully logs in and fetches t
 ![Using OIDC in GitHub Actions to authenticate to Azure and retrieve secrets from a Key Vault](github-oidc-success-dark.png){: .shadow }{: .dark }
 _Using OIDC in GitHub Actions to authenticate to Azure and retrieve secrets from a Key Vault_
 
-If we try to be sneaky and use a different reusable workflow, a different tag/branch, or no reusable workflow at all, it will fail. 
+If we try to be sneaky and use a different reusable workflow, a different tag/branch, or no reusable workflow at all, it will fail.
 
 Here's an example where I tried to use a different reusable workflow and it fails:
 
