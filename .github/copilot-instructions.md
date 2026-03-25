@@ -14,6 +14,7 @@
   - Command variations - showing different ways to run the same script
 - Use `{: .prompt-info }`, `{: .prompt-tip }`, `{: .prompt-warning }`, and `{: .prompt-danger }` for callouts
 - Wrap YML snippets with the `{% raw %}` and `{% endraw %}` tags to avoid Liquid parsing issues
+- Also wrap any inline text or callouts containing `${{ }}` expressions with `{% raw %}` and `{% endraw %}` tags
 - Do not leave any trailing whitespace at the end of lines
 
 ### Images
@@ -30,7 +31,7 @@ Here's an example:
 _Markdown badges in a GitHub organization's README_
 ```
 
-### Style 
+### Style
 
 - I typically always have an `## Overview` and `## Summary` section
 
@@ -54,6 +55,10 @@ image:
   alt: A commit from a GitHub app in a GitHub repository with the commit being attributed to the app
 ---
 ```
+
+### Tags
+
+Only create a new tag if it's a commonly used term that will apply to multiple posts. Check the [tags page](https://josh-ops.com/tags/) for existing tags before adding new ones. One-off tags that only apply to a single post are not worth adding. If an existing tag is relevant to the post, add it.
 
 ## Documentation
 
