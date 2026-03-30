@@ -155,7 +155,7 @@ The action:
 2. Runs `npm run package` (which calls [`ncc`](https://github.com/vercel/ncc), a bundler that compiles Node.js modules into a single file) to bundle everything into `dist/`
 3. Pushes the compiled output to a release tag (e.g., `v1.2.3`)
 4. Updates the major version tag (e.g., `v1`) to point to the new release
-5. Creates a GitHub release
+5. Creates a GitHub release with [auto-generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes), so merged PR titles and authors are included automatically (e.g., Dependabot bumps, bot syncs, and feature PRs all show up without any manual effort). [Here's an example](https://github.com/joshjohanning/nodejs-actions-starter-template/releases/tag/v2.0.1)
 
 I do **not** push the compiled `dist/` folder back to the default branch. Some maintainers do this, but I find it messy - it creates noisy diffs and merge conflicts. Instead, the compiled code only lives on the release tags. People shouldn't be referencing `@main` in their workflows anyway - they should be pinning to a specific version tag (e.g., `@v1`, `@v1.2.3`, or a commit SHA) to ensure stability.
 
