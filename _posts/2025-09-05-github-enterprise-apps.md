@@ -17,6 +17,8 @@ image:
 
 GitHub has made enterprise GitHub App management much easier with the [general availability of Enterprise GitHub Apps](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) and [Enterprise-level access for GitHub Apps and installation automation APIs (public preview)](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis/). These capabilities allow enterprise administrators to programmatically install, manage, and audit GitHub Apps across hundreds of organizations without manually clicking through installation screens. This is particularly useful during migration scenarios where you need to programmatically install and configure apps across multiple organizations.
 
+As of May 2026, there's also a new [enterprise installation API (public preview)](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) that lets an App look up its own enterprise installation ID via [`GET /enterprises/{enterprise}/installation`](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/apps#get-an-enterprise-installation-for-the-authenticated-app) instead of grabbing it from the browser.
+
 This post shows how to use these new APIs with practical bash examples.
 
 > Check out my [Demystifying GitHub Apps: Using GitHub Apps to Replace Service Accounts](/posts/github-apps/) post if you're interested in learning more about what a GitHub App is! 🚀
@@ -76,10 +78,26 @@ Before diving into the examples, there are a few important things to know:
 
 ### Examples (Bash)
 
+Need to look up your enterprise installation ID first? With the new [enterprise installation API (public preview)](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/), you can grab it with a JWT instead of digging through the browser address bar:
+
+```bash
+# Mint a JWT for the app (no --installation-id needed)
+jwt=$(gh token generate --app-id 1891481 --key /Users/joshjohanning/Downloads/josh-github-enterprise-app.2025-09-03.private-key.pem --token-only)
+
+# Look up the enterprise installation ID
+GH_TOKEN=$jwt gh api /enterprises/avocado-corp/installation --jq '.id'
+```
+{: .nolineno}
+
+{: .prompt-tip }
+> If the App's first installation was at the enterprise (no orgs), you can skip the `--installation-id` flag entirely on `gh token generate`. Otherwise, the new API above is the cleanest way to discover it programmatically.
+
+Now the full set of examples for managing app installations across enterprise organizations:
+
 ```bash
 # Generate token for the enterprise app
 # The --installation-id option can be omitted if the App's first installation was at the enterprise (no orgs)
-# Find the installation ID from address bar when reviewing the app's installation configuration
+# Otherwise, look it up programmatically with the new enterprise installation API (see above), or grab it from the address bar
 token=$(gh token generate --app-id 1891481 --installation-id 84179086 --key /Users/joshjohanning/Downloads/josh-github-enterprise-app.2025-09-03.private-key.pem --token-only)
 
 # Get repositories accessible to an app installed in org
@@ -128,11 +146,12 @@ GH_TOKEN=$token gh api /enterprises/avocado-corp/apps/organizations/joshjohannin
 
 ## Current Limitations
 
-As of September 2025, there are some limitations to be aware of:
+As of May 2026, there are some limitations to be aware of:
 
 - **Limited permission scope**: Not every permission is available at the Enterprise level yet (like managing Enterprise settings)
 - **Enterprise webhooks**: Enterprise installations cannot subscribe to webhooks yet
 - ~~**Third-party apps**: Enterprises can only install apps owned by the enterprise or organizations within the enterprise~~ -- This works! You just need the app's `client_id`. See my post on [installing Marketplace apps programmatically with Enterprise Apps](/posts/github-enterprise-apps-install-marketplace-apps/) for details.
+- ~~**Enterprise installation discovery**: Previously, there was no direct API to look up an enterprise installation ID - you had to paginate through all installations or grab it from the browser~~ -- [Resolved in May 2026](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) with `GET /enterprises/{enterprise}/installation` (public preview)
 - **Rate limits**: Enterprise installations have their own 15,000 requests/hour budget - but note each installation still has its own rate limit
 - **Creating apps**: You cannot currently create Apps through the API; I recommend using the [manifest flow](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest) for codifying the app permissions and creation process through the UI
 
@@ -141,7 +160,7 @@ As of September 2025, there are some limitations to be aware of:
 
 ## Summary
 
-[Enterprise-owned GitHub Apps](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) (GA March 2025) and the [Enterprise-level installation automation APIs](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis) (public preview July 2025) solve the manual pain of managing apps across many organizations. The key benefit is eliminating the need to click through installation screens for every org, plus automatic permission propagation when you update app settings.
+[Enterprise-owned GitHub Apps](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) (GA March 2025), the [Enterprise-level installation automation APIs](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis) (public preview July 2025), and the new [enterprise installation API](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) (public preview May 2026) solve the manual pain of managing apps across many organizations. The key benefit is eliminating the need to click through installation screens for every org, plus automatic permission propagation when you update app settings.
 
 The bash examples above demonstrate the core operations: install, uninstall, change repository access, and audit existing installations. These [Enterprise-level GitHub App management APIs](https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/organization-installations?apiVersion=2022-11-28) are particularly valuable during migrations or when you need to deploy security/compliance apps enterprise-wide.
 
