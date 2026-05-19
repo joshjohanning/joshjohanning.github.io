@@ -40,9 +40,13 @@ You can use wildcards in different parts of the expression to match various patt
 |---|---|
 | `claims['sub'] matches 'repo:my-org/*:*'` | Any repo in `my-org`, any ref |
 | `claims['sub'] matches 'repo:my-org/*:ref:refs/heads/main'` | Any repo in `my-org`, but only the `main` branch |
+| `claims['sub'] matches 'repo:my-org/*:environment:*'` | Any repo in `my-org`, any [deployment environment](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-deployments/managing-environments-for-deployment) deploy |
+| `claims['sub'] matches 'repo:my-org/*:environment:prod*'` | Any repo in `my-org`, but only environments starting with `prod` (e.g., `prod`, `prod-us-east`, `production`, etc.) |
 | `claims['sub'] matches 'job_workflow_ref:my-org/reusable-workflows/.github/workflows/deploy.yml@refs/tags/v*'` | The specific reusable workflow, but any `v` tag (e.g., `v1`, `v2`, etc.) |
 
-That last example is particularly useful when combined with [customized OIDC subject claims and reusable workflows](/posts/github-actions-oidc-reusable-workflows/). You can use a single federated credential to match multiple tags of a reusable workflow instead of having to update the credential each time you release a new version.
+The environment examples are particularly useful if you have [deployment protection rules](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-deployments/managing-environments-for-deployment#deployment-protection-rules) (such as required reviewers, wait timers, or even [custom deployment gates](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/create-custom-protection-rules)) programmatically configured on all `prod*` environments in an organization/enterprise. Scoping the federated credential to only match on the environment means Actions jobs can't authenticate at all unless they run through one of those protected deployment environments.
+
+The `job_workflow_ref` example is also useful when combined with [customized OIDC subject claims and reusable workflows](/posts/github-actions-oidc-reusable-workflows/). You can use a single federated credential to match multiple tags of a reusable workflow instead of having to update the credential each time you release a new version.
 
 ### Using Repository Custom Properties
 
