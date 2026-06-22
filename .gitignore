@@ -26,6 +26,7 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 
-# Link Checker
-link-checker.json
-error.txt
+# Hidden system files
+*~
+.DS_Store
+Thumbs.db
