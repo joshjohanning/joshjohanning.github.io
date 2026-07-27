@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="840" viewBox="0 0 1600 840" role="img" aria-labelledby="title desc">
+  <title id="title">GitHub Copilot plugin bundle diagram</title>
+  <desc id="desc">A light mode diagram showing a Copilot plugin manifest bundling agents, skills, hooks, MCP servers, and language servers.</desc>
+  <rect width="1600" height="840" fill="#f6f8fa"/>
+  <rect x="96" y="92" width="1408" height="656" rx="28" fill="#ffffff" stroke="#d0d7de" stroke-width="3"/>
+  <text x="152" y="168" font-family="Arial, sans-serif" font-size="54" font-weight="700" fill="#24292f">GitHub Copilot plugin</text>
+  <text x="152" y="218" font-family="Arial, sans-serif" font-size="26" fill="#57606a">One installable bundle for custom tools, context, and workflows</text>
+  <rect x="152" y="284" width="430" height="420" rx="20" fill="#ddf4ff" stroke="#54aeef" stroke-width="3"/>
+  <text x="196" y="350" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#0969da">plugin.json</text>
+  <text x="196" y="404" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">name</text>
+  <text x="196" y="448" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">description</text>
+  <text x="196" y="492" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">skills</text>
+  <text x="196" y="536" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">agents</text>
+  <text x="196" y="580" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">hooks</text>
+  <text x="196" y="624" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">mcpServers</text>
+  <text x="196" y="668" font-family="Menlo, Consolas, monospace" font-size="24" fill="#24292f">lspServers</text>
+  <path d="M622 450 H720" stroke="#57606a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M702 430 L730 450 L702 470" fill="none" stroke="#57606a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#24292f">
+    <rect x="770" y="284" width="270" height="114" rx="18" fill="#dafbe1" stroke="#2da44e" stroke-width="3"/>
+    <text x="828" y="354">Agents</text>
+    <rect x="1090" y="284" width="270" height="114" rx="18" fill="#fff8c5" stroke="#bf8700" stroke-width="3"/>
+    <text x="1150" y="354">Skills</text>
+    <rect x="770" y="452" width="270" height="114" rx="18" fill="#ffebe9" stroke="#cf222e" stroke-width="3"/>
+    <text x="838" y="522">Hooks</text>
+    <rect x="1090" y="452" width="270" height="114" rx="18" fill="#fbefff" stroke="#8250df" stroke-width="3"/>
+    <text x="1148" y="522">MCP</text>
+    <rect x="930" y="618" width="270" height="86" rx="18" fill="#f6f8fa" stroke="#8c959f" stroke-width="3"/>
+    <text x="978" y="672">LSP config</text>
+  </g>
+</svg>
