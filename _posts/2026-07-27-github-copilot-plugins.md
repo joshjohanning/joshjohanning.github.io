@@ -1,7 +1,7 @@
 ---
 title: 'Creating a GitHub Copilot Plugin'
 author: Josh Johanning
-date: 2026-06-23 12:00:00 -0500
+date: 2026-07-27 12:00:00 -0500
 description: A practical guide to creating and sharing GitHub Copilot plugins that bundle agents, skills, hooks, MCP servers, and other customizations
 categories: [GitHub]
 tags: [GitHub, GitHub Copilot, Custom Agents, MCP]
