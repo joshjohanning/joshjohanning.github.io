@@ -27,8 +27,8 @@ This post collects the features that live in `.github` or `.github-private`, the
 
 The repos are typically used like this:
 
-- **`.github`** (typically public or internal) → community health files, public org profile README, GitHub Actions workflow templates, Copilot custom agents, and Copilot settings/plugin standards
-- **`.github-private`** (typically private, sometimes internal) → member-only org profile README, Copilot custom agents, and enterprise-oriented Copilot settings/plugin standards
+- **`.github`** (typically public or internal) → community health files, public org profile README, GitHub Actions workflow templates, and org-scoped Copilot custom agents
+- **`.github-private`** (typically private, sometimes internal) → member-only org profile README, Copilot custom agents, and enterprise-managed Copilot settings and plugin standards
 
 For Copilot features, both repos can be valid depending on the feature and scope. For enterprise-level custom agent sharing across organizations, the docs still point to a designated `.github-private` repository.
 
@@ -43,7 +43,7 @@ For Copilot features, both repos can be valid depending on the feature and scope
 | [Workflow templates](#feature-4-github-actions-workflow-templates-starter-workflows) | `.github` | Public / Internal / Private | **Internal only** (private doesn't serve templates) | Public / Internal / Private (≥ 3.21) |
 | [Copilot custom agents - org scope](#feature-5-copilot-custom-agents-org--enterprise-scope) | `.github` or `.github-private` | Depends on selected repo | Internal or Private | Depends on selected repo |
 | [Copilot custom agents - enterprise scope](#feature-5-copilot-custom-agents-org--enterprise-scope) | Designated `.github-private` repo | Internal or Private | Internal or Private | Internal or Private |
-| [Copilot plugin marketplace and enterprise standards](#feature-6-copilot-plugin-marketplace-and-enterprise-standards) | `.github` or `.github-private` | Depends on selected repo | Internal or Private | Depends on selected repo |
+| [Enterprise-managed Copilot settings and plugin standards](#feature-6-enterprise-managed-copilot-settings-and-plugin-standards) | Designated `.github-private` repo | Internal or Private | Internal or Private | Not documented |
 
 For Copilot rows that say "depends on selected repo," use the visibility supported by that repo on your platform: `.github` follows `.github` visibility behavior, while `.github-private` supports internal or private for these Copilot use cases. For related files that do not work as org-wide defaults, see [Copilot files that are not org-wide defaults](#what-about-copilot-instructionsmd-agentsmd-skills-hooks-and-prompts).
 
@@ -234,27 +234,36 @@ Visibility depends on which repo you use:
 
 For enterprise-scoped agents, use the designated `.github-private` repository from the enterprise configuration.
 
-## Feature 6: Copilot plugin marketplace and enterprise standards
+## Feature 6: Enterprise-managed Copilot settings and plugin standards
 
-[Enterprise-level Copilot plugin standards](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/configure-enterprise-plugin-standards) are specifically about **Copilot Plugins** today. A plugin can package things like agents, skills, hooks, prompts, MCP servers, and related metadata so users can install and update them consistently.
+[Enterprise-managed Copilot settings](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/configure-enterprise-managed-settings) let enterprise owners centrally control Copilot client behavior. Server-managed settings are sourced from the designated `.github-private` repository in the organization selected as the enterprise's **source of governance**.
 
-You do **not** need a marketplace to use Copilot Plugins. A plugin can be installed directly from a repo or other supported source. The enterprise plugin standards configuration is more about governance: giving users a curated source, improving discoverability, and making versioning/updates more manageable across clients.
+These settings apply to all users on the enterprise's Copilot plan, with no organization-level override. Users do not need access to the `.github-private` repository for the settings to apply. Supported clients currently include Copilot CLI, VS Code, the GitHub Copilot app, and Copilot cloud agent, although individual settings may not be supported by every client.
 
-The enterprise docs use `.github-private`, but the same Copilot settings can also work from `.github`. In practice, `.github-private` is the placement you are more likely to use for enterprise-wide configuration because it is member-only by default.
+The available settings include:
+
+- Permission controls, such as disabling bypass / allow-all mode
+- Default model selection
+- Required or blocked plugins
+- Allowed or restricted plugin marketplaces
+- OpenTelemetry export settings
+- Remote control restrictions
+
+A Copilot plugin can package agents, skills, hooks, prompts, MCP servers, and related metadata. The plugin settings provide enterprise governance over which marketplaces users can access and which plugins are automatically enabled or blocked. Users still need access to the repository or other source where a configured plugin is hosted.
 
 ### Setup
 
-- Repo: **`.github`** or **`.github-private`**
-- Path: `.github/copilot/settings.json`
+- Select an organization as the enterprise's configuration source under **Enterprise settings → Copilot → Agents**
+- Create an **internal** or **private** `.github-private` repository in that organization
+- Add `copilot/managed-settings.json` to the repository's default branch
+- Changes apply automatically within about an hour, or when a user restarts a supported client or signs in again
 
 ### Visibility requirements
 
-Visibility depends on which repo you use:
+The designated `.github-private` repository can be **internal** or **private**. Visibility controls who can read or propose changes to the repository, not who receives the managed settings. Internal visibility grants enterprise members read access automatically, while private visibility lets you grant access manually.
 
-| Repo | Visibility behavior |
-| --- | --- |
-| `.github` | Use the visibility supported for `.github` on your platform |
-| `.github-private` | **Internal** is recommended for enterprise-wide use; **private** also works |
+> **Other deployment methods:** The same managed settings schema can also be deployed through MDM or as a local file. Those methods do not use `.github-private`, so this section focuses on the server-managed repository option.
+{: .prompt-info }
 
 ## What about `copilot-instructions.md`, `AGENTS.md`, skills, hooks, and prompts?
 
@@ -266,13 +275,13 @@ A common question - do any of these per-repo Copilot files work as **org-wide de
 | `.github/instructions/**/*.instructions.md` | Per-repo (path-specific) | Modular instructions in each repo |
 | `~/.copilot/copilot-instructions.md` | Personal/global | User's own machine |
 | `AGENTS.md` | Per-repo | Git root or cwd - repo-scoped instructions |
-| `.github/skills/` | Per-repo | Copilot skill definitions in the current repo |
+| `.github/skills/` | Per-repo | Skills for Copilot cloud agent, code review, CLI, app, and supported IDEs |
 | `.github/hooks/` | Per-repo | Copilot hook definitions in the current repo |
 | `.github/prompts/` | Per-repo | Reusable prompt files in the current repo |
 | `.github/workflows/copilot-setup-steps.yml` | Per-repo | Cloud agent environment setup |
-| `.github/mcp.json` | Per-repo | MCP server configuration |
+| Repository settings → Copilot → MCP servers | Per-repo | Shared MCP configuration for Copilot cloud agent and code review |
 
-You can store skills, hooks, or prompts in `.github-private` if you want a central repo for source control, but that does **not** make them automatically available to Copilot coding agent across every repo. For CCA, install what you need in the target repo or during setup (for example, with `.github/workflows/copilot-setup-steps.yml`). For supported desktop/CLI clients, enterprise plugin standards can help push/install plugins so users get the right skills or tools locally, but that is a plugin/client policy flow - not an automatic `.github-private` repo lookup by CCA.
+You can store skills, hooks, or prompts in `.github-private` if you want a central repo for source control, but that does **not** make them automatically available across every repo. Add skills to `.github/skills/` in each target repository for Copilot cloud agent and code review to discover them. MCP servers for those GitHub.com agents are also configured per target repository in its settings; existing Copilot cloud agent MCP configurations automatically apply to Copilot code review. For supported desktop/CLI clients, enterprise plugin standards can help install plugins so users get the right skills or tools locally, but that is a plugin/client policy flow - not an automatic `.github-private` repo lookup.
 
 For **[org-level Copilot instructions](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-organization-instructions)**, use the Org Settings UI → Copilot → Custom Instructions. There is no file-based equivalent in `.github` or `.github-private`. The docs currently describe org custom instructions as supported for Copilot Chat on GitHub.com, Copilot code review on GitHub.com, and Copilot coding agent on GitHub.com. In practice, we've also seen VS Code pick up org instructions for repos in that org, even though the docs do not clearly say that yet - so treat client support as something to test rather than assume.
 
@@ -282,7 +291,7 @@ For **[org-level Copilot instructions](https://docs.github.com/en/copilot/how-to
 > - If you are testing whether org instructions apply, verify behavior directly or inspect the final assembled context/debug output when available; don't rely only on file-discovery logs.
 {: .prompt-warning }
 
-In contrast, the Copilot features that *do* use `.github` or `.github-private` directly are [custom agents](#feature-5-copilot-custom-agents-org--enterprise-scope) and [Copilot plugin marketplace / enterprise standards](#feature-6-copilot-plugin-marketplace-and-enterprise-standards).
+In contrast, the Copilot features that *do* use `.github` or `.github-private` directly are [custom agents](#feature-5-copilot-custom-agents-org--enterprise-scope) and [enterprise-managed Copilot settings and plugin standards](#feature-6-enterprise-managed-copilot-settings-and-plugin-standards).
 
 ## EMU / GHEC-DR limitations
 
@@ -303,7 +312,7 @@ Everything else (community health files like `CONTRIBUTING.md`/`SECURITY.md`/`SU
 
 The `.github` and `.github-private` repos are used by several org-wide GitHub features, but the required repo, path, and visibility depend on the feature. The two practical takeaways:
 
-1. **`.github` vs `.github-private` is mostly a clean split:** community health files, public README, and workflow templates live in `.github`. Member-only README lives in `.github-private`. Copilot **custom agents** and plugin standards can use either repo, but enterprise-wide configurations commonly use `.github-private`.
+1. **`.github` vs `.github-private` is mostly a clean split:** community health files, public README, and workflow templates live in `.github`. Member-only README and enterprise-managed Copilot settings live in `.github-private`. Copilot **custom agents** can use either repo at organization scope, but enterprise-wide agents and managed settings use the designated `.github-private` repository.
 2. **Visibility rules are feature-specific:** issue/PR templates still require **public**, the member-only README requires **private**, and Copilot features can use internal visibility when hosted from `.github-private`.
 
 If you're on EMU, the public-only requirements for issue/PR templates and the public org README are current product limitations. For issue and PR templates, the workaround is to manage them per-repo.
