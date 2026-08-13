@@ -2,7 +2,7 @@
 title: 'Configure GitHub Dependabot to Keep Actions Up to Date'
 author: Josh Johanning
 date: 2022-07-02 08:00:00 -0500
-description: Using Dependabot to keep Actions in GitHub Actions Workflows up to date, including how this works for custom private/internal actions within an organization
+description: Using Dependabot to keep GitHub Actions workflows up to date, including current access options for private and internal actions
 categories: [GitHub, Dependabot]
 tags: [GitHub, Dependabot, Pull Requests, GitHub Actions]
 media_subpath: /assets/screenshots/2022-07-02-github-dependabot-for-actions
@@ -15,28 +15,28 @@ image:
 
 ## Overview
 
-You probably know that Dependabot can be used to update your packages, such as NPM or NuGet, but did you also know you can use it to keep Actions up to date in your GitHub Actions Workflow?
+You probably know that Dependabot can be used to update your packages, such as npm or NuGet, but did you also know you can use it to keep actions up to date in your GitHub Actions workflows?
 
-What about for custom Actions that you have create in your organization, did you know you can use Dependabot to keep those up to date as well?
+What about custom actions that you have created in your organization? Dependabot can keep those up to date as well.
 
-I will show you how to do this both for Actions in the public marketplace and custom actions you have created in your organization internally.
+I will show you how to do this for actions in the public marketplace and custom actions in private or internal repositories.
 
 ## Marketplace Actions
 
-Configuring Dependabot with marketplace actions is pretty easy. We're using the [Dependabot Version Updates](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates) functionality, so we have to create our [`dependabot.yml`{: .filepath}](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file) file manually. There are 3 ways to do this:
+Configuring Dependabot with marketplace actions is pretty easy. We're using [Dependabot version updates](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configure-version-updates), so we have to create a [`dependabot.yml`{: .filepath}](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference) file. There are three ways to do this:
 
-1. Under the repository Settings page > Code security and analysis > Dependabot version updates, you can click the Configure button to prepopulate the `dependabot.yml`{: .filepath} file.
-2. Under the repository Insights page > Dependency Graph > Dependabot > Create Config File
-3. Create your own file in the `.github/dependabot.yml`{: .filepath} directory.
+1. Under the repository **Settings** page > **Advanced Security** > **Dependabot version updates**, click **Enable** to prepopulate the `dependabot.yml`{: .filepath} file.
+2. Under the repository **Insights** page > **Dependency graph** > **Dependabot**, click **Create config file**.
+3. Create `.github/dependabot.yml`{: .filepath} yourself.
 
-Whichever one you pick, you will still have to configure the `dependabot.yml`{: .filepath} file with which [package ecosystems](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem) you want it to pick up.
+Whichever one you pick, you will still have to configure the `dependabot.yml`{: .filepath} file with the [package ecosystems](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#package-ecosystem-) you want it to pick up.
 
 For GitHub Actions in the marketplace, it would look like this:
 
+{% raw %}
 ```yml
 version: 2
 updates:
-
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
@@ -46,36 +46,62 @@ updates:
     open-pull-requests-limit: 10
 ```
 {: file='.github/dependabot.yml'}
+{% endraw %}
 
-Note that even though your workflows are in the `.github/workflows`{: .filepath} directory, Dependabot still expects the `directory` on line 8 to be set to `"/"` ([documented here](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#directory)).
+Note that even though your workflows are in the `.github/workflows`{: .filepath} directory, Dependabot still expects `directory` to be set to `"/"` ([documented here](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#directory--)).
 
-I also like to set `open-pull-requests-limit` explicitly, otherwise the [default maximum number of pull requests](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#open-pull-requests-limit) that will be created per package ecosystem defined is `5`.
+I also like to set `open-pull-requests-limit` explicitly. Otherwise, the [default maximum number of pull requests](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference#open-pull-requests-limit--) created per package ecosystem is `5`.
 
-## Custom Actions in Organization
+## Custom Actions in an Organization
 
-So far, this is pretty well documented. But what is a little harder to figure out is how to use this for custom actions in private/internal repositories within an organization. There are two different ways to do this, and I will talk about both.
+Custom actions stored in private or internal repositories need one additional piece: Dependabot must be allowed to read the repository that contains the action. The preferred solution is now a repository access policy, not a personal access token (PAT) in every consuming repository.
 
-The first doesn't require any different configuration than the above. However, when you use a custom action, you will see an error in Dependabot:
+If access is missing, the Dependabot job reports an error like this:
 
 ![Error in Dependabot using custom action](dependabot-error.png){: .shadow }
 _Dependabot throws an error and requests you to grant access_
 
-You would have to grant access to _every_ custom action repository in your organization - which seems untenable. 
+### Organization and Enterprise Repository Access
 
-You can [proactively add the private action repositories](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-security-and-analysis-settings-for-your-organization#allowing-dependabot-to-access-private-dependencies) via Organization Settings > Code security and analysis > Grant Dependabot access to private repositories, but again, this seems less than ideal, especially since I don't think there's an API or GraphQL method of updating this. 
+For dependencies hosted in the same organization, an organization owner can grant Dependabot access centrally. In the organization, go to **Settings** > **Security** > **Advanced Security** > **Global settings**, then find **Grant Dependabot access to repositories**. Set the default access level to **Internal** to cover all current and future internal repositories, or explicitly add private repositories that host actions.
+
+On GitHub Enterprise Cloud, an enterprise owner can also enable internal access across organizations in the same enterprise. Go to the enterprise **Policies** page > **Advanced Security** > **Grant Dependabot access to repositories**, and select internal access. This is useful when the workflow repository and the internal action repository are in different organizations.
+
+The [Dependabot repository access REST API](https://docs.github.com/en/rest/dependabot/repository-access) supports both organization and enterprise administration. For example, `PUT /orgs/{org}/dependabot/repository-access/default-level` can set the organization default to `internal`, while `PUT /enterprises/{enterprise}/dependabot/repository-access/default-level` applies across organizations.
+
+> Repository visibility and licensing still matter. **Internal** repositories require an enterprise account. Private repositories are available on other plans, but each private action repository must be explicitly granted unless it is covered by an applicable policy. The cross-organization internal repository policy is available on GitHub.com and GitHub Enterprise Cloud; for GitHub Enterprise Server, verify that your installed version includes it.
+{: .prompt-info }
 
 ![Granting Dependabot access to private repos](dependabot-private-repos.png){: .shadow }
-_Granting Dependabot access to private repos in organization settings_
+_The older organization UI for granting Dependabot access to repositories_
 
-The second way to do this is to use a Dependabot secret (GitHub PAT) and a `git` repository as a [private registry](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#git).
+No registry entry or PAT is needed in `dependabot.yml`{: .filepath} when the repository access policy covers the action repository. The original `github-actions` update block is enough.
 
-Here's the `dependabot.yml`{: .filepath} file:
+### Centralized Private Registry Configuration
+
+Repository access and private registry access solve different problems. Use the repository policy above for actions stored in GitHub repositories. Use a [private registry configuration](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/manage-your-dependency-security/configure-access-to-private-registries) for package feeds or Git sources that require separate credentials.
+
+Organization owners can define these centrally under **Organization Settings** > **Security** > **Secrets and variables** > **Private registries** > **New private registry**. Select which repositories can use the configuration: all repositories, private and internal repositories, or selected repositories. Organization configurations can also be managed with the [private registries REST API](https://docs.github.com/en/rest/private-registries/organization-configurations), starting with `POST /orgs/{org}/private-registries`.
+
+Prefer the safest authentication method supported by the registry:
+
+1. Use **OIDC** when available. Dependabot receives short-lived credentials for each update job instead of storing a long-lived secret. Current organization-level OIDC providers include Azure, AWS CodeArtifact, Cloudsmith, Google Artifact Registry, and JFrog Artifactory.
+2. Otherwise, use a dedicated, read-only registry token with the smallest repository or package scope and a short expiration. Store it in the centralized organization registry configuration.
+3. Use username and password only when the registry does not support a safer token or OIDC option.
+
+> Organization-level private registries are available on GitHub.com and GitHub Enterprise Cloud. GitHub Enterprise Server support depends on the installed release, and OIDC/provider support can differ by version. Check the documentation for your GHES version before designing around it.
+{: .prompt-tip }
+
+### Legacy Fallback for Git Sources
+
+Keep the `git` registry pattern only when a repository access policy cannot cover the source, such as a private Git dependency outside the enterprise or an older GitHub Enterprise Server release. It should not be the default for same-organization or same-enterprise internal actions.
+
+In that case, define the credential once as an organization Dependabot secret under **Organization Settings** > **Security** > **Secrets and variables** > **Dependabot**, restrict its repository access, and reference it from `dependabot.yml`{: .filepath}:
 
 {% raw %}
 ```yml
 version: 2
 updates:
-
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     # Workflow files stored in the default location of `.github/workflows`
@@ -88,27 +114,19 @@ registries:
   github:
     type: git
     url: https://github.com
-    username: x-access-token # username doesn't matter
-    password: ${{ secrets.GHEC_TOKEN }} # dependabot secret
+    username: dependabot-read
+    # Organization Dependabot secret containing the scoped, expiring PAT
+    password: ${{ secrets.ORG_GITHUB_READ_TOKEN }}
 ```
 {: file='.github/dependabot.yml'}
-
-You'll notice the `password: ${{ secrets.GHEC_TOKEN }}` on line 17. We need to create a [Dependabot Secret](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-encrypted-secrets-for-dependabot) using a [GitHub Personal Access Token (PAT)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). I know that managing a PAT can be annoying and potentially insecure, but on the upside, Dependabot Secrets can _only_ be accessed via Dependabot, and the Dependabot implementation is essentially a black box to us. They can't be accessed maliciously / inappropriately through GitHub Actions workflow runs.
-
-What I recommend is:
-
-1. Creating a machine user or service account that only has read-access to the repositories in the organization - note that this will consume a license
-2. Log into that account and [create a PAT](https://github.com/settings/personal-access-tokens/new) that doesn't expire with only the `repositories` scope selected
-3. Create an [organization secret for Dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-encrypted-secrets-for-dependabot#adding-an-organization-secret-for-dependabot) - this way all the repositories in the organization will be able to access the Dependabot secret
-
-Notes: 
-- In theory you could [create the PAT](https://github.com/settings/personal-access-tokens/new) under anyone's account since no one can dump the PAT from a GitHub Action workflow and it would be fine, but I think it's better to have it under a machine user or service account so that Dependabot will still work if / when that original person is no longer with the company
-- Another reason to use a machine user or service account is that you can't currently create a PAT with a read only repo scope - it's all or nothing
-- And before you ask: you unfortunately can't use a GitHub App here, at least not with the native Dependabot implementation
-
 {% endraw %}
 
-Once you configure the `dependabot.yml`{: .filepath} and Dependabot secret as discussed above, the next time Dependabot runs, it will create pull requests for you for both marketplace AND private / custom actions.
+Use a fine-grained PAT when the target supports it, grant read-only **Contents** access only to the required repositories, set an expiration, and rotate it. A classic PAT should be the last resort because its `repo` scope is broad. A machine user can avoid tying the fallback to an employee, but it consumes a paid seat for private or internal repository access and does not make a non-expiring token safe. GitHub App installation tokens are short-lived, but native Dependabot cannot mint a fresh installation token inside a static `dependabot.yml`{: .filepath} registry definition, so they are not a direct substitute in this fallback.
+
+> Dependabot secrets are encrypted and are not exposed directly to workflow steps, but that is not a reason to use a broad or non-expiring credential. Treat the token as a production secret and scope, expire, audit, and rotate it accordingly.
+{: .prompt-warning }
+
+Once repository or registry access is configured, the next Dependabot run can create pull requests for both marketplace and private or internal actions.
 
 ![Dependabot created pull requests for both marketplace and private / custom actions](dependabot-pr.png){: .shadow }
 _Dependabot created pull requests for both marketplace and private / custom actions_
@@ -119,4 +137,4 @@ You're in luck! Check out this [post](/posts/dependabot-reusable-workflows/) of 
 
 ## Summary
 
-Keeping marketplace actions up to date is one thing, but keeping your custom actions might be just as important! With the magic of Dependabot, you can keep your custom actions up to date without having to manually check for updates.
+Keeping marketplace actions up to date is one thing, but keeping custom actions might be just as important. Prefer organization or enterprise repository access for GitHub-hosted actions, centralize private registry configuration when credentials are required, and reserve a tightly scoped expiring PAT for legacy cases that the native access model cannot cover.
