@@ -26,53 +26,65 @@ This post shows how to use these new APIs with practical bash examples.
 
 ## What Are Enterprise GitHub Apps?
 
-With the [March 2025 GA release](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) of enterprise-owned GitHub Apps and the [July 2025 introduction (public preview)](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis/) of enterprise-level access and installation automation APIs, enterprises can now:
+Enterprise GitHub Apps are GitHub Apps owned by an enterprise account instead of an individual user or organization. Enterprise ownership gives enterprise owners a central place to create, manage, and transfer Apps used across their organizations.
 
-- **Install GitHub Apps at the enterprise level** with new enterprise-specific permissions
-  - You can now use an App to authenticate to some endpoints at the Enterprise level
-  - Previously, Apps could only be installed at org/user level without enterprise API access
-  - Note not all enterprise endpoints are available yet (see: [limitations](#current-limitations))
-- **Programmatically manage app installations** across all organizations in their enterprise, such as:
-  - Adding or removing repositories (you could previously do this at the organization level with an [API](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/installations?apiVersion=2022-11-28#add-a-repository-to-an-app-installation), but only with a classic PAT)
-  - Toggling from all repositories to selected (a feature that was previously not possible through any API)
-- **Automate GitHub Apps installation** using the [Enterprise-level REST APIs](https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/organization-installations?apiVersion=2022-11-28) (it wasn't possible to programmatically install an app before!)
-- **Centrally audit and control** which apps are installed and what they can access
-  - Previously, if you wanted to get which repositories the app had access to, you had to use an [App's JWT token](https://docs.github.com/en/enterprise-cloud@latest/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app#example-using-bash-to-generate-a-jwt) to [query the installation](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/apps?apiVersion=2022-11-28#get-an-organization-installation-for-the-authenticated-app) and using the `repository_selection` property
-- **Automatic permission propagation**: When you update app permissions, all organizations automatically accept the changes without requiring manual approval from each org owner (huge for enterprises with many organizations!)
-- **Transfer existing organization apps**: Organization-owned GitHub Apps can now be transferred to enterprise ownership, allowing you to centralize management of apps that were previously created at the organization level
+The [March 2025 GA release](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) made this ownership model generally available. Existing organization-owned Apps can be transferred to the enterprise, and permission updates are automatically accepted by organizations where the App is installed. This removes much of the organization-by-organization administration required for Apps used across a large enterprise.
+
+Enterprise ownership alone does not grant an App access to enterprise resources. The App must also be installed on the enterprise and granted the appropriate enterprise permissions.
 
 ### Enterprise App Permission Scopes & Capabilities
 
-Here's a list of the scopes available to an Enterprise GitHub App. In this post, we are specifically focusing on how these can be used to manage app installations across your enterprise organizations:
+The available permissions now extend well beyond App installation management. The following tree groups them by the enterprise resources they control:
 
 ```text
-Enterprise App Installation
-├── Enterprise-level permissions (new)
-│   ├── Enterprise custom properties
-│   ├── Enterprise custom organization roles
-│   ├── ⭐️ Enterprise organization installation repositories
-│   ├── ⭐️ Enterprise organization installations
-│   ├── Enterprise organizations (create and removing enterprise orgs)
-│   ├── Enterprise SSO and SCIM management
-│   ├── Enterprise people (managing user access to the enterprise)
-│   └── Enterprise single sign-on (view and manage SSO information; does not replace setup EMU user)
-└── Organization App installations (Enterprise Apps can now manage)
-    ├── Installing/uninstalling the app in an org
-    └── Repository access settings (flipping access between all repos to selected repos)
-    └── Repository access list (adding/removing repos the app has access to)
+Enterprise permissions
+├── Copilot and AI
+│   ├── Copilot usage records (view API usage records)
+│   ├── Enterprise Copilot metrics (view Copilot metrics)
+│   └── Enterprise AI controls (manage enterprise-wide AI controls)
+├── Roles and access
+│   ├── Custom enterprise roles (manage roles and assignments)
+│   ├── Enterprise custom organization roles (manage organization roles)
+│   ├── Enterprise people (manage user access)
+│   ├── Enterprise teams (manage enterprise teams)
+│   └── Enterprise single sign-on (view and manage SSO configuration)
+├── Properties and security
+│   ├── Custom properties (manage repository property definitions)
+│   ├── Enterprise custom properties for organizations
+│   ├── Enterprise credentials (view and manage credentials)
+│   └── Enterprise innersource vulnerabilities
+├── Enterprise administration
+│   └── Enterprise organizations (create and remove organizations)
+└── GitHub App installation management
+    ├── Enterprise organization installations (install or uninstall Apps)
+    └── Enterprise organization installation repositories
+        ├── Change access between all and selected repositories
+        └── Add or remove repositories from an App installation
 ```
 {: .nolineno}
+
+GitHub maintains the endpoint-level details for each scope in the [enterprise permissions reference](https://docs.github.com/enterprise-cloud@latest/rest/overview/permissions-required-for-github-apps#enterprise-permissions).
+
+> Requesting either **Enterprise organization installation repositories** or **Enterprise organization installations** prevents the App from being installed on other enterprises.
+{: .prompt-warning }
+
+## Installation Automation API Examples
+
+The examples in this post use the **Enterprise organization installations** and **Enterprise organization installation repositories** permissions with the [enterprise-level access and installation automation APIs](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis/). Together, they allow an App to:
+
+- Install or uninstall GitHub Apps across enterprise-owned organizations
+- Audit which Apps are installed and which repositories they can access
+- Add or remove repositories from an App installation
+- Change an installation between all repositories and selected repositories
 
 {: .prompt-tip }
 > You can use an Enterprise-owned GitHub App to install another Enterprise-owned GitHub App into an organization, an organization-owned GitHub App, or even a third-party Marketplace app into an organization. The key difference is that the Enterprise-owned App has enterprise-level permissions and can be managed centrally by enterprise owners. See my post on [installing Marketplace apps with Enterprise Apps](/posts/github-enterprise-apps-install-marketplace-apps/) for a walkthrough.
 
-## Installation Automation API Examples
-
-Now that we understand what Enterprise GitHub Apps can do, let's look at the automation APIs. These examples show how to manage app installations across your enterprise organizations programmatically.
+Previously, installing an App still required someone to complete the web flow. Repository access could be changed through an organization-level [API](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/installations?apiVersion=2022-11-28#add-a-repository-to-an-app-installation), but it required a classic PAT and could not change an installation between all and selected repositories. Auditing an App's repository access also required authenticating with the [App's JWT](https://docs.github.com/en/enterprise-cloud@latest/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app#example-using-bash-to-generate-a-jwt), [querying each organization installation](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/apps?apiVersion=2022-11-28#get-an-organization-installation-for-the-authenticated-app), and inspecting its `repository_selection` value. The enterprise-level APIs make this workflow programmatic and centrally accessible.
 
 Before diving into the examples, there are a few important things to know:
 
-- **Prerequisites**: You'll need enterprise owner access (or delegated app manager permissions), and an [Enterprise GitHub App](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-your-enterprise-account/creating-github-apps-for-your-enterprise) with **Enterprise --> "Enterprise organization installations" (write)** permissions (and generate and safeguard the private key).
+- **Prerequisites**: You'll need enterprise owner access (or delegated app manager permissions), and an [Enterprise GitHub App](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-your-enterprise-account/creating-github-apps-for-your-enterprise) with write access for both **Enterprise organization installations** and **Enterprise organization installation repositories**. You'll also need to generate and safeguard the App's private key.
 - **Authentication**: In my examples, I'm using the [`gh token`](https://github.com/Link-/gh-token) CLI command to generate a token for App authentication. You can also generate your own [JWT](https://docs.github.com/en/enterprise-cloud@latest/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app#example-using-bash-to-generate-a-jwt) and [App installation token](https://docs.github.com/en/enterprise-cloud@latest/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app) using your preferred method.
 - **API Documentation**: There are two different sets of API endpoints for Apps, and navigating the documentation can be tricky. We'll be using the **[REST API for managing organization GitHub App installations for Enterprise Administration](https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/organization-installations?apiVersion=2022-11-28)**, not the regular [REST API endpoints for GitHub Apps](https://docs.github.com/en/enterprise-cloud@latest/rest/apps?apiVersion=2022-11-28) (which are app and org-based, not enterprise).
 
