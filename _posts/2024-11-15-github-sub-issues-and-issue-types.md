@@ -1,8 +1,8 @@
 ---
-title: 'GitHub Issues: Scripts for working with Sub-Issues and Issue Types'
+title: 'GitHub Issues: Automating Sub-Issues and Issue Types'
 author: Josh Johanning
 date: 2024-11-15 1:00:00 -0600
-description: A collection of scripts for working with sub-issues and issue types in GitHub Issues
+description: A guide to automating GitHub sub-issues and issue types with the REST API, GitHub CLI, and GraphQL
 categories: [GitHub, Scripts]
 tags: [GitHub, GitHub Issues, GitHub Projects]
 media_subpath: /assets/screenshots/2024-11-15-github-sub-issues-and-issue-types
@@ -15,252 +15,237 @@ image:
 
 ## Overview
 
-Public previews for [Sub-Issues](https://github.com/orgs/community/discussions/139932) and [Issue Types](https://github.com/orgs/community/discussions/139933) have recently shipped, and they are *awesome*! 🎉 I encourage you to sign your org up for the opt-in public preview [here](https://github.com/features/issues/signup).
+[Sub-issues and issue types became generally available](https://github.blog/changelog/2025-04-09-evolving-github-issues-and-projects/) in April 2025. They are available without an opt-in, and API calls no longer need feature-preview headers.
 
-I was looking to do some automation with sub-issues and issue types, and noticed that right now we have to use the GraphQL API to work with them. To run certain queries and mutations, we need the GraphQL IDs of the fields, which if you don't know GraphQL, can be a bit of a challenge. I created these helper scripts to abstract this process and make automation much easier. 🚀
+Sub-issues let you break work into a hierarchy and track progress from a parent issue. Issue types provide an organization-wide classification shared by every repository in the organization. GitHub now supports both features in the REST API, and GitHub CLI v2.94.0 and later has first-class flags for common workflows.
 
 > Check out [@mickeygousset](https://github.com/mickeygousset)'s videos for working with [sub-issues](https://www.youtube.com/watch?v=F42FN6cZmA4) and [issue types](https://www.youtube.com/watch?v=2wVmcuCC1is)! ✨
 {: .prompt-info }
 
-## The Scripts
+## Sub-Issues
 
-### Sub-Issue Scripts
+### Current Limits and Behavior
 
-- [`get-parent-issue-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-parent-issue-of-issue.sh)
-- [`get-sub-issues-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-sub-issues-of-issue.sh)
-- [`get-sub-issues-summary-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-sub-issues-summary-of-issue.sh)
-- [`add-sub-issue-to-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/add-sub-issue-to-issue.sh)
-- [`remove-sub-issue-from-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/remove-sub-issue-from-issue.sh)
+- A parent issue can have up to **100 direct sub-issues**.
+- A hierarchy can contain up to **eight levels** of nested sub-issues.
+- A sub-issue can itself be a parent issue.
+- Existing issues can be added from another repository owned by the same user or organization. The REST `Add sub-issue` endpoint requires the parent and child repositories to have the same owner.
+- Each issue can have only one parent. Pass `replace_parent=true` to the REST endpoint when moving a sub-issue to a new parent.
+- Sub-issue progress appears on the parent issue and in GitHub Projects. REST issue responses include `sub_issues_summary` and `parent_issue_url`.
 
-### Issue Type Scripts
+See [Adding sub-issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues) for the current product behavior.
 
-- [`get-issue-type-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-issue-type-of-issue.sh)
-- [`update-issue-issue-type.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/update-issue-issue-type.sh)
-- [`remove-issue-issue-type.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/remove-issue-issue-type.sh)
+### REST API Examples
 
-## Usage
+The examples use [`gh api`](https://cli.github.com/manual/gh_api), so authentication and the recommended REST headers are handled by GitHub CLI.
 
-### Sub-Issue Scripts Usage
+#### Get the Parent Issue
 
-#### get-parent-issue-of-issue.sh
-
-Gets the parent issue of the specified issue.
-
-Query:
+The dedicated REST endpoint replaces the original GraphQL lookup:
 
 ```sh
-./get-parent-issue-of-issue.sh joshjohanning-org migrating-ado-to-gh-issues-v2 7
+gh api repos/OWNER/REPO/issues/SUB_ISSUE_NUMBER/parent \
+  --jq '{number, title, url: .html_url, issueType: .type.name}'
 ```
-{: .nolineno}
+{: .nolineno }
 
-Response:
+#### List Sub-Issues
 
-```json
-{
-  "title": "Website enhancements",
-  "number": 5,
-  "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/5",
-  "id": "I_kwDONO_ztc6eXvAG",
-  "issueType": "Feature"
-}
-```
-{: .nolineno}
-
-#### get-sub-issues-of-issue.sh
-
-Gets a list of sub-issues for the specified issue.
-
-Query:
+Use `--paginate` because the endpoint returns 30 items per page by default:
 
 ```sh
-./get-sub-issues-of-issue.sh joshjohanning-org migrating-ado-to-gh-issues-v2 5
+gh api --paginate repos/OWNER/REPO/issues/PARENT_ISSUE_NUMBER/sub_issues \
+  --jq '.[] | {number, title, url: .html_url, issueType: .type.name}'
 ```
-{: .nolineno}
+{: .nolineno }
 
-Response:
+#### Get the Sub-Issue Progress Summary
 
-```json
-{
-  "totalCount": 3,
-  "issues": [
-    {
-      "title": "Fix login page",
-      "number": 6,
-      "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/6",
-      "id": "I_kwDONO_ztc6eXvDa",
-      "issueType": "User Story"
-    },
-    {
-      "title": "Increase contrast of members page",
-      "number": 7,
-      "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/7",
-      "id": "I_kwDONO_ztc6eXvGo",
-      "issueType": null
-    },
-    {
-      "title": "Add logout button",
-      "number": 8,
-      "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/8",
-      "id": "I_kwDONO_ztc6eXvKm",
-      "issueType": null
-    }
-  ]
-}
-```
-{: .nolineno}
-
-#### get-sub-issues-summary-of-issue.sh
-
-Gets the sub-issues summary for the specified issue.
-
-Query:
+The standard REST issue response contains the summary:
 
 ```sh
-./get-sub-issues-summary-of-issue.sh joshjohanning-org migrating-ado-to-gh-issues-v2 5
+gh api repos/OWNER/REPO/issues/PARENT_ISSUE_NUMBER \
+  --jq '.sub_issues_summary'
 ```
-{: .nolineno}
+{: .nolineno }
 
-Response:
+An example response looks like:
 
 ```json
 {
   "total": 3,
   "completed": 1,
-  "percentCompleted": 33
+  "percent_completed": 33
 }
 ```
-{: .nolineno}
+{: .nolineno }
 
-#### remove-sub-issue-from-issue.sh
+#### Add an Existing Issue as a Sub-Issue
 
-Removes the specified sub-issue from the specified parent issue.
-
-Query:
+The API requires the database ID returned in the REST issue's `id` field, not the issue number:
 
 ```sh
-./remove-sub-issue-from-issue.sh joshjohanning-org migrating-ado-to-gh-issues-v2 5 9
+sub_issue_id=$(gh api repos/OWNER/REPO/issues/SUB_ISSUE_NUMBER --jq '.id')
+
+gh api --method POST \
+  repos/OWNER/REPO/issues/PARENT_ISSUE_NUMBER/sub_issues \
+  -F sub_issue_id="$sub_issue_id"
 ```
-{: .nolineno}
+{: .nolineno }
 
-Response:
+To move an issue that already has a parent, include `-F replace_parent=true`.
 
-```text
-Child issue #9 is a sub-issue of parent issue #5.
-{
-  "data": {
-    "removeSubIssue": {
-      "issue": {
-        "title": "Website enhancements",
-        "number": 5,
-        "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/5",
-        "id": "I_kwDONO_ztc6eXvAG",
-        "issueType": {
-          "name": "Feature"
+#### Remove a Sub-Issue
+
+Removing a sub-issue also uses its REST database ID:
+
+```sh
+sub_issue_id=$(gh api repos/OWNER/REPO/issues/SUB_ISSUE_NUMBER --jq '.id')
+
+gh api --method DELETE \
+  repos/OWNER/REPO/issues/PARENT_ISSUE_NUMBER/sub_issue \
+  -F sub_issue_id="$sub_issue_id"
+```
+{: .nolineno }
+
+#### Reprioritize a Sub-Issue
+
+Place one sub-issue after another in the parent's ordered list:
+
+```sh
+sub_issue_id=$(gh api repos/OWNER/REPO/issues/SUB_ISSUE_NUMBER --jq '.id')
+after_id=$(gh api repos/OWNER/REPO/issues/AFTER_ISSUE_NUMBER --jq '.id')
+
+gh api --method PATCH \
+  repos/OWNER/REPO/issues/PARENT_ISSUE_NUMBER/sub_issues/priority \
+  -F sub_issue_id="$sub_issue_id" \
+  -F after_id="$after_id"
+```
+{: .nolineno }
+
+Use `before_id` instead of `after_id` to position it before another sub-issue. The complete endpoint reference is in [REST API endpoints for sub-issues](https://docs.github.com/en/rest/issues/sub-issues).
+
+## Issue Types
+
+### Current Limits and Behavior
+
+- An organization can have up to **25 issue types**.
+- GitHub provides `Task`, `Bug`, and `Feature` by default. Organization owners can edit, disable, or delete them and create custom types.
+- An issue can have one issue type, and the type is shared across repositories in the organization.
+- Disabling a type prevents it from being selected but preserves it on existing issues. Deleting a type permanently removes it.
+- Issue types can be used in issue and project filters, such as `type:Bug` and `no:type`.
+
+See [Managing issue types in an organization](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/managing-issue-types-in-an-organization) for the current product behavior.
+
+### REST API Examples
+
+#### Read an Issue's Type
+
+The standard issue response now includes the `type` object:
+
+```sh
+gh api repos/OWNER/REPO/issues/ISSUE_NUMBER \
+  --jq '{number, title, url: .html_url, issueType: .type.name}'
+```
+{: .nolineno }
+
+#### List Organization Issue Types
+
+```sh
+gh api orgs/ORG/issue-types \
+  --jq '.[] | {id, name, description, color, is_enabled}'
+```
+{: .nolineno }
+
+#### Set or Remove an Issue Type
+
+REST accepts the issue type name when creating or updating an issue. Set the name to `null` to remove it:
+
+```sh
+gh api --method PATCH repos/ORG/REPO/issues/ISSUE_NUMBER -f type='Bug'
+
+gh api --method PATCH repos/ORG/REPO/issues/ISSUE_NUMBER -F type=null
+```
+{: .nolineno }
+
+#### Create an Organization Issue Type
+
+Organization owners can create and manage issue types:
+
+```sh
+gh api --method POST orgs/ORG/issue-types \
+  -f name='Epic' \
+  -f description='A large body of work spanning multiple issues' \
+  -f color='green' \
+  -F is_enabled=true
+```
+{: .nolineno }
+
+The organization endpoints also support updating and deleting types. See [REST API endpoints for issue types](https://docs.github.com/en/rest/orgs/issue-types).
+
+## GitHub CLI Commands
+
+With GitHub CLI v2.94.0 or later, common operations no longer need `gh api` (GitHub Enterprise Server requires GHES 3.17 or later):
+
+```sh
+gh issue create --repo OWNER/REPO --title 'Fix login page' --type 'Bug' --parent 5
+gh issue edit 5 --repo OWNER/REPO --add-sub-issue 6
+gh issue edit 5 --repo OWNER/REPO --remove-sub-issue 6
+gh issue edit 6 --repo OWNER/REPO --type 'Task'
+gh issue view 5 --repo OWNER/REPO --json type,parent,subIssues
+```
+{: .nolineno }
+
+## Existing Helper Scripts
+
+The original scripts remain linked below, but most are now **legacy GraphQL implementations** superseded by REST endpoints or first-class `gh issue` options:
+
+| Script | Status |
+| --- | --- |
+| [`get-parent-issue-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-parent-issue-of-issue.sh) | Legacy GraphQL; use `GET .../parent` |
+| [`get-sub-issues-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-sub-issues-of-issue.sh) | Legacy GraphQL; use `GET .../sub_issues` |
+| [`get-sub-issues-summary-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-sub-issues-summary-of-issue.sh) | Legacy GraphQL; use `GET .../issues/{number}` and `.sub_issues_summary` |
+| [`add-sub-issue-to-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/add-sub-issue-to-issue.sh) | Legacy GraphQL; use `POST .../sub_issues` or `gh issue edit --add-sub-issue` |
+| [`remove-sub-issue-from-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/remove-sub-issue-from-issue.sh) | Legacy GraphQL; use `DELETE .../sub_issue` or `gh issue edit --remove-sub-issue` |
+| [`get-issue-type-of-issue.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/get-issue-type-of-issue.sh) | Legacy GraphQL; use the REST issue's `.type` field |
+| [`update-issue-issue-type.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/update-issue-issue-type.sh) | Legacy GraphQL; use `PATCH .../issues/{number}` or `gh issue edit --type` |
+| [`remove-issue-issue-type.sh`](https://github.com/joshjohanning/github-misc-scripts/blob/main/gh-cli/remove-issue-issue-type.sh) | Legacy GraphQL; use `PATCH .../issues/{number}` with `type: null` |
+
+I verified that all linked files still exist and pass Bash syntax and usage checks. They currently use obsolete GraphQL feature headers, so new automation should prefer the REST and GitHub CLI examples above.
+
+## When GraphQL Still Provides Value
+
+REST is now the simplest choice for individual operations. GraphQL remains useful when one request needs a custom-shaped issue hierarchy or related project data that would otherwise require several REST calls. For example, this query retrieves the parent, progress summary, and first page of sub-issues together:
+
+```graphql
+query ($owner: String!, $repo: String!, $number: Int!) {
+  repository(owner: $owner, name: $repo) {
+    issue(number: $number) {
+      parent {
+        number
+        title
+      }
+      subIssuesSummary {
+        total
+        completed
+        percentCompleted
+      }
+      subIssues(first: 100) {
+        nodes {
+          number
+          title
+          issueType {
+            name
+          }
         }
-      },
-      "subIssue": {
-        "title": "task 1",
-        "number": 9,
-        "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/9",
-        "id": "I_kwDONO_ztc6eXvN3",
-        "issueType": null
-      }
-    }
-  }
-}
-Successfully removed issue joshjohanning-org/migrating-ado-to-gh-issues-v2#9 as a sub-issue to joshjohanning-org/migrating-ado-to-gh-issues-v2#5.
-```
-{: .nolineno}
-
-
-### Issue Types Scripts Usage
-
-#### get-issue-type-of-issue.sh
-
-Gets the issue type of the specified issue.
-
-Query:
-
-```sh
-./get-issue-type-of-issue.sh joshjohanning-org migrating-ado-to-gh-issues-v2 5
-```
-{: .nolineno}
-
-Response:
-
-```json
-{
-  "title": "Website enhancements",
-  "number": 5,
-  "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/5",
-  "id": "I_kwDONO_ztc6eXvAG",
-  "issueType": "Feature"
-}
-```
-{: .nolineno}
-
-#### update-issue-issue-type.sh
-
-Updates/sets the issue type of the specified issue.
-
-Query:
-
-```sh
-./update-issue-issue-type.sh joshjohanning-org migrating-ado-to-gh-issues-v2 6 "user story"
-```
-{: .nolineno}
-
-Response:
-
-```json
-{
-  "data": {
-    "updateIssueIssueType": {
-      "issue": {
-        "title": "Fix login page",
-        "number": 6,
-        "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/6",
-        "id": "I_kwDONO_ztc6eXvDa",
-        "issueType": {
-          "name": "User Story"
-        }
       }
     }
   }
 }
 ```
-{: .nolineno}
 
-#### remove-issue-issue-type.sh
-
-Removes the issue type from the specified issue.
-
-Query:
-
-```sh
-./remove-issue-issue-type.sh joshjohanning-org migrating-ado-to-gh-issues-v2 6
-```
-{: .nolineno}
-
-Response:
-
-```json
-{
-  "data": {
-    "updateIssueIssueType": {
-      "issue": {
-        "title": "Fix login page",
-        "number": 6,
-        "url": "https://github.com/joshjohanning-org/migrating-ado-to-gh-issues-v2/issues/6",
-        "id": "I_kwDONO_ztc6eXvDa",
-        "issueType": null
-      }
-    }
-  }
-}
-```
-{: .nolineno}
+This read-only query does not need the old `GraphQL-Features: sub_issues` or `GraphQL-Features: issue_types` feature headers.
 
 ## Summary
 
-Working with GraphQL can sometimes be challenging, especially if you're more familiar with REST APIs. I hope you find these scripts helpful! Please let me know if you have any questions or feedback. 🚀 Keep an eye on [the changelog](https://github.blog/changelog/label/projects/) for new Issues/Projects features!
+Sub-issues and issue types are generally available, supported by dedicated REST endpoints, and built into current versions of GitHub CLI. Prefer `gh issue` for interactive command-line workflows and `gh api` with REST for automation. Keep GraphQL for queries that benefit from selecting several related fields in one response.
