@@ -35,6 +35,13 @@ Sub-issues let you break work into a hierarchy and track progress from a parent 
 
 See [Adding sub-issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues) for the current product behavior.
 
+> Before adding a sub-issue, choose the relationship that best represents how the issues are connected:
+>
+> - **Parent/sub-issue:** Use for a hierarchy in which a larger issue contains smaller pieces of work.
+> - **Blocking/blocked by:** Use for a dependency in which one issue must be completed before another can proceed. [Issue dependencies are generally available](https://github.blog/changelog/2025-08-21-dependencies-on-issues/).
+> - **Relates to:** Use for connected issues when neither hierarchy nor dependency applies. See the [`Relates to` relationship announcement](https://github.blog/changelog/2026-08-07-connecting-issues-and-multi-select-field-support/) for more information.
+{: .prompt-info }
+
 ### REST API Examples
 
 The examples use [`gh api`](https://cli.github.com/manual/gh_api), so authentication and the recommended REST headers are handled by GitHub CLI.
