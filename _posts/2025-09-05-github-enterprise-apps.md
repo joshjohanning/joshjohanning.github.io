@@ -17,7 +17,7 @@ image:
 
 GitHub has made enterprise GitHub App management much easier with the [general availability of Enterprise GitHub Apps](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) and [Enterprise-level access for GitHub Apps and installation automation APIs (public preview)](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis/). These capabilities allow enterprise administrators to programmatically install, manage, and audit GitHub Apps across hundreds of organizations without manually clicking through installation screens. This is particularly useful during migration scenarios where you need to programmatically install and configure apps across multiple organizations.
 
-As of May 2026, there's also a new [enterprise installation API (public preview)](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) that lets an App look up its own enterprise installation ID via [`GET /enterprises/{enterprise}/installation`](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/apps#get-an-enterprise-installation-for-the-authenticated-app) instead of grabbing it from the browser.
+As of May 2026, there's also a new [enterprise installation API (public preview)](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) that lets an App look up its own enterprise installation ID via [`GET /enterprises/{enterprise}/installation`](https://docs.github.com/en/enterprise-cloud@latest/rest/apps/apps#get-an-enterprise-installation-for-the-authenticated-app) instead of grabbing it from the browser. In August 2026, GitHub also added an [enterprise billing permission](https://github.blog/changelog/2026-08-26-github-apps-can-now-access-enterprise-billing-data/) so Apps can access usage data and manage budgets and cost centers without relying on a personal access token.
 
 This post shows how to use these new APIs with practical bash examples.
 
@@ -38,6 +38,8 @@ The available permissions now extend well beyond App installation management. Th
 
 ```text
 Enterprise permissions
+├── Billing
+│   └── Enterprise billing (view usage or manage budgets and cost centers)
 ├── Copilot and AI
 │   ├── Copilot usage records (view API usage records)
 │   ├── Enterprise Copilot metrics (view Copilot metrics)
@@ -67,6 +69,19 @@ GitHub maintains the endpoint-level details for each scope in the [enterprise pe
 
 > Requesting either **Enterprise organization installation repositories** or **Enterprise organization installations** prevents the App from being installed on other enterprises.
 {: .prompt-warning }
+
+### Enterprise Billing API Access
+
+Enterprise owners can grant a GitHub App the **Enterprise billing** permission with either **read** or **read and write** access. An installation access token carrying this permission can call the [enterprise billing REST API](https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/billing) to:
+
+- Pull usage data into finance or business intelligence systems
+- Reconcile invoices
+- Manage budgets and cost centers with read and write access
+
+Before this permission was introduced, billing API automation required a personal access token belonging to an enterprise owner or billing manager. Using an App installation access token removes that dependency on an individual and provides higher rate limits than a personal access token.
+
+> The enterprise billing permission is available on GitHub Enterprise Cloud.
+{: .prompt-info }
 
 ## Installation Automation API Examples
 
@@ -158,9 +173,9 @@ GH_TOKEN=$token gh api /enterprises/avocado-corp/apps/organizations/joshjohannin
 
 ## Current Limitations
 
-As of May 2026, there are some limitations to be aware of:
+As of September 2026, there are some limitations to be aware of:
 
-- **Limited permission scope**: Not every permission is available at the Enterprise level yet (like managing Enterprise settings)
+- **Limited permission scope**: Not every enterprise capability has a corresponding GitHub App permission yet
 - **Enterprise webhooks**: Enterprise installations cannot subscribe to webhooks yet
 - ~~**Third-party apps**: Enterprises can only install apps owned by the enterprise or organizations within the enterprise~~ -- This works! You just need the app's `client_id`. See my post on [installing Marketplace apps programmatically with Enterprise Apps](/posts/github-enterprise-apps-install-marketplace-apps/) for details.
 - ~~**Enterprise installation discovery**: Previously, there was no direct API to look up an enterprise installation ID - you had to paginate through all installations or grab it from the browser~~ -- [Resolved in May 2026](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) with `GET /enterprises/{enterprise}/installation` (public preview)
@@ -172,7 +187,7 @@ As of May 2026, there are some limitations to be aware of:
 
 ## Summary
 
-[Enterprise-owned GitHub Apps](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) (GA March 2025), the [Enterprise-level installation automation APIs](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis) (public preview July 2025), and the new [enterprise installation API](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) (public preview May 2026) solve the manual pain of managing apps across many organizations. The key benefit is eliminating the need to click through installation screens for every org, plus automatic permission propagation when you update app settings.
+[Enterprise-owned GitHub Apps](https://github.blog/changelog/2025-03-10-enterprise-owned-github-apps-are-now-generally-available/) (GA March 2025), the [Enterprise-level installation automation APIs](https://github.blog/changelog/2025-07-01-enterprise-level-access-for-github-apps-and-installation-automation-apis) (public preview July 2025), the [enterprise installation API](https://github.blog/changelog/2026-05-13-new-enterprise-installation-api-now-in-public-preview/) (public preview May 2026), and [enterprise billing access](https://github.blog/changelog/2026-08-26-github-apps-can-now-access-enterprise-billing-data/) continue to remove personal access token and manual administration dependencies. Apps can now manage installations across organizations and automate billing workflows with centrally controlled enterprise permissions.
 
 The bash examples above demonstrate the core operations: install, uninstall, change repository access, and audit existing installations. These [Enterprise-level GitHub App management APIs](https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/organization-installations?apiVersion=2022-11-28) are particularly valuable during migrations or when you need to deploy security/compliance apps enterprise-wide.
 
