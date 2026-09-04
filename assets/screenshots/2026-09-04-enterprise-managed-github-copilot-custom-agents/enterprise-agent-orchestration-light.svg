@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Enterprise-managed subagent orchestration test</title>
+  <desc id="desc">An orchestrator delegates three marker tasks to worker agents, then a verifier checks their output.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#59636e"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#f6f8fa"/>
+  <text x="120" y="120" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="43" font-weight="700" fill="#1f2328">The orchestration test</text>
+  <text x="120" y="166" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" fill="#59636e">Three delegated tasks, followed by independent verification</text>
+
+  <rect x="120" y="322" width="310" height="180" rx="18" fill="#ddf4ff" stroke="#0969da" stroke-width="3"/>
+  <text x="275" y="393" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="27" font-weight="700" fill="#0969da">Orchestrator</text>
+  <text x="275" y="437" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20" fill="#59636e">Delegates all four steps</text>
+
+  <path d="M430 412H555" fill="none" stroke="#59636e" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <rect x="590" y="244" width="270" height="108" rx="16" fill="#ffffff" stroke="#1f883d" stroke-width="2"/>
+    <text x="725" y="291" text-anchor="middle" font-size="24" font-weight="700" fill="#1f883d">Alpha Worker</text>
+    <text x="725" y="324" text-anchor="middle" font-size="18" fill="#59636e">Creates alpha.txt</text>
+
+    <rect x="590" y="376" width="270" height="108" rx="16" fill="#ffffff" stroke="#9a6700" stroke-width="2"/>
+    <text x="725" y="423" text-anchor="middle" font-size="24" font-weight="700" fill="#9a6700">Beta Worker</text>
+    <text x="725" y="456" text-anchor="middle" font-size="18" fill="#59636e">Creates beta.txt</text>
+
+    <rect x="590" y="508" width="270" height="108" rx="16" fill="#ffffff" stroke="#8250df" stroke-width="2"/>
+    <text x="725" y="555" text-anchor="middle" font-size="24" font-weight="700" fill="#8250df">Gamma Worker</text>
+    <text x="725" y="588" text-anchor="middle" font-size="18" fill="#59636e">Creates gamma.txt</text>
+  </g>
+
+  <path d="M860 298C945 298 945 375 1010 375" fill="none" stroke="#59636e" stroke-width="3"/>
+  <path d="M860 430H1010" fill="none" stroke="#59636e" stroke-width="3"/>
+  <path d="M860 562C945 562 945 485 1010 485" fill="none" stroke="#59636e" stroke-width="3"/>
+
+  <rect x="1010" y="328" width="300" height="204" rx="18" fill="#ffffff" stroke="#cf222e" stroke-width="3"/>
+  <text x="1160" y="393" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="27" font-weight="700" fill="#cf222e">Marker Verifier</text>
+  <text x="1160" y="438" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20" fill="#59636e">Checks all three files</text>
+  <text x="1160" y="471" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20" fill="#59636e">Creates verified.txt</text>
+
+  <path d="M1310 430H1380" fill="none" stroke="#59636e" stroke-width="4" marker-end="url(#arrow)"/>
+  <circle cx="1430" cy="430" r="35" fill="#1f883d"/>
+  <path d="M1415 430L1426 441L1446 417" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <line x1="120" y1="714" x2="1480" y2="714" stroke="#d0d7de" stroke-width="2"/>
+  <text x="800" y="766" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" fill="#59636e">All five profiles came from the enterprise governance repository</text>
+</svg>

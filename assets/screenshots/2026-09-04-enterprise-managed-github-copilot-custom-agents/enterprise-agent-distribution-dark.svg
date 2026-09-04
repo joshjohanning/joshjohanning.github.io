@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Enterprise-managed GitHub Copilot agent distribution</title>
+  <desc id="desc">Enterprise-managed agents flow from a central governance repository to four tested Copilot surfaces and can delegate work to other managed agents.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#8b949e"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0d1117"/>
+
+  <text x="120" y="120" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="43" font-weight="700" fill="#f0f6fc">Enterprise agents, managed once</text>
+  <text x="120" y="166" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" fill="#8b949e">Distributed across supported Copilot surfaces, with delegation built in</text>
+
+  <rect x="120" y="270" width="380" height="250" rx="18" fill="#161b22" stroke="#58a6ff" stroke-width="3"/>
+  <rect x="120" y="270" width="12" height="250" rx="6" fill="#58a6ff"/>
+  <text x="174" y="336" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="29" font-weight="700" fill="#58a6ff">Enterprise source</text>
+  <text x="174" y="398" font-family="SFMono-Regular, Consolas, monospace" font-size="23" font-weight="600" fill="#f0f6fc">.github-private/agents</text>
+  <line x1="174" y1="429" x2="446" y2="429" stroke="#30363d" stroke-width="2"/>
+  <text x="174" y="468" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20" fill="#b1bac4">PRs · rulesets · CODEOWNERS</text>
+
+  <path d="M500 395H615" fill="none" stroke="#8b949e" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <text x="660" y="246" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="21" font-weight="600" fill="#8b949e">WORKED IN MY TEST</text>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <rect x="660" y="270" width="330" height="110" rx="16" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <circle cx="708" cy="325" r="18" fill="#3fb950"/>
+    <path d="M700 325L706 331L717 318" fill="none" stroke="#0d1117" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="746" y="319" font-size="25" font-weight="700" fill="#f0f6fc">GitHub.com</text>
+    <text x="746" y="349" font-size="19" fill="#8b949e">Cloud agent</text>
+
+    <rect x="1030" y="270" width="330" height="110" rx="16" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <circle cx="1078" cy="325" r="18" fill="#3fb950"/>
+    <path d="M1070 325L1076 331L1087 318" fill="none" stroke="#0d1117" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1116" y="319" font-size="25" font-weight="700" fill="#f0f6fc">VS Code</text>
+    <text x="1116" y="349" font-size="19" fill="#8b949e">Cloud harness</text>
+
+    <rect x="660" y="410" width="330" height="110" rx="16" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <circle cx="708" cy="465" r="18" fill="#3fb950"/>
+    <path d="M700 465L706 471L717 458" fill="none" stroke="#0d1117" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="746" y="459" font-size="25" font-weight="700" fill="#f0f6fc">Copilot CLI</text>
+    <text x="746" y="489" font-size="19" fill="#8b949e">User authenticated</text>
+
+    <rect x="1030" y="410" width="330" height="110" rx="16" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <circle cx="1078" cy="465" r="18" fill="#3fb950"/>
+    <path d="M1070 465L1076 471L1087 458" fill="none" stroke="#0d1117" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1116" y="459" font-size="25" font-weight="700" fill="#f0f6fc">Copilot app</text>
+    <text x="1116" y="489" font-size="19" fill="#8b949e">Desktop app</text>
+  </g>
+
+  <line x1="120" y1="624" x2="1360" y2="624" stroke="#30363d" stroke-width="2"/>
+  <text x="120" y="677" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="21" font-weight="600" fill="#8b949e">SUBAGENT ORCHESTRATION ALSO WORKED</text>
+
+  <rect x="120" y="710" width="310" height="90" rx="16" fill="#0c2d6b" stroke="#58a6ff" stroke-width="2"/>
+  <text x="275" y="764" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#58a6ff">Orchestrator</text>
+
+  <path d="M430 755H650" fill="none" stroke="#8b949e" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="540" y="724" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18" fill="#8b949e">delegates</text>
+
+  <rect x="680" y="710" width="420" height="90" rx="16" fill="#033a16" stroke="#3fb950" stroke-width="2"/>
+  <text x="890" y="764" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#56d364">Enterprise-managed subagents</text>
+
+  <circle cx="1218" cy="755" r="30" fill="#3fb950"/>
+  <path d="M1205 755L1215 765L1232 744" fill="none" stroke="#0d1117" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1270" y="763" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="23" font-weight="700" fill="#56d364">Verified</text>
+</svg>
